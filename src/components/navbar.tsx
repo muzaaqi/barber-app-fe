@@ -2,8 +2,8 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav className="w-full py-5 px-10 border-b border-border fixed">
-      <div className="flex justify-between">
+    <nav className="w-full border-b border-border flex justify-center fixed py-4">
+      <div className="flex justify-between container">
         <div className="text-primary text-2xl font-extrabold">
           <h1>BERGAS</h1>
         </div>
