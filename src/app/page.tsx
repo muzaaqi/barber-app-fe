@@ -1,8 +1,13 @@
+import HeroSection from "@/components/hero";
+import Navbar from "@/components/navbar";
 
 export default function Home() {
   return (
-    <div className="font-mono">
-      <h1>Hello World</h1>
+    <div className="font-mono bg-background text-foreground min-h-screen flex justify-center">
+      <div className="container flex justify-center">
+        <Navbar />
+        <HeroSection />
+      </div>
     </div>
   );
 }
