@@ -2,10 +2,8 @@ import HeroSection from "@/components/hero";
 
 export default function Home() {
   return (
-    <div className="font-mono bg-background text-foreground min-h-screen flex justify-center">
-      <div className="container flex justify-center">
-        <HeroSection />
-      </div>
+    <div className="bg-background text-foreground flex min-h-screen justify-center">
+      <HeroSection />
     </div>
   );
 }

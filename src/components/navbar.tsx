@@ -3,8 +3,8 @@ import ThemeSwitch from "./theme-switch";
 
 const Navbar = () => {
   return (
-    <nav className="bg-background border-border fixed flex w-full justify-center border-b py-4">
-      <div className="container flex justify-between items-center">
+    <nav className="bg-background border-border fixed z-50 flex w-full justify-center border-b py-4">
+      <div className="container flex justify-between items-center font-mono">
         <div className="text-primary text-2xl font-extrabold">
           <h1>BERGAS</h1>
         </div>

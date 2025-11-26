@@ -6,7 +6,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: "Oswald", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -69,7 +70,7 @@
 
 :root {
   --radius: 0rem;
-  --background: oklch(1.0000 0 0);
+  --background: oklch(1 0 0);
   --foreground: oklch(0 0 0);
   --card: oklch(0.9702 0 0);
   --card-foreground: oklch(0 0 0);
@@ -91,7 +92,7 @@
   --chart-2: oklch(0.8276 0.1013 230.3179);
   --chart-3: oklch(0.8366 0.1165 66.2896);
   --chart-4: oklch(0.8077 0.1035 19.5706);
-  --chart-5: oklch(0.7090 0.1592 293.5412);
+  --chart-5: oklch(0.709 0.1592 293.5412);
   --sidebar: oklch(0.9551 0 0);
   --sidebar-foreground: oklch(0 0 0);
   --sidebar-primary: oklch(0.8493 0.2073 128.8497);
@@ -100,10 +101,10 @@
   --sidebar-accent-foreground: oklch(0 0 0);
   --sidebar-border: oklch(0.8576 0 0);
   --sidebar-ring: oklch(0.8493 0.2073 128.8497);
-  --destructive-foreground: oklch(1.0000 0 0);
-  --font-sans: 'Roboto Mono', monospace;
+  --destructive-foreground: oklch(1 0 0);
+  --font-sans: "Oswald", sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
-  --font-mono: 'Roboto Mono', monospace;
+  --font-mono: "JetBrains Mono", monospace;
   --shadow-color: 0 0 0;
   --shadow-opacity: 0;
   --shadow-blur: 0;
@@ -112,28 +113,28 @@
   --shadow-offset-y: 0;
   --letter-spacing: 0.025em;
   --spacing: 0.25rem;
-  --shadow-2xs: 0 0 0 0 hsl(0 0 0 / 0.00);
-  --shadow-xs: 0 0 0 0 hsl(0 0 0 / 0.00);
-  --shadow-sm: 0 0 0 0 hsl(0 0 0 / 0.00), 0 1px 2px -1px hsl(0 0 0 / 0.00);
-  --shadow: 0 0 0 0 hsl(0 0 0 / 0.00), 0 1px 2px -1px hsl(0 0 0 / 0.00);
-  --shadow-md: 0 0 0 0 hsl(0 0 0 / 0.00), 0 2px 4px -1px hsl(0 0 0 / 0.00);
-  --shadow-lg: 0 0 0 0 hsl(0 0 0 / 0.00), 0 4px 6px -1px hsl(0 0 0 / 0.00);
-  --shadow-xl: 0 0 0 0 hsl(0 0 0 / 0.00), 0 8px 10px -1px hsl(0 0 0 / 0.00);
-  --shadow-2xl: 0 0 0 0 hsl(0 0 0 / 0.00);
+  --shadow-2xs: 0 0 0 0 hsl(0 0 0 / 0);
+  --shadow-xs: 0 0 0 0 hsl(0 0 0 / 0);
+  --shadow-sm: 0 0 0 0 hsl(0 0 0 / 0), 0 1px 2px -1px hsl(0 0 0 / 0);
+  --shadow: 0 0 0 0 hsl(0 0 0 / 0), 0 1px 2px -1px hsl(0 0 0 / 0);
+  --shadow-md: 0 0 0 0 hsl(0 0 0 / 0), 0 2px 4px -1px hsl(0 0 0 / 0);
+  --shadow-lg: 0 0 0 0 hsl(0 0 0 / 0), 0 4px 6px -1px hsl(0 0 0 / 0);
+  --shadow-xl: 0 0 0 0 hsl(0 0 0 / 0), 0 8px 10px -1px hsl(0 0 0 / 0);
+  --shadow-2xl: 0 0 0 0 hsl(0 0 0 / 0);
   --tracking-normal: 0.025em;
 }
 
 .dark {
   --background: oklch(0 0 0);
-  --foreground: oklch(1.0000 0 0);
+  --foreground: oklch(1 0 0);
   --card: oklch(0.2178 0 0);
-  --card-foreground: oklch(1.0000 0 0);
+  --card-foreground: oklch(1 0 0);
   --popover: oklch(0.2178 0 0);
-  --popover-foreground: oklch(1.0000 0 0);
+  --popover-foreground: oklch(1 0 0);
   --primary: oklch(0.8493 0.2073 128.8497);
   --primary-foreground: oklch(0 0 0);
   --secondary: oklch(0.3012 0 0);
-  --secondary-foreground: oklch(1.0000 0 0);
+  --secondary-foreground: oklch(1 0 0);
   --muted: oklch(0.3012 0 0);
   --muted-foreground: oklch(0.7155 0 0);
   --accent: oklch(0.3485 0 0);
@@ -146,20 +147,20 @@
   --chart-2: oklch(0.8276 0.1013 230.3179);
   --chart-3: oklch(0.8366 0.1165 66.2896);
   --chart-4: oklch(0.8077 0.1035 19.5706);
-  --chart-5: oklch(0.7090 0.1592 293.5412);
+  --chart-5: oklch(0.709 0.1592 293.5412);
   --sidebar: oklch(0.1448 0 0);
-  --sidebar-foreground: oklch(1.0000 0 0);
+  --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(0.8493 0.2073 128.8497);
   --sidebar-primary-foreground: oklch(0 0 0);
   --sidebar-accent: oklch(0.3012 0 0);
   --sidebar-accent-foreground: oklch(0.8493 0.2073 128.8497);
   --sidebar-border: oklch(0.4091 0 0);
   --sidebar-ring: oklch(0.8493 0.2073 128.8497);
-  --destructive-foreground: oklch(1.0000 0 0);
+  --destructive-foreground: oklch(1 0 0);
   --radius: 0rem;
-  --font-sans: 'Roboto Mono', monospace;
+  --font-sans: "Oswald", sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
-  --font-mono: 'Roboto Mono', monospace;
+  --font-mono: "JetBrains Mono", monospace;
   --shadow-color: 0 0 0;
   --shadow-opacity: 0;
   --shadow-blur: 0;
@@ -168,14 +169,14 @@
   --shadow-offset-y: 0;
   --letter-spacing: 0.025em;
   --spacing: 0.25rem;
-  --shadow-2xs: 0 0 0 0 hsl(0 0 0 / 0.00);
-  --shadow-xs: 0 0 0 0 hsl(0 0 0 / 0.00);
-  --shadow-sm: 0 0 0 0 hsl(0 0 0 / 0.00), 0 1px 2px -1px hsl(0 0 0 / 0.00);
-  --shadow: 0 0 0 0 hsl(0 0 0 / 0.00), 0 1px 2px -1px hsl(0 0 0 / 0.00);
-  --shadow-md: 0 0 0 0 hsl(0 0 0 / 0.00), 0 2px 4px -1px hsl(0 0 0 / 0.00);
-  --shadow-lg: 0 0 0 0 hsl(0 0 0 / 0.00), 0 4px 6px -1px hsl(0 0 0 / 0.00);
-  --shadow-xl: 0 0 0 0 hsl(0 0 0 / 0.00), 0 8px 10px -1px hsl(0 0 0 / 0.00);
-  --shadow-2xl: 0 0 0 0 hsl(0 0 0 / 0.00);
+  --shadow-2xs: 0 0 0 0 hsl(0 0 0 / 0);
+  --shadow-xs: 0 0 0 0 hsl(0 0 0 / 0);
+  --shadow-sm: 0 0 0 0 hsl(0 0 0 / 0), 0 1px 2px -1px hsl(0 0 0 / 0);
+  --shadow: 0 0 0 0 hsl(0 0 0 / 0), 0 1px 2px -1px hsl(0 0 0 / 0);
+  --shadow-md: 0 0 0 0 hsl(0 0 0 / 0), 0 2px 4px -1px hsl(0 0 0 / 0);
+  --shadow-lg: 0 0 0 0 hsl(0 0 0 / 0), 0 4px 6px -1px hsl(0 0 0 / 0);
+  --shadow-xl: 0 0 0 0 hsl(0 0 0 / 0), 0 8px 10px -1px hsl(0 0 0 / 0);
+  --shadow-2xl: 0 0 0 0 hsl(0 0 0 / 0);
 }
 
 @layer base {
