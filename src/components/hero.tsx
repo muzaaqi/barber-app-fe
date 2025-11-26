@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <div className="min-h-svh w-full">
       <Image
-        className="absolute z-0 min-h-svh min-w-full object-cover"
+        className="absolute z-0 min-h-svh max-h-svh min-w-full object-cover"
         src={"/hero-bg.jpg"}
         alt="Hero Background"
         width={1920}
