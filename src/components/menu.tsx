@@ -22,27 +22,27 @@ const MenuSection = () => {
       price: "$35",
     },
     {
-      title: "Kids Haircut (12 & under)",
+      title: "Kids Haircut",
       price: "$20",
     },
     {
-      title: "Senior Haircut (65 & over)",
+      title: "Senior Haircut",
       price: "$20",
     },
   ];
   return (
     <div className="container flex min-h-svh flex-col items-center justify-center py-10">
       <h1 className="font-sans text-5xl font-bold">MENU</h1>
-      <Card className="mt-10 w-2/3">
+      <Card className="mt-10 w-10/12 md:w-2/3">
         <CardContent className="font-mono font-bold space-y-3">
           {menuItems.map(({title, price}) => (
-            <div key={title} className="flex justify-between py-2 border-b border-border">
+            <div key={title} className="flex justify-between py-2 border-b border-border text-sm md:text-base">
               <span>{title.toUpperCase()}</span>
               <span className="text-primary">{price}</span>
             </div>
           ))}
           <div>
-            <span className="italic text-sm text-muted-foreground">WALK-INS WELCOME / APPOINTMENTS RECOMMENDED</span>
+            <span className="italic text-xs md:text-sm text-muted-foreground">WALK-INS WELCOME / APPOINTMENTS RECOMMENDED</span>
           </div>
         </CardContent>
       </Card>
