@@ -20,7 +20,7 @@ const CrewSection = () => {
     },
   ];
   return (
-    <div className="container flex min-h-svh flex-col items-center justify-center py-10">
+    <div id="crew" className="container flex min-h-svh flex-col items-center justify-center py-10">
       <h1 className="font-sans text-5xl font-bold">CREW</h1>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 mt-10 w-10/12 md:w-2/3">
         {crewItems.map(({ name, role, img }) => (

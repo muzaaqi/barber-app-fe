@@ -2,7 +2,7 @@ import { Card, CardContent } from "./ui/card";
 
 const LocationSection = () => {
   return (
-    <div className="container flex min-h-svh flex-col items-center justify-center py-10">
+    <div id="location" className="container flex min-h-svh flex-col items-center justify-center py-10">
       <h1 className="font-sans text-5xl font-bold">LOCATION</h1>
       <Card className="mt-10 w-10/12 md:w-2/3">
         <CardContent className="flex flex-col items-center">

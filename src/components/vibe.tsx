@@ -23,7 +23,7 @@ const VibeSection = () => {
   ];
 
   return (
-    <div className="container flex min-h-svh flex-col items-center justify-center py-10">
+    <div id="vibe" className="container flex min-h-svh flex-col items-center justify-center py-10">
       <h1 className="font-sans text-5xl font-bold">VIBE</h1>
       <div className="mt-10 grid w-2/3 grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4">
         {vibeItems.map(({ title, img }) => (
