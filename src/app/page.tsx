@@ -1,4 +1,5 @@
 import CrewSection from "@/components/crew";
+import FooterSection from "@/components/footer";
 import HeroSection from "@/components/hero";
 import LocationSection from "@/components/location";
 import MenuSection from "@/components/menu";
@@ -12,6 +13,7 @@ export default function Home() {
       <CrewSection />
       <VibeSection />
       <LocationSection />
+      <FooterSection />
     </div>
   );
 }
