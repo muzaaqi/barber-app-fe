@@ -1,6 +1,7 @@
 "use client";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Moon, Sun } from "lucide-react";
 
 const ThemeSwitch = () => {
@@ -17,4 +18,24 @@ const ThemeSwitch = () => {
   );
 };
 
-export default ThemeSwitch;
+const MobileThemeSwitch = () => {
+  const { theme, setTheme } = useTheme();
+  return (
+    <ButtonGroup className="w-full">
+      <Button
+        variant={theme === "light" ? "default" : "outline"}
+        onClick={() => setTheme("light")}
+      >
+        <Sun /> Light
+      </Button>
+      <Button
+        variant={theme === "dark" ? "default" : "outline"}
+        onClick={() => setTheme("dark")}
+      >
+        <Moon /> Dark
+      </Button>
+    </ButtonGroup>
+  );
+};
+
+export { ThemeSwitch, MobileThemeSwitch };
