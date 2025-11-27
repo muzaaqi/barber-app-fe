@@ -1,11 +1,6 @@
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 
 const MenuSection = () => {
@@ -37,7 +32,7 @@ const MenuSection = () => {
   ];
   return (
     <div className="container flex min-h-svh flex-col items-center justify-center py-10">
-      <h1 className="font-sans text-5xl font-bold">Menu</h1>
+      <h1 className="font-sans text-5xl font-bold">MENU</h1>
       <Card className="mt-10 w-2/3">
         <CardContent className="font-mono font-bold space-y-3">
           {menuItems.map(({title, price}) => (
