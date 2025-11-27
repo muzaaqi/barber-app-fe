@@ -4,17 +4,17 @@ import { Card, CardContent, CardFooter } from "./ui/card";
 const CrewSection = () => {
   const crewItems = [
     {
-      name: "John Doe - Barber",
+      name: "John Doe",
       role: "HEAD BARBER",
       img: "/barber-1.jpg",
     },
     {
-      name: "Jane Smith - Stylist",
+      name: "Jane Smith",
       role: "STYLIST",
       img: "/barber-2.jpg",
     },
     {
-      name: "Mike Johnson - Apprentice",
+      name: "Mike Johnson",
       role: "APPRENTICE",
       img: "/barber-3.jpg",
     },
