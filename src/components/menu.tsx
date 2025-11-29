@@ -1,56 +1,94 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import Image from "next/image";
+import { Button } from "./ui/button";
 
 const MenuSection = () => {
   const menuItems = [
     {
-      title: "Classic Haircut",
+      title: "French Crop",
       price: "$25",
+      img: "/models/french-crop.png",
     },
     {
-      title: "Beard Trim",
+      title: "Undercut",
       price: "$15",
+      img: "/models/undercut.png",
     },
     {
-      title: "Hot Towel Shave",
+      title: "Buzz Cut",
       price: "$30",
+      img: "/models/buzz-cut.png",
     },
     {
-      title: "Haircut & Beard Combo",
+      title: "Fade Cut",
       price: "$35",
+      img: "/models/fade-cut.png",
     },
     {
-      title: "Kids Haircut",
+      title: "Textured",
       price: "$20",
+      img: "/models/textured-cut.png",
     },
     {
-      title: "Senior Haircut",
+      title: "Crew Cut",
       price: "$20",
+      img: "/models/crew-cut.png",
+    },
+    {
+      title: "Quiff",
+      price: "$20",
+      img: "/models/quiff.png",
+    },
+    {
+      title: "Caesar Cut",
+      price: "$20",
+      img: "/models/caesar-cut.png",
+    },
+    {
+      title: "Comma Hair",
+      price: "$20",
+      img: "/models/comma-hair.png",
+    },
+    {
+      title: "Two Block",
+      price: "$20",
+      img: "/models/two-block.png",
     },
   ];
   return (
     <div
       id="menu"
-      className="container flex min-h-svh flex-col items-center justify-center py-10"
+      className="container flex flex-col items-center justify-center py-10"
     >
       <h1 className="font-sans text-5xl font-bold">MENU</h1>
-      <Card className="mt-10 w-10/12 md:w-2/3">
-        <CardContent className="space-y-3 font-mono font-bold">
-          {menuItems.map(({ title, price }) => (
-            <div
-              key={title}
-              className="border-border flex justify-between border-b py-2 text-sm md:text-base"
-            >
-              <span>{title.toUpperCase()}</span>
-              <span className="text-primary">{price}</span>
-            </div>
-          ))}
-          <div>
-            <span className="text-muted-foreground text-xs italic md:text-sm">
-              WALK-INS WELCOME / APPOINTMENTS RECOMMENDED
-            </span>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid w-full grid-cols-2 gap-5 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4">
+        {menuItems.map(({ title, price, img }, index) => (
+          <Card key={index}>
+            <CardContent className="space-y-3 font-mono font-bold">
+              <Image
+                src={img}
+                alt={title}
+                width={500}
+                height={500}
+                className="grayscale hover:grayscale-0 transition-all duration-300 object-cover rounded-md"
+              />
+              <div className="flex items-center justify-center">
+                <span className="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+                  {title}
+                </span>
+              </div>
+            </CardContent>
+            <CardFooter className="justify-self-end">
+              <Button className="w-full">{price}</Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+      <div>
+        <span className="text-muted-foreground text-xs italic md:text-sm">
+          WALK-INS WELCOME / APPOINTMENTS RECOMMENDED
+        </span>
+      </div>
     </div>
   );
 };
