@@ -8,29 +8,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LucideHamburger } from "lucide-react";
+import { Menu } from "lucide-react";
 
 const Navbar = () => {
   const liClass = "hover:text-primary transition-color duration-300";
   const navItems = [
     {
-      name: "Home",
+      name: "Beranda",
       url: "/",
     },
     {
-      name: "Models",
+      name: "Model",
       url: "/#models",
     },
     {
-      name: "Crew",
+      name: "Barbershop",
       url: "/#crew",
     },
     {
-      name: "Vibe",
-      url: "/#vibe",
-    },
-    {
-      name: "Location",
+      name: "Lokasi",
       url: "/#location",
     },
   ];
@@ -54,10 +50,10 @@ const Navbar = () => {
           <div className="md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <LucideHamburger />
+                <Menu />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="font-mono">
-                <DropdownMenuLabel>Navigation</DropdownMenuLabel>
+                <DropdownMenuLabel className="font-bold">NAVIGASI</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {navItems.map(({ name, url }) => (
                   <DropdownMenuItem key={name} asChild>

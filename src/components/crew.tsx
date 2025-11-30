@@ -5,7 +5,7 @@ import VibeCards from "./vibe";
 const CrewSection = () => {
   return (
     <div id="crew" className="container flex flex-col justify-center py-10 px-4 md:px-0">
-      <SectionTitle>Our Barbershop</SectionTitle>
+      <SectionTitle>BARBERSHOP KAMI</SectionTitle>
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="flex aspect-square flex-col items-center md:items-start">
           <Image

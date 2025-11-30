@@ -4,7 +4,6 @@ import HeroSection from "@/components/hero";
 import LocationSection from "@/components/location";
 import ModelsSection from "@/components/models";
 import ProductsSection from "@/components/products";
-import VibeSection from "@/components/vibe";
 
 export default function Home() {
   return (

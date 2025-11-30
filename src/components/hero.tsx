@@ -13,16 +13,16 @@ const HeroSection = () => {
       />
       <div className="relative z-10 flex min-h-svh flex-col items-center justify-center text-center bg-background/50">
         <h1 className="font-sans text-4xl md:text-8xl font-bold">
-          SHARP CUTS.
+          HASIL RAPI.
         </h1>
         <h2 className="font-sans text-4xl md:text-8xl font-bold">
-          SMOOTH STYLES.
+          POTONGAN PRESISI.
         </h2>
         <div className="flex flex-col items-center gap-4">
           <span className="text-muted-foreground/80 md:text-lg">
-            PRECISION BARBERING / STREETWEAR AESTHETIC / INDUSTRIAL EDGE
+            BARBER PROFESIONAL | TEMPAT NYAMAN | PELAYANAN RAMAH
           </span>
-          <Button className="px-5 md:px-7 md:py-6 text-lg md:text-2xl">Book Now</Button>
+          <Button className="px-5 md:px-7 md:py-6 text-lg md:text-2xl">POTONG SEKARANG</Button>
         </div>
       </div>
     </div>

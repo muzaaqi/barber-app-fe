@@ -7,7 +7,7 @@ const LocationSection = () => {
       id="location"
       className="container flex flex-col justify-center px-4 md:px-0"
     >
-      <SectionTitle>Location</SectionTitle>
+      <SectionTitle>LOKASI KAMI</SectionTitle>
       <Card className="mx-auto w-10/12 md:w-2/3">
         <CardContent className="flex h-50 flex-col items-center md:h-100">
           <iframe

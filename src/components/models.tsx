@@ -5,14 +5,14 @@ import SectionTitle from "./ui/text";
 
 const ModelsSection = () => {
   return (
-    <div id="models" className="flex flex-col justify-center py-10 container">
+    <div id="models" className="flex flex-col justify-center py-10 container z-2">
       <div className="px-4 md:px-0">
-        <SectionTitle>Haircut Models</SectionTitle>
+        <SectionTitle>MODEL POTONGAN</SectionTitle>
       </div>
       <CarouselModels />
       <div className="mt-3 grid justify-items-center gap-3">
-        <Button className="w-fit text-lg">
-          Lihat Semua
+        <Button className="w-fit text-md">
+          LIHAT SEMUA
           <ArrowRight />
         </Button>
       </div>

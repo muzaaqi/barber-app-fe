@@ -26,13 +26,13 @@ const MobileThemeSwitch = () => {
         variant={theme === "light" ? "default" : "outline"}
         onClick={() => setTheme("light")}
       >
-        <Sun /> Light
+        <Sun /> Terang
       </Button>
       <Button
         variant={theme === "dark" ? "default" : "outline"}
         onClick={() => setTheme("dark")}
       >
-        <Moon /> Dark
+        <Moon /> Gelap
       </Button>
     </ButtonGroup>
   );
