@@ -8,7 +8,7 @@ const LocationSection = () => {
       className="container flex flex-col justify-center px-4 md:px-0"
     >
       <SectionTitle>Location</SectionTitle>
-      <Card className="mx-auto mt-10 w-10/12 md:w-2/3">
+      <Card className="mx-auto w-10/12 md:w-2/3">
         <CardContent className="flex h-50 flex-col items-center md:h-100">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d440.1599142500016!2d109.92239018303175!3d-7.842449133285149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7add001e0d0725%3A0xe3733fcaec2dd351!2sBERGAS%20BARBERSHOP!5e0!3m2!1sen!2sid!4v1764232590663!5m2!1sen!2sid"
