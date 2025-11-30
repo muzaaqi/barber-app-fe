@@ -81,7 +81,7 @@ const CarouselModels = () => {
     <Carousel
       className="mt-10"
       opts={{ loop: true, duration: 300, align: "start" }}
-      plugins={[Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })]}
+      plugins={[Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })]}
     >
       <CarouselContent className="py-2 max-w-screen">
         {menuLoading
@@ -114,6 +114,7 @@ const CarouselModels = () => {
                       width={500}
                       height={500}
                       className="w-full rounded-md object-cover grayscale transition-all duration-300 hover:grayscale-0"
+                      loading="eager"
                     />
                     <div className="flex items-center justify-center">
                       <span className="text-md sm:text-lg md:text-xl xl:text-2xl">
