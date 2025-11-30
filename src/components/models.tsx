@@ -10,10 +10,7 @@ const ModelsSection = () => {
         <SectionTitle>Haircut Models</SectionTitle>
       </div>
       <CarouselModels />
-      <div className="mt-5 grid justify-items-center gap-3">
-        <span className="text-muted-foreground text-xs italic md:text-sm">
-          WALK-INS WELCOME / APPOINTMENTS RECOMMENDED
-        </span>
+      <div className="mt-3 grid justify-items-center gap-3">
         <Button className="w-fit text-lg">
           Lihat Semua
           <ArrowRight />
