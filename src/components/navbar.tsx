@@ -18,8 +18,8 @@ const Navbar = () => {
       url: "/",
     },
     {
-      name: "Menu",
-      url: "/#menu",
+      name: "Models",
+      url: "/#models",
     },
     {
       name: "Crew",

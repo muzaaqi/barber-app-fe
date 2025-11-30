@@ -92,8 +92,8 @@ const CarouselModels = () => {
               >
                 <Card>
                   <CardContent className="flex flex-col items-center space-y-3 font-mono font-bold">
-                    <Skeleton className="aspect-square w-full rounded-md" />
-                    <Skeleton className="h-6 w-32" />
+                    <Skeleton className="aspect-square w-full xl:w-50 2xl:w-72 rounded-md" />
+                    <Skeleton className="h-7 w-32" />
                   </CardContent>
                   <CardFooter>
                     <Skeleton className="h-10 w-full" />
@@ -116,7 +116,7 @@ const CarouselModels = () => {
                       className="w-full rounded-md object-cover grayscale transition-all duration-300 hover:grayscale-0"
                     />
                     <div className="flex items-center justify-center">
-                      <span className="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+                      <span className="text-md sm:text-lg md:text-xl xl:text-2xl">
                         {title}
                       </span>
                     </div>
