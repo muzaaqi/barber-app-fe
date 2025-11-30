@@ -22,6 +22,10 @@ const Navbar = () => {
       url: "/#models",
     },
     {
+      name: "Produk",
+      url: "/#products",
+    },
+    {
       name: "Barbershop",
       url: "/#crew",
     },

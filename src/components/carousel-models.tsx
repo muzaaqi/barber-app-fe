@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import { formatIDR } from "@/features/formatter";
 import { Button } from "./ui/button";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState } from "react";
