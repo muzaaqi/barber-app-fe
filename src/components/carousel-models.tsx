@@ -83,7 +83,7 @@ const CarouselModels = () => {
       opts={{ loop: true, duration: 300, align: "start"}}
       plugins={[Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })]}
     >
-      <CarouselContent className="py-2 max-w-screen">
+      <CarouselContent className="py-5 max-w-screen">
         {menuLoading
           ? Array.from({ length: 6 }).map((_, index) => (
               <CarouselItem
@@ -106,14 +106,14 @@ const CarouselModels = () => {
                 key={index}
                 className="mx-2 pl-1 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
               >
-                <Card>
+                <Card className="hover:scale-105 transition-transform duration-300 group">
                   <CardContent className="flex flex-col items-center space-y-3 font-mono font-bold">
                     <Image
                       src={img}
                       alt={title}
                       width={500}
                       height={500}
-                      className="w-full rounded-md object-cover grayscale transition-all duration-300 hover:grayscale-0"
+                      className="w-full rounded-md object-cover grayscale transition-all duration-300 grouhover:grayscale-0"
                       loading="eager"
                     />
                     <div className="flex items-center justify-center">
@@ -129,7 +129,7 @@ const CarouselModels = () => {
               </CarouselItem>
             ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute top-1/2 left-2 -translate-y-1/2 rounded-none" />
+      <CarouselPrevious   className="absolute top-1/2 left-2 -translate-y-1/2 rounded-none" />
       <CarouselNext className="absolute top-1/2 right-2 -translate-y-1/2 rounded-none" />
     </Carousel>
   );
