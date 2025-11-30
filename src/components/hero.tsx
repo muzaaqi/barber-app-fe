@@ -22,7 +22,7 @@ const HeroSection = () => {
           <span className="text-muted-foreground/80 md:text-lg">
             BARBER PROFESIONAL | TEMPAT NYAMAN | PELAYANAN RAMAH
           </span>
-          <Button className="px-5 md:px-7 md:py-6 text-lg md:text-2xl">POTONG SEKARANG</Button>
+          <Button className="px-5 py-6 md:px-7 md:py-6 text-lg md:text-2xl">POTONG SEKARANG</Button>
         </div>
       </div>
     </div>
