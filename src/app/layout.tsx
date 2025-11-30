@@ -15,8 +15,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Barber App",
-  description: "Barber App Frontend",
+  title: "BERGAS - Barber Shop",
+  description: "BERGAS Barber Shop - Your Style, Our Passion",
 };
 
 export default function RootLayout({
