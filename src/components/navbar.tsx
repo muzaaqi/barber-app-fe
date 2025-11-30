@@ -26,7 +26,7 @@ const Navbar = () => {
       url: "/#products",
     },
     {
-      name: "Barbershop",
+      name: "Tentang",
       url: "/#about",
     },
     {
