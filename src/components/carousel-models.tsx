@@ -16,52 +16,52 @@ import { Skeleton } from "./ui/skeleton";
 
 const menuItems = [
   {
-    title: "French Crop",
+    name: "French Crop",
     price: 25000,
     img: "/models/french-crop.png",
   },
   {
-    title: "Undercut",
+    name: "Undercut",
     price: 15000,
     img: "/models/undercut.png",
   },
   {
-    title: "Buzz Cut",
+    name: "Buzz Cut",
     price: 30000,
     img: "/models/buzz-cut.png",
   },
   {
-    title: "Fade Cut",
+    name: "Fade Cut",
     price: 35000,
     img: "/models/fade-cut.png",
   },
   {
-    title: "Textured",
+    name: "Textured",
     price: 20000,
     img: "/models/textured-cut.png",
   },
   {
-    title: "Crew Cut",
+    name: "Crew Cut",
     price: 20000,
     img: "/models/crew-cut.png",
   },
   {
-    title: "Quiff",
+    name: "Quiff",
     price: 20000,
     img: "/models/quiff.png",
   },
   {
-    title: "Caesar Cut",
+    name: "Caesar Cut",
     price: 20000,
     img: "/models/caesar-cut.png",
   },
   {
-    title: "Comma Hair",
+    name: "Comma Hair",
     price: 20000,
     img: "/models/comma-hair.png",
   },
   {
-    title: "Two Block",
+    name: "Two Block",
     price: 20000,
     img: "/models/two-block.png",
   },
@@ -79,11 +79,10 @@ const CarouselModels = () => {
 
   return (
     <Carousel
-      className="mt-10"
       opts={{ loop: true, duration: 300, align: "start"}}
       plugins={[Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })]}
     >
-      <CarouselContent className="py-5 max-w-screen">
+      <CarouselContent className="py-4 max-w-screen">
         {menuLoading
           ? Array.from({ length: 6 }).map((_, index) => (
               <CarouselItem
@@ -101,7 +100,7 @@ const CarouselModels = () => {
                 </Card>
               </CarouselItem>
             ))
-          : menuItems.map(({ title, price, img }, index) => (
+          : menuItems.map(({ name, price, img }, index) => (
               <CarouselItem
                 key={index}
                 className="mx-2 pl-1 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
@@ -110,7 +109,7 @@ const CarouselModels = () => {
                   <CardContent className="flex flex-col items-center space-y-3 font-mono font-bold">
                     <Image
                       src={img}
-                      alt={title}
+                      alt={name}
                       width={500}
                       height={500}
                       className="w-full rounded-md object-cover grayscale transition-all duration-300 grouhover:grayscale-0"
@@ -118,7 +117,7 @@ const CarouselModels = () => {
                     />
                     <div className="flex items-center justify-center">
                       <span className="text-md sm:text-lg md:text-xl xl:text-2xl">
-                        {title}
+                        {name}
                       </span>
                     </div>
                   </CardContent>
