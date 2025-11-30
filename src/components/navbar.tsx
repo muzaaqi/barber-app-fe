@@ -56,7 +56,7 @@ const Navbar = () => {
               <DropdownMenuTrigger asChild>
                 <Menu />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="font-mono">
+              <DropdownMenuContent className="font-mono" align="end">
                 <DropdownMenuLabel className="font-bold">NAVIGASI</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {navItems.map(({ name, url }) => (
