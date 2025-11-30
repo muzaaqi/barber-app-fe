@@ -4,7 +4,7 @@ import VibeCards from "./vibe";
 
 const CrewSection = () => {
   return (
-    <div id="crew" className="container flex flex-col justify-center items-center py-10 px-4 md:px-0 max-w-screen">
+    <div id="crew" className="container flex flex-col justify-center py-10 px-4 md:px-0 max-w-screen">
       <SectionTitle>BARBERSHOP KAMI</SectionTitle>
       <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
         <div className="flex aspect-square flex-col items-center md:items-start">
