@@ -30,7 +30,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${oswald.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Navbar />
           {children}
         </ThemeProvider>
