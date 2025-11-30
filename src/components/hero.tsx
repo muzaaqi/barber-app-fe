@@ -20,7 +20,7 @@ const HeroSection = () => {
         </h2>
         <div className="flex flex-col items-center gap-4">
           <span className="text-muted-foreground/80 md:text-lg">
-            BARBER PROFESIONAL | TEMPAT NYAMAN | PELAYANAN RAMAH
+            BARBER PROFESIONAL | TEMPAT NYAMAN
           </span>
           <Button className="px-5 py-6 md:px-7 md:py-6 text-lg md:text-2xl">POTONG SEKARANG</Button>
         </div>
