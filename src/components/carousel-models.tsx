@@ -81,7 +81,7 @@ const CarouselModels = () => {
     <Carousel
       className="mt-10"
       opts={{ loop: true, duration: 300, align: "start" }}
-      plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]}
+      plugins={[Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })]}
     >
       <CarouselContent className="py-2 max-w-screen">
         {menuLoading
