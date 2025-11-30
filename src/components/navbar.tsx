@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu } from "lucide-react";
+import { Home, Info, Scissors, Menu, MapPin, Package } from "lucide-react";
 
 const Navbar = () => {
   const liClass = "hover:text-primary transition-color duration-300";
@@ -16,22 +16,27 @@ const Navbar = () => {
     {
       name: "Beranda",
       url: "/",
+      icon:  <Home />,
     },
     {
       name: "Tentang",
       url: "/#about",
+      icon: <Info />,
     },
     {
       name: "Model",
       url: "/#models",
+      icon: <Scissors />,
     },
     {
       name: "Produk",
       url: "/#products",
+      icon: <Package />,
     },
     {
       name: "Lokasi",
       url: "/#location",
+      icon: <MapPin />,
     },
   ];
   return (
@@ -59,9 +64,9 @@ const Navbar = () => {
               <DropdownMenuContent className="font-mono" align="end">
                 <DropdownMenuLabel className="font-bold">NAVIGASI</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {navItems.map(({ name, url }) => (
+                {navItems.map(({ name, url, icon }) => (
                   <DropdownMenuItem key={name} asChild>
-                    <Link href={url}>{name}</Link>
+                    <Link href={url}>{icon}{name}</Link>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator />
