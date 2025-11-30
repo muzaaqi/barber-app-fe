@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 
@@ -12,18 +11,10 @@ const VibeCards = () => {
       title: "room-2",
       img: "/hero-bg.jpg",
     },
-    {
-      title: "room-3",
-      img: "/shop-interior.jpg",
-    },
-    {
-      title: "room-4",
-      img: "/hero-bg.jpg",
-    },
   ];
 
   return (
-    <div className="grid gap-5 lg:gap-10 xl:gap-20 grid-cols-2 px-4 md:px-0">
+    <div className="grid gap-5 lg:gap-10 xl:gap-20 grid-cols-2 md:px-0">
       {vibeItems.map(({ title, img }) => (
         <Card key={title} className="py-0">
           <CardContent className="group relative aspect-square overflow-hidden px-0">

@@ -18,16 +18,16 @@ const Navbar = () => {
       url: "/",
     },
     {
+      name: "Tentang",
+      url: "/#about",
+    },
+    {
       name: "Model",
       url: "/#models",
     },
     {
       name: "Produk",
       url: "/#products",
-    },
-    {
-      name: "Tentang",
-      url: "/#about",
     },
     {
       name: "Lokasi",

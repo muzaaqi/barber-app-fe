@@ -101,7 +101,7 @@ const CarouselModels = () => {
                       alt={name}
                       width={500}
                       height={500}
-                      className="w-full rounded-md object-cover grayscale transition-all duration-300 grouhover:grayscale-0"
+                      className="w-full rounded-md object-cover grayscale transition-all duration-300 group-hover:grayscale-0"
                       loading="eager"
                     />
                     <div className="flex items-center justify-center">

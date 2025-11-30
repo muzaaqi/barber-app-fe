@@ -5,7 +5,7 @@ import SectionTitle from "./ui/text";
 
 const ModelsSection = () => {
   return (
-    <div id="models" className="flex flex-col justify-center py-10 container z-2">
+    <div id="models" className="flex flex-col justify-center container z-2">
       <div className="px-4 md:px-0">
         <SectionTitle>MODEL POTONGAN</SectionTitle>
       </div>

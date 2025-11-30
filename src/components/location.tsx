@@ -21,7 +21,7 @@ const LocationSection = () => {
           ></iframe>
         </CardContent>
       </Card>
-      <div className="grid grid-cols-2 mb-10 text-sm md:text-lg">
+      <div className="grid grid-cols-2 text-sm md:text-lg">
         <div className="mt-5 flex flex-col items-end justify-center space-y-2 border-r text-center font-mono px-5">
           <h2>JALAN DAENDELS</h2>
           <h2>DEPOK REJO</h2>
