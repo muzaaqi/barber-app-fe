@@ -56,7 +56,7 @@ const AboutSection = () => {
                       height={500}
                       className="object-cover brightness-70 group-hover:scale-110 group-hover:brightness-90 transition-all duration-300"
                     />
-                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl">
+                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl md:text-3xl text-primary font-semibold">
                       {name}
                     </span>
                   </CardContent>
