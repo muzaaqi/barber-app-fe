@@ -23,13 +23,13 @@ const LocationSection = () => {
       </Card>
       <div className="grid grid-cols-2 mb-10 text-sm md:text-lg">
         <div className="mt-5 flex flex-col items-end justify-center space-y-2 border-r text-center font-mono px-5">
-          <h2>RAMBUTAN STREET</h2>
-          <h2>CENTRAL JAVA</h2>
-          <h2>INDONESIA</h2>
+          <h2>JALAN DAENDELS</h2>
+          <h2>DEPOK REJO</h2>
+          <h2>PURWOREJO</h2>
         </div>
         <div className="mt-5 flex flex-col items-start justify-center space-y-2 text-center font-mono px-5">
-          <h2 className="text-muted-foreground">WE&apos;RE OPEN AT</h2>
-          <p>EVERDAY</p>
+          <h2 className="text-muted-foreground">KAMI BUKA</h2>
+          <p>SETIAP HARI</p>
           <p>15:00 - 23:00</p>
         </div>
       </div>

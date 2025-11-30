@@ -13,7 +13,7 @@ const FooterSection = () => {
         </div>
         <div className="md:justify-self-end">
           <span className="text-muted-foreground text-sm">
-            &copy; 2024 Bergas. All rights reserved.
+            &copy; 2025 Bergas. All rights reserved.
           </span>
         </div>
       </div>
