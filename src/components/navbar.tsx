@@ -35,7 +35,7 @@ const Navbar = () => {
     },
   ];
   return (
-    <nav className="bg-background/50 backdrop-blur-sm border-border fixed z-50 flex w-full justify-center border-b py-4 px-5 xl:px-0">
+    <nav className="bg-background/50 backdrop-blur-sm fixed z-50 flex w-full justify-center py-4 px-5 xl:px-0">
       <div className="container flex items-center justify-between font-mono">
         <div className="text-primary text-2xl font-extrabold">
           <h1>BERGAS</h1>
