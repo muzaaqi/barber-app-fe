@@ -27,7 +27,7 @@ const Navbar = () => {
     },
     {
       name: "Barbershop",
-      url: "/#crew",
+      url: "/#about",
     },
     {
       name: "Lokasi",
@@ -36,7 +36,7 @@ const Navbar = () => {
   ];
   return (
     <nav className="bg-background border-border fixed z-50 flex w-full justify-center border-b py-4">
-      <div className="container flex items-center justify-between px-5 font-mono">
+      <div className="container flex items-center justify-between font-mono">
         <div className="text-primary text-2xl font-extrabold">
           <h1>BERGAS</h1>
         </div>

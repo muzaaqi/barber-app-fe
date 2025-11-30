@@ -1,4 +1,4 @@
-import CrewSection from "@/components/crew";
+import CrewSection from "@/components/about";
 import FooterSection from "@/components/footer";
 import HeroSection from "@/components/hero";
 import LocationSection from "@/components/location";
