@@ -1,4 +1,5 @@
-import { Instagram, Twitter } from "lucide-react";
+import { Instagram, Phone, Twitter } from "lucide-react";
+import Link from "next/link";
 
 const FooterSection = () => {
   return (
@@ -7,9 +8,24 @@ const FooterSection = () => {
         <div className="flex justify-center md:justify-self-start">
           <h1 className="text-4xl font-bold">BERGAS</h1>
         </div>
-        <div className="flex items-center justify-center gap-3">
-          <Instagram className="text-primary h-6 w-6" />
-          <Twitter className="text-primary h-6 w-6" />
+        <div className="flex items-center justify-center gap-7">
+          <Link
+            href="https://www.instagram.com/bergas_barbershop/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Instagram className="text-primary h-6 w-6" />
+          </Link>
+          <Link
+            href="https://twitter.com/bergas_barbershop"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Twitter className="text-primary h-6 w-6" />
+          </Link>
+          <Link href="tel:+621234567890">
+            <Phone className="text-primary h-6 w-6" />
+          </Link>
         </div>
         <div className="md:justify-self-end">
           <span className="text-muted-foreground text-sm">
