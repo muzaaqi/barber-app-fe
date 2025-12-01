@@ -5,11 +5,11 @@ const VibeCards = () => {
   const vibeItems = [
     {
       title: "room-1",
-      img: "/shop-interior.jpg",
+      img: "/vibes/vibe-1.png",
     },
     {
       title: "room-2",
-      img: "/hero-bg.jpg",
+      img: "/vibes/vibe-2.png",
     },
   ];
 
@@ -21,9 +21,9 @@ const VibeCards = () => {
             <Image
               src={img}
               alt={title}
-              width={500}
-              height={500}
-              className="h-full w-full object-cover grayscale transition-transform duration-500 group-hover:scale-105"
+              width={1000}
+              height={1000}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </CardContent>
         </Card>
