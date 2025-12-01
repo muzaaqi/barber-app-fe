@@ -35,7 +35,7 @@ const AboutSection = () => {
             className="border object-cover xl:w-11/12"
           />
           <div className="mt-4 flex flex-col items-center justify-center xl:w-11/12">
-            <h2 className="text-3xl font-bold">SUDIRO</h2>
+            <h2 className="text-3xl font-bold">JOHN DOE</h2>
             <span className="text-muted-foreground text-sm italic">Barber</span>
           </div>
         </div>
