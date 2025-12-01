@@ -3,6 +3,7 @@ import { JetBrains_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "next-themes";
+import { ScrollTop } from "@/components/scroll-top";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -33,6 +34,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Navbar />
           {children}
+          <ScrollTop />
         </ThemeProvider>
       </body>
     </html>
