@@ -20,10 +20,7 @@ const services = [
 
 const AboutSection = () => {
   return (
-    <div
-      id="about"
-      className="container flex flex-col justify-center px-4 md:px-0"
-    >
+    <div id="about" className="container flex flex-col justify-center px-4">
       <SectionTitle>BARBERSHOP KAMI</SectionTitle>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="flex aspect-square flex-col items-center">
@@ -41,22 +38,24 @@ const AboutSection = () => {
         </div>
         <div className="space-y-5 xl:space-y-10">
           <div className="flex flex-col space-y-4">
-            <h2 className="text-xl lg:text-2xl xl:text-3xl font-semibold">MELAYANI</h2>
+            <h2 className="text-xl font-semibold lg:text-2xl xl:text-3xl">
+              MELAYANI
+            </h2>
             <div className="grid grid-cols-3 gap-4">
               {services.map(({ name, img }) => (
                 <Card
                   key={name}
-                  className="relative flex flex-col items-center py-0 group"
+                  className="group relative flex flex-col items-center py-0"
                 >
-                  <CardContent className="flex w-full items-center justify-center px-0 overflow-hidden">
+                  <CardContent className="flex w-full items-center justify-center overflow-hidden px-0">
                     <Image
                       src={img}
                       alt={name}
                       width={500}
                       height={500}
-                      className="object-cover brightness-70 group-hover:scale-110 group-hover:brightness-90 transition-all duration-300"
+                      className="object-cover brightness-70 transition-all duration-300 group-hover:scale-110 group-hover:brightness-90"
                     />
-                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl md:text-3xl text-primary font-semibold">
+                    <span className="text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl font-semibold md:text-3xl">
                       {name}
                     </span>
                   </CardContent>
@@ -65,7 +64,9 @@ const AboutSection = () => {
             </div>
           </div>
           <div className="space-y-4">
-            <h2 className="text-xl lg:text-2xl xl:text-3xl font-semibold">TEMPAT</h2>
+            <h2 className="text-xl font-semibold lg:text-2xl xl:text-3xl">
+              TEMPAT
+            </h2>
             <VibeCards />
           </div>
         </div>

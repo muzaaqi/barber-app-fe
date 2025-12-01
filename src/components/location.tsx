@@ -5,7 +5,7 @@ const LocationSection = () => {
   return (
     <div
       id="location"
-      className="container flex flex-col justify-center px-4 md:px-0"
+      className="container flex flex-col justify-center px-4"
     >
       <SectionTitle>LOKASI KAMI</SectionTitle>
       <Card className="mx-auto w-11/12 md:w-9/10 py-0 border-primary border-2">

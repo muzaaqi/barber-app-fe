@@ -14,7 +14,7 @@ const VibeCards = () => {
   ];
 
   return (
-    <div className="grid gap-5 lg:gap-10 xl:gap-20 grid-cols-2 md:px-0">
+    <div className="grid grid-cols-2 gap-5 lg:gap-10 xl:gap-20">
       {vibeItems.map(({ title, img }) => (
         <Card key={title} className="py-0">
           <CardContent className="group relative aspect-square overflow-hidden px-0">

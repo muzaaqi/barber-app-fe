@@ -3,7 +3,7 @@ import SectionTitle from "./ui/text";
 
 const ProductsSection = () => {
   return (
-    <div id="products" className="container px-4 md:px-0">
+    <div id="products" className="container px-4">
       <SectionTitle>SOLUSI RAMBUTMU</SectionTitle>
       <div>
         <ProductCards />
