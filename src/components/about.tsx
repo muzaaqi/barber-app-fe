@@ -26,7 +26,7 @@ const AboutSection = () => {
     >
       <SectionTitle>BARBERSHOP KAMI</SectionTitle>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="flex aspect-square flex-col items-center md:items-start">
+        <div className="flex aspect-square flex-col items-center">
           <Image
             src="/barber.png"
             alt="crew-1"

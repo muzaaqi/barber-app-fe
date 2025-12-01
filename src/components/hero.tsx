@@ -12,10 +12,10 @@ const HeroSection = () => {
         height={1080}
       />
       <div className="bg-background/50 relative z-10 flex min-h-svh flex-col items-center justify-center text-center">
-        <h1 className="font-sans text-4xl font-bold md:text-8xl">
+        <h1 className="font-sans text-4xl md:text-6xl font-bold lg:text-8xl">
           HASIL RAPI<span className="text-primary">.</span>
         </h1>
-        <h2 className="font-sans text-4xl font-bold md:text-8xl">
+        <h2 className="font-sans text-4xl md:text-6xl font-bold lg:text-8xl">
           POTONGAN PRESISI
         </h2>
         <div className="flex flex-col items-center gap-4">
