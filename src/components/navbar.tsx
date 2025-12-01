@@ -43,7 +43,7 @@ const Navbar = () => {
     <nav className="bg-background/50 backdrop-blur-sm fixed z-50 flex w-full justify-center py-4 px-5 xl:px-0 border-b border-border">
       <div className="container flex items-center justify-between font-mono">
         <div className="text-primary text-2xl font-extrabold">
-          <h1>BERGAS</h1>
+          <Link href="/"><h1>BERGAS</h1></Link>
         </div>
         <div className="flex items-center gap-6 text-lg font-medium">
           <ul className="hidden gap-5 md:flex">
