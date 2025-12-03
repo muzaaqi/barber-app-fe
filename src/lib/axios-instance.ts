@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const instance = axios.create({
-  baseURL: 'https://bergas-api.muzaaqi.my.id/api',
+export const BergasInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
