@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Home, Info, Scissors, Menu, MapPin, Package } from "lucide-react";
+import { AuthButton, MobileAuthButton } from "./auth-button";
 
 const Navbar = () => {
   const liClass = "hover:text-primary transition-color duration-300";
@@ -16,7 +17,7 @@ const Navbar = () => {
     {
       name: "Beranda",
       url: "/",
-      icon:  <Home />,
+      icon: <Home />,
     },
     {
       name: "Tentang",
@@ -40,10 +41,12 @@ const Navbar = () => {
     },
   ];
   return (
-    <nav className="bg-background/50 backdrop-blur-sm fixed z-50 flex w-full justify-center py-4 px-5 xl:px-0 border-b border-border">
+    <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b px-5 py-4 backdrop-blur-sm xl:px-0">
       <div className="container flex items-center justify-between font-mono">
         <div className="text-primary text-2xl font-extrabold">
-          <Link href="/"><h1>BERGAS</h1></Link>
+          <Link href="/">
+            <h1>BERGAS</h1>
+          </Link>
         </div>
         <div className="flex items-center gap-6 text-lg font-medium">
           <ul className="hidden gap-5 md:flex">
@@ -53,7 +56,10 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          <div className="hidden md:block">
+          <div>
+          </div>
+          <div className="hidden gap-3 md:flex">
+            <AuthButton />
             <ThemeSwitch />
           </div>
           <div className="md:hidden">
@@ -62,16 +68,25 @@ const Navbar = () => {
                 <Menu />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="font-mono" align="end">
-                <DropdownMenuLabel className="font-bold">NAVIGASI</DropdownMenuLabel>
+                <DropdownMenuLabel className="font-bold">
+                  NAVIGASI
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {navItems.map(({ name, url, icon }) => (
                   <DropdownMenuItem key={name} asChild>
-                    <Link href={url}>{icon}{name}</Link>
+                    <Link href={url}>
+                      {icon}
+                      {name}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <MobileThemeSwitch />
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <MobileAuthButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
