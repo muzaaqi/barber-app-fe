@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Spinner } from "./ui/spinner";
+import Link from "next/link";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
@@ -115,7 +116,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   {registerLoading ? <Spinner /> : "Create Account"}
                 </Button>
                 <FieldDescription className="px-6 text-center">
-                  Sudah punya akun? <a href="/login">Masuk</a>
+                  Sudah punya akun? <Link href="/login">Masuk</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
