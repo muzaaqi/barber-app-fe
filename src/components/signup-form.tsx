@@ -53,8 +53,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   }
   return (
     <Card {...props}>
-      <CardHeader>
-        <CardTitle>Sign Up</CardTitle>
+      <CardHeader className="text-center">
+        <CardTitle className="text-primary text-3xl font-bold">
+          Sign Up
+        </CardTitle>
         <CardDescription>
           Masukkan detail Anda untuk membuat akun baru
         </CardDescription>
