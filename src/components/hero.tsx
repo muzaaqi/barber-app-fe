@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Scissors, ShoppingCart } from "lucide-react";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -24,15 +25,19 @@ const HeroSection = () => {
             BARBER PROFESIONAL | TEMPAT NYAMAN
           </span>
           <div className="flex gap-4">
-            <Button className="gap-3 px-5 py-6 text-lg md:px-7 md:py-6 md:text-2xl">
-              <Scissors /> POTONG SEKARANG
-            </Button>
-            <Button
-              variant="outline"
-              className="gap-3 px-5 py-6 text-lg md:px-7 md:py-6 md:text-2xl"
-            >
-              <ShoppingCart /> LIHAT PRODUK
-            </Button>
+            <Link href="/#models">
+              <Button className="gap-3 px-5 py-6 text-lg md:px-7 md:py-6 md:text-2xl">
+                <Scissors /> POTONG SEKARANG
+              </Button>
+            </Link>
+            <Link href="/#products">
+              <Button
+                variant="outline"
+                className="gap-3 px-5 py-6 text-lg md:px-7 md:py-6 md:text-2xl"
+              >
+                <ShoppingCart /> LIHAT PRODUK
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
