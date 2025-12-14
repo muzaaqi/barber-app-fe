@@ -2,7 +2,7 @@ import AboutSection from "@/components/about";
 import FooterSection from "@/components/footer";
 import HeroSection from "@/components/hero";
 import LocationSection from "@/components/location";
-import ModelsSection from "@/components/models";
+import ServicesSection from "@/components/services";
 import ProductsSection from "@/components/products";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
     <div className="bg-background text-foreground flex flex-col min-h-screen items-center justify-center mx-auto space-y-9 lg:space-y-20">
       <HeroSection />
       <AboutSection />
-      <ModelsSection />
+      <ServicesSection />
       <ProductsSection />
       <LocationSection />
       <FooterSection />
