@@ -24,8 +24,8 @@ const Navbar = async () => {
       icon: <Info />,
     },
     {
-      name: "Model",
-      url: "/#models",
+      name: "Services",
+      url: "/#services",
       icon: <Scissors />,
     },
     {
