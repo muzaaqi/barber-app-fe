@@ -1,76 +1,67 @@
 import Image from "next/image";
-import SectionTitle from "./ui/text";
-import VibeCards from "./vibe";
 import { Card, CardContent } from "./ui/card";
-
-const services = [
-  {
-    name: "POTONG",
-    img: "/services/cutting.png",
-  },
-  {
-    name: "SEMIR",
-    img: "/services/colorize.png",
-  },
-  {
-    name: "KERAMAS",
-    img: "/services/washing.png",
-  },
-];
 
 const AboutSection = () => {
   return (
-    <div id="about" className="container flex flex-col justify-center px-4">
-      <SectionTitle>BARBERSHOP KAMI</SectionTitle>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="flex aspect-square flex-col items-center">
-          <Image
-            src="/barber.png"
-            alt="crew-1"
-            width={1000}
-            height={1000}
-            className="border object-cover xl:w-11/12"
-          />
-          <div className="mt-4 flex flex-col items-center justify-center xl:w-11/12">
-            <h2 className="text-3xl font-bold">JOHN DOE</h2>
-            <span className="text-muted-foreground text-sm italic">Barber</span>
+    <div id="about" className="container flex flex-col justify-center px-4 py-16">
+      <Card className="xl:w-10/12 self-center shadow-lg">
+        <CardContent className="flex flex-col gap-10 md:flex-row p-8 md:p-10">
+          <div className="md:w-1/2 shrink-0">
+            <Image
+              src="/vibes/vibe-1.png"
+              alt="About BarberShop"
+              width={500}
+              height={500}
+              className="border-border rounded-xl border object-cover shadow-md w-full h-full"
+            />
           </div>
-        </div>
-        <div className="space-y-5 xl:space-y-10">
-          <div className="flex flex-col space-y-4">
-            <h2 className="text-xl font-semibold lg:text-2xl xl:text-3xl">
-              MELAYANI
-            </h2>
-            <div className="grid grid-cols-3 gap-4">
-              {services.map(({ name, img }) => (
-                <Card
-                  key={name}
-                  className="group relative flex flex-col items-center py-0"
-                >
-                  <CardContent className="flex w-full items-center justify-center overflow-hidden px-0">
-                    <Image
-                      src={img}
-                      alt={name}
-                      width={500}
-                      height={500}
-                      className="object-cover brightness-70 transition-all duration-300 group-hover:scale-110 group-hover:brightness-90"
-                    />
-                    <span className="text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl font-semibold md:text-3xl">
-                      {name}
-                    </span>
-                  </CardContent>
-                </Card>
-              ))}
+          
+          <div className="flex flex-col justify-between md:w-1/2 space-y-8">
+            <div className="space-y-6">
+              <h1 className="text-primary text-4xl md:text-5xl font-bold leading-tight">
+                BERGAS BARBERSHOP
+              </h1>
+              <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                <span className="font-semibold">BERGAS BARBERSHOP</span> adalah
+                tempat terbaik untuk potong rambut dan perawatan pria. Kami
+                menyediakan layanan berkualitas dengan tenaga profesional. Dengan
+                suasana nyaman dan harga terjangkau, kami berkomitmen memberikan
+                pengalaman terbaik bagi setiap pelanggan. Datang dan rasakan
+                layanan istimewa kami!
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-4 md:gap-6 pt-6 border-t">
+              <div className="text-center space-y-2">
+                <h2 className="text-primary text-4xl md:text-5xl lg:text-6xl font-bold">
+                  10+
+                </h2>
+                <p className="text-xs md:text-sm text-muted-foreground font-medium leading-tight">
+                  Tahun<br className="hidden sm:block" /> Pengalaman
+                </p>
+              </div>
+              
+              <div className="text-center space-y-2 border-x">
+                <h2 className="text-primary text-4xl md:text-5xl lg:text-6xl font-bold">
+                  20+
+                </h2>
+                <p className="text-xs md:text-sm text-muted-foreground font-medium leading-tight">
+                  Pilihan Model<br className="hidden sm:block" /> Rambut
+                </p>
+              </div>
+              
+              <div className="text-center space-y-2">
+                <h2 className="text-primary text-4xl md:text-5xl lg:text-6xl font-bold">
+                  2JT
+                </h2>
+                <p className="text-xs md:text-sm text-muted-foreground font-medium leading-tight">
+                  Pelanggan<br className="hidden sm:block" /> Puas
+                </p>
+              </div>
             </div>
           </div>
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold lg:text-2xl xl:text-3xl">
-              TEMPAT
-            </h2>
-            <VibeCards />
-          </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
