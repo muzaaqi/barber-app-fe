@@ -40,7 +40,7 @@ const Navbar = async () => {
     },
   ];
   return (
-    <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b px-5 py-4 backdrop-blur-sm xl:px-0">
+    <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b px-5 py-4 backdrop-blur-sm 2xl:px-0">
       <div className="container flex justify-between font-mono lg:grid lg:grid-cols-3">
         <div className="text-primary text-2xl font-extrabold">
           <Link href="/">
