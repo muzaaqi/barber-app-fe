@@ -24,7 +24,7 @@ const HeroSection = () => {
           <span className="text-muted-foreground/80 md:text-lg">
             BARBER PROFESIONAL | TEMPAT NYAMAN
           </span>
-          <div className="flex gap-4">
+          <div className="grid grid-cols-2 gap-2">
             <Link href="/services?options=haircuts">
               <Button className="gap-3 px-5 py-6 text-lg md:px-7 md:py-6 md:text-2xl">
                 <Scissors /> POTONG SEKARANG
