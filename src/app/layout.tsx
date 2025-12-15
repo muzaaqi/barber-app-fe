@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Oswald } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
 import { ThemeProvider } from "next-themes";
 import { ScrollTop } from "@/components/scroll-top";
 
@@ -32,7 +31,6 @@ export default function RootLayout({
         className={`${oswald.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <Navbar />
           {children}
           <ScrollTop />
         </ThemeProvider>
