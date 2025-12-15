@@ -20,7 +20,7 @@ const ServicesPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4">
+    <div className="flex min-h-screen flex-col items-center pt-25 gap-4">
       <ButtonGroup>
         <Button
           onClick={() => handleSwitch("POTONG")}
