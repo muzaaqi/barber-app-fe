@@ -8,6 +8,7 @@ import { Skeleton } from "./ui/skeleton";
 type Haircut = {
   id: number;
   name: string;
+  description: string;
   image_url: string;
 };
 
@@ -31,8 +32,8 @@ const Haircuts = () => {
   useEffect(() => {
     const fetchHaircuts = async () => {
       try {
-        const response = await api.get("/haircuts");
-        setHaircuts(response.data.data.data);
+        const res = await api.get("/haircuts");
+        setHaircuts(res.data.data.data);
       } catch (error) {
         console.error("Error fetching haircuts:", error);
       } finally {
