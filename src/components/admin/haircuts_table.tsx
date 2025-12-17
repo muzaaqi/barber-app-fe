@@ -13,7 +13,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Ellipsis, Pencil, Trash } from "lucide-react";
+import { Ellipsis, Trash } from "lucide-react";
 import { api } from "@/lib/axios-instance";
 import EditHaircut from "./edit-haircut";
 
