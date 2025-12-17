@@ -17,7 +17,7 @@ import { Button } from "../ui/button";
 import { api } from "@/lib/axios-instance";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
-import { Trash2, Upload } from "lucide-react";
+import { Plus, Trash2, Upload } from "lucide-react";
 
 const AddHaircut = () => {
   const [name, setName] = useState("");
@@ -75,7 +75,7 @@ const AddHaircut = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Haircut</Button>
+        <Button><Plus /> Add Haircut</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form action={handleSubmit}>
