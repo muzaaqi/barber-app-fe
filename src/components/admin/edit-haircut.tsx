@@ -54,7 +54,7 @@ const EditHaircut = ({ id, haircut_name, haircut_description, image_url } : { id
     }
 
     try {
-      const res = await api.post("/haircuts", formData, {
+      const res = await api.put(`/haircuts/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
