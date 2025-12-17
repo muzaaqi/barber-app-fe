@@ -13,75 +13,64 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Pencil, Trash } from "lucide-react";
+import { api } from "@/lib/axios-instance";
+import EditHaircut from "./edit-haircut";
 
-const HaircutsTable = () => {
-  const haircuts = [
-    {
-      id: 1,
-      name: "French Crop",
-      description:
-        "A stylish short haircut with a textured top and faded sides.",
-      image_url: "/models/french-crop.png",
-    },
-    {
-      id: 2,
-      name: "Buzz Cut",
-      description: "A very short haircut achieved with electric clippers.",
-      image_url: "/models/buzz-cut.png",
-    },
-  ];
+type Haircut = {
+  id: number;
+  name: string;
+  description: string;
+  image_url: string;
+};
+
+const HaircutsTable = async () => {
+  const res = (await api.get("/haircuts")) || [];
+  const haircuts: Haircut[] = res.data.data.data;
   return (
-    <div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableCell>NO</TableCell>
-            <TableCell>Nama Model</TableCell>
-            <TableCell>Deskripsi</TableCell>
-            <TableCell>Gambar</TableCell>
-            <TableCell>Action</TableCell>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableCell>NO</TableCell>
+          <TableCell>Nama Model</TableCell>
+          <TableCell>Deskripsi</TableCell>
+          <TableCell>Gambar</TableCell>
+          <TableCell>Action</TableCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {haircuts.map(({ id, name, description, image_url }, index) => (
+          <TableRow key={id}>
+            <TableCell>{index + 1}</TableCell>
+            <TableCell>{name}</TableCell>
+            <TableCell>{description.length > 50 ? description.substring(0, 50) + "..." : description}</TableCell>
+            <TableCell>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="secondary">View Image</Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-fit">
+                  <Image src={image_url} alt={name} width={200} height={200} />
+                </PopoverContent>
+              </Popover>
+            </TableCell>
+            <TableCell>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Ellipsis />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-fit grid">
+                  <EditHaircut id={id} haircut_name={name} haircut_description={description} image_url={image_url} />
+                  <Button variant="ghost" className="justify-start gap-3">
+                    <Trash /> Delete
+                  </Button>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {haircuts.map(({ id, name, description, image_url }, index) => (
-            <TableRow key={id}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell>{name}</TableCell>
-              <TableCell>{description}</TableCell>
-              <TableCell>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="secondary">View Image</Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-fit">
-                    <Image
-                      src={image_url}
-                      alt={name}
-                      width={200}
-                      height={200}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Ellipsis />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <Button variant="ghost" className="w-full">Edit</Button>
-                    <Button variant="ghost" className="w-full text-destructive">
-                      Delete
-                    </Button>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 
