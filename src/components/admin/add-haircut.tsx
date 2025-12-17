@@ -18,6 +18,7 @@ import { api } from "@/lib/axios-instance";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { Plus, Trash2, Upload } from "lucide-react";
+import { Textarea } from "../ui/textarea";
 
 const AddHaircut = () => {
   const [name, setName] = useState("");
@@ -156,14 +157,13 @@ const AddHaircut = () => {
             </Field>
             <Field>
               <FieldLabel htmlFor="description">Description</FieldLabel>
-              <Input
+              <Textarea
                 id="description"
+                rows={5}
                 name="description"
-                type="text"
-                placeholder="A stylish middle cut"
+                placeholder="Add description about this haircut model (max. 255 characters)"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                required
               />
             </Field>
           </FieldGroup>

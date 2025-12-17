@@ -170,8 +170,8 @@ const EditHaircut = ({
                 id="description"
                 rows={5}
                 value={description}
+                placeholder="Change description about this haircut model(max. 255 characters)"
                 onChange={(e) => setDescription(e.target.value)}
-                required
               />
             </Field>
           </FieldGroup>
