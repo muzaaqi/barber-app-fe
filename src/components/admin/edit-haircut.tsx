@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, DragEvent } from "react";
+import { useState, DragEvent, useEffect } from "react";
 import {
   Dialog,
   DialogClose,
@@ -15,14 +15,28 @@ import { Field, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { api } from "@/lib/axios-instance";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { Spinner } from "../ui/spinner";
+import Image from "next/image";
 
-const EditHaircut = ({ id, haircut_name, haircut_description, image_url } : { id: number; haircut_name: string; haircut_description: string; image_url: string }) => {
+type Props = {
+  id: number;
+  haircut_name: string;
+  haircut_description: string;
+  image_url: string;
+};
+
+const EditHaircut = ({
+  id,
+  haircut_name,
+  haircut_description,
+  image_url,
+}: Props) => {
   const [name, setName] = useState(haircut_name);
   const [description, setDescription] = useState(haircut_description);
   const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string>(image_url);
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,47 +44,43 @@ const EditHaircut = ({ id, haircut_name, haircut_description, image_url } : { id
     if (!selected) return;
     if (!selected.type.startsWith("image/")) return;
     setFile(selected);
+    setPreview(URL.createObjectURL(selected));
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    handleFile(e.dataTransfer.files?.[0]);
+    handleFile(e.dataTransfer.files?.[0] || null);
+  };
+
+  const handleRemoveImage = () => {
+    setFile(null);
+    setPreview(image_url);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+
     const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+
     if (file) {
       formData.append("image", file);
-      formData.append("name", name);
-      formData.append("description", description);
-    }
-
-    if (!formData.has("image") === false && !formData.has("name") === false) {
-      setIsLoading(false);
-      return;
     }
 
     try {
-      const res = await api.put(`/haircuts/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      const res = await api.put(`/haircuts/${id}`, formData);
       if (res.status === 200) {
         window.location.reload();
-
       }
-    } catch (error) {
-      console.error("Error submitting haircut:", error);
+    } catch (err) {
+      console.error("Update haircut failed:", err);
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -78,14 +88,16 @@ const EditHaircut = ({ id, haircut_name, haircut_description, image_url } : { id
           <Pencil /> Edit
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+
+      <DialogContent className="sm:max-w-[450px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Add Haircut Model</DialogTitle>
+            <DialogTitle>Edit Haircut Model</DialogTitle>
             <DialogDescription>
-              Add a new haircut model to the collection.
+              Update haircut data and image.
             </DialogDescription>
           </DialogHeader>
+
           <FieldGroup>
             <Field>
               <FieldLabel>Image</FieldLabel>
@@ -96,32 +108,57 @@ const EditHaircut = ({ id, haircut_name, haircut_description, image_url } : { id
                 }}
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={onDrop}
-                onClick={() => document.getElementById("image")?.click()}
-                className={`cursor-pointer rounded-xl border-2 border-dashed p-6 text-center transition ${isDragging ? "border-primary bg-muted" : "border-muted-foreground/30"} `}
+                onClick={() =>
+                  document.getElementById(`image-${id}`)?.click()
+                }
+                className={`aspect-square cursor-pointer rounded-xl border-2 border-dashed p-4 transition
+                  ${
+                    isDragging
+                      ? "border-primary bg-muted"
+                      : "border-muted-foreground/30"
+                  }
+                `}
               >
-                <p className="text-muted-foreground text-sm">
-                  Drag & drop image here, or click to select
+                <Image
+                  width={500}
+                  height={500}
+                  src={preview}
+                  alt="Preview"
+                  className="mx-auto mb-3 w-full rounded-lg object-cover"
+                />
+                <p className="text-center text-sm text-muted-foreground">
+                  Drag & drop image here, or click to replace
                 </p>
                 {file && (
-                  <p className="mt-2 text-sm font-medium">{file.name}</p>
+                  <p className="mt-1 text-center text-xs font-medium">
+                    {file.name}
+                  </p>
                 )}
               </div>
               <Input
-                id="image"
-                name="image"
+                id={`image-${id}`}
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => handleFile(e.target.files?.[0] || null)}
+                onChange={(e) =>
+                  handleFile(e.target.files?.[0] || null)
+                }
               />
+              {file && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="mt-2 w-full gap-2 text-destructive"
+                  onClick={handleRemoveImage}
+                >
+                  <Trash2 size={16} /> Remove Image
+                </Button>
+              )}
             </Field>
             <Field>
               <FieldLabel htmlFor="name">Name</FieldLabel>
               <Input
                 id="name"
-                name="name"
-                type="text"
-                placeholder="Middle Cut"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -131,8 +168,6 @@ const EditHaircut = ({ id, haircut_name, haircut_description, image_url } : { id
               <FieldLabel htmlFor="description">Description</FieldLabel>
               <Textarea
                 id="description"
-                name="description"
-                placeholder="A stylish middle cut"
                 rows={5}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -142,9 +177,13 @@ const EditHaircut = ({ id, haircut_name, haircut_description, image_url } : { id
           </FieldGroup>
           <DialogFooter className="mt-4">
             <DialogClose asChild>
-              <Button variant="outline" disabled={isLoading}>Cancel</Button>
+              <Button variant="outline" disabled={isLoading}>
+                Cancel
+              </Button>
             </DialogClose>
-            <Button type="submit" disabled={isLoading}>{isLoading ? <Spinner /> : "Save"}</Button>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? <Spinner /> : "Save"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
