@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Spinner } from "./ui/spinner";
 import Link from "next/link";
-import { registerAction } from "@/actions/register";
+import { registerAction } from "@/actions/auth/register";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
@@ -52,7 +52,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       setMsg(result.message);
     }
     setRegisterLoading(false);
-  }
+  };
   return (
     <Card {...props}>
       <CardHeader className="text-center">
