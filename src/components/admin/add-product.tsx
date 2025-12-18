@@ -82,7 +82,7 @@ const AddProduct = () => {
           <Plus /> Tambah Produk
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
         <form action={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Tambah Produk</DialogTitle>
@@ -90,115 +90,119 @@ const AddProduct = () => {
               Tambahkan produk baru ke koleksi.
             </DialogDescription>
           </DialogHeader>
-          <FieldGroup>
-            <Field>
-              <FieldLabel>Gambar</FieldLabel>
-              <div
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setIsDragging(true);
-                }}
-                onDragLeave={() => setIsDragging(false)}
-                onDrop={onDrop}
-                onClick={() => document.getElementById("image")?.click()}
-                className={`grid aspect-square cursor-pointer items-center justify-center rounded-xl border-2 border-dashed p-4 transition ${
-                  isDragging
-                    ? "border-primary bg-muted"
-                    : "border-muted-foreground/30"
-                } `}
-              >
-                {preview && (
-                  <Image
-                    width={500}
-                    height={500}
-                    src={preview}
-                    alt="Preview"
-                    className="mx-auto mb-3 w-full rounded-lg object-cover"
-                  />
-                )}
-                <div className="flex flex-col items-center justify-center gap-2">
-                  <Upload size={40} className="text-muted-foreground" />
-                  <p className="text-muted-foreground text-center text-sm">
-                    Drag & drop image here, or click to replace
-                  </p>
-                </div>
-                {file && (
-                  <p className="mt-1 text-center text-xs font-medium">
-                    {file.name}
-                  </p>
-                )}
-              </div>
-              <Input
-                id="image"
-                name="image"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => handleFile(e.target.files?.[0] || null)}
-              />
-              {file && (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  className="text-destructive mt-2 w-full gap-2"
-                  onClick={handleRemoveImage}
+          <div className="grid gap-4 xl:grid-cols-2">
+            <FieldGroup>
+              <Field>
+                <FieldLabel>Gambar</FieldLabel>
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDragging(true);
+                  }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={onDrop}
+                  onClick={() => document.getElementById("image")?.click()}
+                  className={`grid aspect-square cursor-pointer items-center justify-center rounded-xl border-2 border-dashed p-4 transition ${
+                    isDragging
+                      ? "border-primary bg-muted"
+                      : "border-muted-foreground/30"
+                  } `}
                 >
-                  <Trash2 size={16} /> Hapus Gambar
-                </Button>
-              )}
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="name">Nama</FieldLabel>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Hair Vitamin"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="price">Harga</FieldLabel>
-              <Input
-                id="price"
-                name="price"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="19.99"
-                value={price}
-                onChange={(e) => setPrice(parseFloat(e.target.value))}
-                required
-              />
-            </Field>
-            <Field>
-              <FieldLabel>Stok</FieldLabel>
-              <Input
-                id="stock"
-                name="stock"
-                type="number"
-                min="0"
-                step="1"
-                placeholder="100"
-                value={stock}
-                onChange={(e) => setStock(parseInt(e.target.value))}
-                required
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="description">Deskripsi</FieldLabel>
-              <Textarea
-                id="description"
-                rows={5}
-                name="description"
-                placeholder="Tambahkan deskripsi produk (maks. 500 karakter)"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </Field>
-          </FieldGroup>
+                  {preview && (
+                    <Image
+                      width={500}
+                      height={500}
+                      src={preview}
+                      alt="Preview"
+                      className="mx-auto mb-3 w-full rounded-lg object-cover"
+                    />
+                  )}
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <Upload size={40} className="text-muted-foreground" />
+                    <p className="text-muted-foreground text-center text-sm">
+                      Drag & drop image here, or click to replace
+                    </p>
+                  </div>
+                  {file && (
+                    <p className="mt-1 text-center text-xs font-medium">
+                      {file.name}
+                    </p>
+                  )}
+                </div>
+                <Input
+                  id="image"
+                  name="image"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleFile(e.target.files?.[0] || null)}
+                />
+                {file && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="text-destructive mt-2 w-full gap-2"
+                    onClick={handleRemoveImage}
+                  >
+                    <Trash2 size={16} /> Hapus Gambar
+                  </Button>
+                )}
+              </Field>
+            </FieldGroup>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="name">Nama</FieldLabel>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Hair Vitamin"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="price">Harga</FieldLabel>
+                <Input
+                  id="price"
+                  name="price"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="19.99"
+                  value={price}
+                  onChange={(e) => setPrice(parseFloat(e.target.value))}
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel>Stok</FieldLabel>
+                <Input
+                  id="stock"
+                  name="stock"
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder="100"
+                  value={stock}
+                  onChange={(e) => setStock(parseInt(e.target.value))}
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="description">Deskripsi</FieldLabel>
+                <Textarea
+                  id="description"
+                  rows={5}
+                  name="description"
+                  placeholder="Tambahkan deskripsi produk (maks. 500 karakter)"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Field>
+            </FieldGroup>
+          </div>
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" disabled={isLoading}>
