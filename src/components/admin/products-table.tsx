@@ -55,6 +55,8 @@ const ProductsTable = async () => {
                   ? description.substring(0, 50) + "..."
                   : description}
               </TableCell>
+              <TableCell>{price}</TableCell>
+              <TableCell>{stock}</TableCell>
               <TableCell>
                 <Popover>
                   <PopoverTrigger asChild>
