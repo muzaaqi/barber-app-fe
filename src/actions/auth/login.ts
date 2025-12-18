@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
-import { api } from "../lib/axios-instance";
+import { api } from "../../lib/axios-instance";
 
 export async function loginAction(email: string, password: string) {
   try {
@@ -26,7 +26,9 @@ export async function loginAction(email: string, password: string) {
   } catch (err: unknown) {
     return {
       success: false,
-      message: axios.isAxiosError(err) ? err.response?.data?.message || "Login error" : "Login error",
+      message: axios.isAxiosError(err)
+        ? err.response?.data?.message || "Login error"
+        : "Login error",
     };
   }
 }
