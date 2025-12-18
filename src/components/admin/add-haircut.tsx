@@ -76,19 +76,19 @@ const AddHaircut = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button><Plus /> Add Haircut</Button>
+        <Button><Plus /> Tambah Model</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form action={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Add Haircut Model</DialogTitle>
+            <DialogTitle>Tambah Model Potongan Rambut</DialogTitle>
             <DialogDescription>
-              Add a new haircut model to the collection.
+              Tambahkan model potongan rambut baru ke koleksi.
             </DialogDescription>
           </DialogHeader>
           <FieldGroup>
             <Field>
-              <FieldLabel>Image</FieldLabel>
+              <FieldLabel>Gambar</FieldLabel>
               <div
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -139,12 +139,12 @@ const AddHaircut = () => {
                   className="text-destructive mt-2 w-full gap-2"
                   onClick={handleRemoveImage}
                 >
-                  <Trash2 size={16} /> Remove Image
+                  <Trash2 size={16} /> Hapus Gambar
                 </Button>
               )}
             </Field>
             <Field>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <FieldLabel htmlFor="name">Nama</FieldLabel>
               <Input
                 id="name"
                 name="name"
@@ -156,12 +156,12 @@ const AddHaircut = () => {
               />
             </Field>
             <Field>
-              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <FieldLabel htmlFor="description">Deskripsi</FieldLabel>
               <Textarea
                 id="description"
                 rows={5}
                 name="description"
-                placeholder="Add description about this haircut model (max. 255 characters)"
+                placeholder="Tambahkan deskripsi tentang model potongan rambut ini (maks. 500 karakter)"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
@@ -170,11 +170,11 @@ const AddHaircut = () => {
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" disabled={isLoading}>
-                Cancel
+                Batal
               </Button>
             </DialogClose>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? <Spinner /> : "Save"}
+              {isLoading ? <Spinner /> : "Tambah"}
             </Button>
           </DialogFooter>
         </form>
