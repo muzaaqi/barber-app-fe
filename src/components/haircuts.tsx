@@ -6,24 +6,11 @@ import { api } from "@/lib/axios-instance";
 import { Skeleton } from "./ui/skeleton";
 
 type Haircut = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   image_url: string;
 };
-
-// const haircuts = [
-//   {
-//     id: 1,
-//     name: "French Crop",
-//     image_url: "/models/french-crop.png",
-//   },
-//   {
-//     id: 2,
-//     name: "Buzz Cut",
-//     image_url: "/models/buzz-cut.png",
-//   }
-// ];
 
 const Haircuts = () => {
   const [haircuts, setHaircuts] = useState<Haircut[]>([]);

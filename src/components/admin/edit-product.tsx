@@ -21,7 +21,7 @@ import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 
 type Props = {
-  id: number;
+  id: string;
   product_name: string;
   product_description: string;
   product_price: number;

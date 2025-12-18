@@ -20,7 +20,7 @@ import { api } from "@/lib/axios-instance";
 // ];
 
 type Products = {
-  id: number;
+  id: string;
   name: string;
   image_url: string;
 };

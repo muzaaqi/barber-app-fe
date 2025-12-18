@@ -21,7 +21,7 @@ import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 
 type Props = {
-  id: number;
+  id: string;
   haircut_name: string;
   haircut_description: string;
   image_url: string;

@@ -17,9 +17,10 @@ import { Ellipsis, Trash } from "lucide-react";
 import { api } from "@/lib/axios-instance";
 import EditProduct from "./edit-product";
 import GlobalPagination from "../global-pagination";
+import DeleteDialog from "../delete-dialog";
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -86,9 +87,7 @@ const ProductsTable = async () => {
                       product_stock={stock}
                       image_url={image_url}
                     />
-                    <Button variant="ghost" className="justify-start gap-3">
-                      <Trash /> Hapus
-                    </Button>
+                    <DeleteDialog id={id} variant="product" />
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
