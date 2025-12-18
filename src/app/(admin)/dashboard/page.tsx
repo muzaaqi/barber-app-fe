@@ -1,9 +1,16 @@
-import React from 'react'
+import HaircutTransactionsTable from "@/components/admin/haircut-transactions-table";
 
-const page = () => {
+const DashboardPage = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <div className="p-10">
+        <div className="flex justify-between">
+          <h1 className="mb-4 text-3xl font-bold">Haircut Transactions</h1>
+        </div>
+        <HaircutTransactionsTable />
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default DashboardPage;
