@@ -54,7 +54,7 @@ const HaircutsTable = async () => {
               <TableCell>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="secondary">View Image</Button>
+                    <Button variant="secondary">Lihat Gambar</Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-fit">
                     <Image
@@ -79,7 +79,7 @@ const HaircutsTable = async () => {
                       image_url={image_url}
                     />
                     <Button variant="ghost" className="justify-start gap-3">
-                      <Trash /> Delete
+                      <Trash /> Hapus
                     </Button>
                   </DropdownMenuContent>
                 </DropdownMenu>
