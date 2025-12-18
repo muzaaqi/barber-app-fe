@@ -13,13 +13,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Ellipsis, Trash } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { api } from "@/lib/axios-instance";
 import EditHaircut from "./edit-haircut";
 import GlobalPagination from "../global-pagination";
+import DeleteDialog from "../delete-dialog";
 
 type Haircut = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   image_url: string;
@@ -78,9 +79,7 @@ const HaircutsTable = async () => {
                       haircut_description={description}
                       image_url={image_url}
                     />
-                    <Button variant="ghost" className="justify-start gap-3">
-                      <Trash /> Hapus
-                    </Button>
+                    <DeleteDialog id={id} variant="haircut" />
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
