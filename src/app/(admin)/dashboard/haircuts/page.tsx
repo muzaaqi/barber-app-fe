@@ -1,7 +1,7 @@
 import AddHaircut from "@/components/admin/add-haircut";
 import HaircutsTable from "@/components/admin/haircuts_table";
 
-const HaircutsPage = () => {
+const HaircutsDashboard = () => {
   return (
     <div className="p-10">
       <div className="flex justify-between">
@@ -13,4 +13,4 @@ const HaircutsPage = () => {
   );
 };
 
-export default HaircutsPage;
+export default HaircutsDashboard;
