@@ -1,5 +1,5 @@
 import AddHaircut from "@/components/admin/add-haircut";
-import HaircutsTable from "@/components/admin/haircuts_table";
+import HaircutsTable from "@/components/admin/haircuts-table";
 
 const HaircutsDashboard = () => {
   return (
