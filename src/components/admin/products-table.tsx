@@ -13,7 +13,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Ellipsis, Trash } from "lucide-react";
+import { Ellipsis} from "lucide-react";
 import { api } from "@/lib/axios-instance";
 import EditProduct from "./edit-product";
 import GlobalPagination from "../global-pagination";
