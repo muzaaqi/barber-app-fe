@@ -45,7 +45,7 @@ const HaircutTransactionsTable = async () => {
         <TableHeader>
           <TableRow>
             <TableCell>NO</TableCell>
-            <TableCell>Nama Customerl</TableCell>
+            <TableCell>Nama Customer</TableCell>
             <TableCell>Model Rambut</TableCell>
             <TableCell>Waktu Reservasi</TableCell>
             <TableCell>Status Reservasi</TableCell>
