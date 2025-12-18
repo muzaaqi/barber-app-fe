@@ -7,7 +7,7 @@ const Sidebar = () => {
   const navItems = [
     {
       name: 'Transactions',
-      url: '/dashboard/transactions',
+      url: '/dashboard',
       icon: <ArrowLeftRight />
     },
     {
