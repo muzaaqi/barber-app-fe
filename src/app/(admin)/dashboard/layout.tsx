@@ -9,6 +9,7 @@ export default function DashboardLayout({
     <div>
       <Sidebar />
       <Suspense fallback={<div className="p-10 text-center">Loading dashboard data...</div>}>
+          {children}
       </Suspense>
     </div>
   );
