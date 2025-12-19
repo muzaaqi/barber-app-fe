@@ -1,12 +1,14 @@
 "use client";
 
+import { Suspense } from "react";
 import Haircuts from "@/components/haircuts";
 import Products from "@/components/productss";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
 
-const ServicesPage = () => {
+const ServicesContent = () => {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -49,5 +51,18 @@ const ServicesPage = () => {
   );
 };
 
+const ServicesPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="h-svh w-svw items-center justify-center text-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <ServicesContent />
+    </Suspense>
+  );
+};
 
 export default ServicesPage;
