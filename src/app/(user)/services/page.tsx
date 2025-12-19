@@ -1,12 +1,14 @@
 "use client";
 
+import { Suspense } from "react";
 import Haircuts from "@/components/haircuts";
 import Products from "@/components/productss";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
 
-const ServicesPage = () => {
+const ServicesContent = () => {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -20,7 +22,7 @@ const ServicesPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center pt-25 gap-4">
+    <div className="flex min-h-screen flex-col items-center gap-4 pt-25">
       <ButtonGroup>
         <Button
           onClick={() => handleSwitch("POTONG")}
@@ -35,13 +37,31 @@ const ServicesPage = () => {
           PRODUK
         </Button>
       </ButtonGroup>
-      <div className={`${servicePage === "POTONG" ? "block" : "hidden"} container`}>
+      <div
+        className={`${servicePage === "POTONG" ? "block" : "hidden"} container`}
+      >
         <Haircuts />
       </div>
-      <div className={`${servicePage === "PRODUK" ? "block" : "hidden"} container`}>
+      <div
+        className={`${servicePage === "PRODUK" ? "block" : "hidden"} container`}
+      >
         <Products />
       </div>
     </div>
+  );
+};
+
+const ServicesPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="h-svh w-svw items-center justify-center text-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <ServicesContent />
+    </Suspense>
   );
 };
 
