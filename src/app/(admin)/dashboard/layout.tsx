@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-export const dynamic = 'force-dynamic';
 import Sidebar from "@/components/admin/sidebar";
 
 export default function DashboardLayout({
