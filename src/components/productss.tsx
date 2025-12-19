@@ -6,18 +6,6 @@ import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
-// const products = [
-//   {
-//     id: 1,
-//     name: "Hair Tonic",
-//     image_url: "/products/hair-tonic.png",
-//   },
-//   {
-//     id: 2,
-//     name: "Pomade",
-//     image_url: "/products/pomade.png",
-//   }
-// ];
 
 type Products = {
   id: string;
