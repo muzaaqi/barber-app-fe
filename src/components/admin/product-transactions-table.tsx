@@ -12,6 +12,7 @@ import { api } from "@/lib/axios-instance";
 import GlobalPagination from "../global-pagination";
 import getAuthHeader from "@/features/get-jwt-token";
 import { Ellipsis } from "lucide-react";
+import { formatIDR } from "@/features/formatter";
 
 type ProductsTransaction = {
   id: string;
@@ -31,6 +32,7 @@ type ProductsTransaction = {
   user: {
     name: string;
     email: string;
+    image_url?: string;
   };
 };
 
@@ -111,10 +113,15 @@ const ProductsTransactionsTable = async () => {
                       </PopoverTrigger>
                       <PopoverContent className="w-fit">
                         {items.map(
-                          ({ product_name, product_image, quantity, subtotal }) => (
+                          ({
+                            product_name,
+                            product_image,
+                            quantity,
+                            subtotal,
+                          }) => (
                             <div
                               key={product_name}
-                              className="grid grid-cols-3 gap-3 items-center"
+                              className="grid grid-cols-3 items-center gap-3"
                             >
                               <Image
                                 src={product_image}
@@ -126,7 +133,9 @@ const ProductsTransactionsTable = async () => {
                                 <span className="">
                                   {product_name} (x{quantity})
                                 </span>
-                                <span className="text-muted-foreground">{subtotal}</span>
+                                <span className="text-muted-foreground">
+                                  {formatIDR(subtotal)}
+                                </span>
                               </div>
                             </div>
                           ),
@@ -135,12 +144,27 @@ const ProductsTransactionsTable = async () => {
                     </Popover>
                   )}
                 </TableCell>
-                <TableCell>{user.name}</TableCell>
+                <TableCell>
+                  <div className="grid w-fit grid-cols-3 items-center gap-4">
+                    <Image
+                      src={user.image_url || "/default_avatar.svg"}
+                      alt={user.name}
+                      width={45}
+                      height={45}
+                    />
+                    <div className="col-span-2 w-fit">
+                      <span>{user.name}</span>
+                      <span className="text-muted-foreground block text-sm">
+                        {user.email}
+                      </span>
+                    </div>
+                  </div>
+                </TableCell>
                 <TableCell>{expedition_service}</TableCell>
                 <TableCell>{expedition_status}</TableCell>
                 <TableCell>{payment_method}</TableCell>
                 <TableCell>{payment_status}</TableCell>
-                <TableCell>{total_price}</TableCell>
+                <TableCell>{formatIDR(total_price)}</TableCell>
               </TableRow>
             ),
           )}

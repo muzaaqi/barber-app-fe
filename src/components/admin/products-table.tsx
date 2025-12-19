@@ -6,8 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +16,7 @@ import { api } from "@/lib/axios-instance";
 import EditProduct from "./edit-product";
 import GlobalPagination from "../global-pagination";
 import DeleteDialog from "../delete-dialog";
+import { formatIDR } from "@/features/formatter";
 
 type Product = {
   id: string;
@@ -40,8 +39,8 @@ const ProductsTable = async () => {
             <TableCell>NO</TableCell>
             <TableCell>Nama Produk</TableCell>
             <TableCell>Deskripsi</TableCell>
-            <TableCell>Harga</TableCell>
             <TableCell>Stok</TableCell>
+            <TableCell>Harga</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHeader>
@@ -63,8 +62,8 @@ const ProductsTable = async () => {
                     ? description.substring(0, 50) + "..."
                     : description}
                 </TableCell>
-                <TableCell>{price}</TableCell>
                 <TableCell>{stock}</TableCell>
+                <TableCell>{formatIDR(price)}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger>

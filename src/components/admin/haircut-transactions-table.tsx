@@ -9,6 +9,7 @@ import {
 import { api } from "@/lib/axios-instance";
 import GlobalPagination from "../global-pagination";
 import getAuthHeader from "@/features/get-jwt-token";
+import { formatIDR } from "@/features/formatter";
 
 type HaircutTransaction = {
   id: string;
@@ -24,6 +25,7 @@ type HaircutTransaction = {
   user: {
     name: string;
     email: string;
+    image_url?: string;
   };
 };
 
@@ -70,7 +72,7 @@ const HaircutTransactionsTable = async () => {
               <TableRow key={id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell className="w-fit">
-                  <div className="grid grid-cols-3 items-center gap-4 w-fit">
+                  <div className="grid w-fit grid-cols-3 items-center gap-4">
                     <Image
                       src={haircut.image_url}
                       alt={haircut.name}
@@ -82,12 +84,27 @@ const HaircutTransactionsTable = async () => {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>{user.name}</TableCell>
+                <TableCell>
+                  <div className="grid grid-cols-3 w-fit gap-4 items-center">
+                    <Image
+                      src={user.image_url || "/default_avatar.svg"}
+                      alt={user.name}
+                      width={45}
+                      height={45}
+                    />
+                    <div className="col-span-2 w-fit">
+                      <span>{user.name}</span>
+                      <span className="text-muted-foreground block text-sm">
+                        {user.email}
+                      </span>
+                    </div>
+                  </div>
+                </TableCell>
                 <TableCell>{reservation_time}</TableCell>
                 <TableCell>{reservation_status}</TableCell>
                 <TableCell>{payment_method}</TableCell>
                 <TableCell>{payment_status}</TableCell>
-                <TableCell>{total_price}</TableCell>
+                <TableCell>{formatIDR(total_price)}</TableCell>
               </TableRow>
             ),
           )}
