@@ -1,3 +1,5 @@
+// components/admin/haircuts-table.tsx
+
 import Image from "next/image";
 import {
   Table,
@@ -5,12 +7,12 @@ import {
   TableCell,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "@/components/ui/table"; // Pastikan path import sesuai
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
 import { api } from "@/lib/axios-instance";
 import EditHaircut from "./edit-haircut";
@@ -24,10 +26,18 @@ type Haircut = {
   image_url: string;
 };
 
-const HaircutsTable = async () => {
-  const res = (await api.get("/haircuts")) || [];
+type Props = {
+  page?: string;
+};
+
+const HaircutsTable = async ({ page }: Props) => {
+  const currentPage = Number(page) || 1;
+
+  const res = await api.get(`/haircuts?page=${currentPage}`); 
+
   const haircuts: Haircut[] = res.data.data.data;
   const pagination = res.data.data.pagination;
+
   return (
     <>
       <Table>
@@ -42,7 +52,7 @@ const HaircutsTable = async () => {
         <TableBody>
           {haircuts.map(({ id, name, description, image_url }, index) => (
             <TableRow key={id}>
-              <TableCell>{index + 1}</TableCell>
+              <TableCell>{(currentPage - 1) * 10 + index + 1}</TableCell>
               <TableCell>
                 <div className="grid w-fit grid-cols-3 items-center gap-4">
                   <Image

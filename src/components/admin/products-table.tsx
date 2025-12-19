@@ -27,8 +27,14 @@ type Product = {
   image_url: string;
 };
 
-const ProductsTable = async () => {
-  const res = (await api.get("/products")) || [];
+type Props = {
+  page?: string;
+};
+
+const ProductsTable = async ({ page }: Props) => {
+  const currentPage = Number(page) || 1;
+  const res = (await api.get(`/products?page=${currentPage}`)) || [];
+  
   const products: Product[] = res.data.data.data;
   const pagination = res.data.data.pagination;
   return (
@@ -48,7 +54,7 @@ const ProductsTable = async () => {
           {products.map(
             ({ id, name, description, price, stock, image_url }, index) => (
               <TableRow key={id}>
-                <TableCell>{index + 1}</TableCell>
+                <TableCell>{(currentPage - 1) * 10 + index + 1}</TableCell>
                 <TableCell>
                   <div className="grid w-fit grid-cols-3 items-center gap-4">
                     <Image src={image_url} alt={name} width={50} height={50} />
@@ -83,7 +89,7 @@ const ProductsTable = async () => {
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ),
+            )
           )}
         </TableBody>
       </Table>
