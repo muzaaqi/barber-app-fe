@@ -3,7 +3,6 @@ import FooterSection from "@/components/footer";
 import HeroSection from "@/components/hero";
 import LocationSection from "@/components/location";
 import ServicesSection from "@/components/services";
-import ProductsSection from "@/components/products";
 import Navbar from "@/components/navbar";
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ServicesSection />
-        <ProductsSection />
         <LocationSection />
         <FooterSection />
       </div>

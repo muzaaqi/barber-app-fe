@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Home, Info, Scissors, Menu, MapPin, Package } from "lucide-react";
+import { Home, Info, Scissors, Menu, MapPin } from "lucide-react";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { getProfile } from "@/actions/auth/get-profile";
 const Navbar = async () => {
@@ -29,11 +29,6 @@ const Navbar = async () => {
       name: "Services",
       url: "/#services",
       icon: <Scissors />,
-    },
-    {
-      name: "Produk",
-      url: "/#products",
-      icon: <Package />,
     },
     {
       name: "Lokasi",
