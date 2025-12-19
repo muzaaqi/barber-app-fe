@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+export const dynamic = 'force-dynamic';
 import Sidebar from "@/components/admin/sidebar";
 
 export default function DashboardLayout({
@@ -6,7 +8,8 @@ export default function DashboardLayout({
   return (
     <div>
       <Sidebar />
-      <div className="ml-15">{children}</div>
+      <Suspense fallback={<div className="p-10 text-center">Loading dashboard data...</div>}>
+      </Suspense>
     </div>
   );
 }
