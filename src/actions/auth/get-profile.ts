@@ -1,11 +1,10 @@
 "use server";
 
+import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
-import { cookies } from "next/headers";
 
 export async function getProfile() {
-  const cookiesStore = await cookies();
-  const token = cookiesStore.get("token")?.value || "";
+  const token = await getAuthHeader();
 
   if (!token) return null;
   const res = await api.get("/user/me", {
