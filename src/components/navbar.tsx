@@ -56,7 +56,7 @@ const Navbar = async () => {
                 <Link href={url}>{name}</Link>
               </li>
             ))}
-            {user.role === "admin" && (
+            {user?.role === "admin" && (
               <li className={liClass}>
                 <Link href="/dashboard">Dashboard</Link>
               </li>
