@@ -15,6 +15,7 @@ import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 import { deleteItem } from "@/actions/management/delete";
 import { Spinner } from "./ui/spinner";
+import { toast } from "sonner";
 
 const DeleteDialog = ({
   id,
@@ -27,10 +28,14 @@ const DeleteDialog = ({
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      const res = await deleteItem(id, variant);
-      return res;
+      await deleteItem(id, variant);
+      toast.success(
+        `${variant === "haircut" ? "Model potongan rambut" : "Produk"} berhasil dihapus.`,
+      );
     } catch (error) {
-      console.error("Delete failed:", error);
+      toast.error("Gagal menghapus data.", {
+        description: String(error),
+      });
     } finally {
       setIsLoading(false);
     }

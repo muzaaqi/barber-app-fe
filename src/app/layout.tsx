@@ -3,6 +3,7 @@ import { JetBrains_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { ScrollTop } from "@/components/scroll-top";
+import { Toaster } from "@/components/ui/sonner";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -30,9 +31,15 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${oswald.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
           <ScrollTop />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

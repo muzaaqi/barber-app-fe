@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
@@ -5,6 +6,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
 import { Skeleton } from "./ui/skeleton";
 import { BookCheck } from "lucide-react";
+import { toast } from "sonner";
 
 type Haircut = {
   id: string;
@@ -23,43 +25,45 @@ const Haircuts = () => {
         const res = await api.get("/haircuts");
         setHaircuts(res.data.data.data);
       } catch (error) {
-        console.error("Error fetching haircuts:", error);
+        toast.error("Gagal memuat potongan rambut.", {
+          description: String(error),
+        });
       } finally {
         setIsLoading(false);
       }
     };
     fetchHaircuts();
-  }, [])
+  }, []);
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-      {isLoading || !haircuts ? (
-        Array.from({ length: 10 }).map((_, index) => (
-          <Card key={index}>
-            <CardContent className="text-center">
-              <Skeleton className="aspect-square mb-3"/>
-              <Skeleton className="h-10 w-full"/>
-            </CardContent>
-            <CardFooter>
-              <Skeleton className="w-full h-10"/>
-            </CardFooter>
-          </Card>
-        ))
-      ) : haircuts.map(({ id, name, image_url }) => (
-        <Card key={id} className="hover:border-primary transition-colors duration-300">
-          <CardContent className="text-center">
-            <Image
-              src={image_url}
-              alt={name}
-              width={1000}
-              height={1000}
-            />
-            <h2 className="text-xl md:text-2xl font-semibold">{name}</h2>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full"><BookCheck /> Pilih</Button>
-          </CardFooter>
-        </Card>
-      ))}
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+      {isLoading || !haircuts
+        ? Array.from({ length: 10 }).map((_, index) => (
+            <Card key={index}>
+              <CardContent className="text-center">
+                <Skeleton className="mb-3 aspect-square" />
+                <Skeleton className="h-10 w-full" />
+              </CardContent>
+              <CardFooter>
+                <Skeleton className="h-10 w-full" />
+              </CardFooter>
+            </Card>
+          ))
+        : haircuts.map(({ id, name, image_url }) => (
+            <Card
+              key={id}
+              className="hover:border-primary transition-colors duration-300"
+            >
+              <CardContent className="text-center">
+                <Image src={image_url} alt={name} width={1000} height={1000} />
+                <h2 className="text-xl font-semibold md:text-2xl">{name}</h2>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full">
+                  <BookCheck /> Pilih
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
     </div>
   );
 };

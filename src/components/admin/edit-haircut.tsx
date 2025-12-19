@@ -19,6 +19,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
+import { toast } from "sonner";
 
 type Props = {
   id: string;
@@ -73,10 +74,13 @@ const EditHaircut = ({
     try {
       const res = await api.put(`/haircuts/${id}`, formData);
       if (res.status === 200) {
+        toast.success(`Model ${name} berhasil diperbarui.`);
         window.location.reload();
       }
     } catch (err) {
-      console.error("Update haircut failed:", err);
+      toast.error("Gagal memperbarui model.", {
+        description: String(err),
+      });
     } finally {
       setIsLoading(false);
     }

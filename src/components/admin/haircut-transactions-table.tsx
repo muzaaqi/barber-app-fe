@@ -85,7 +85,7 @@ const HaircutTransactionsTable = async () => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className="grid grid-cols-3 w-fit gap-4 items-center">
+                  <div className="grid w-fit grid-cols-3 items-center gap-4">
                     <Image
                       src={user.image_url || "/default_avatar.svg"}
                       alt={user.name}

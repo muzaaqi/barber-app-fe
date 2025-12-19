@@ -19,6 +19,7 @@ import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { Plus, Trash2, Upload } from "lucide-react";
 import { Textarea } from "../ui/textarea";
+import { toast } from "sonner";
 
 const AddHaircut = () => {
   const [name, setName] = useState("");
@@ -46,7 +47,7 @@ const AddHaircut = () => {
     setPreview("");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsLoading(true);
     const formData = new FormData();
     if (file) {
@@ -61,13 +62,23 @@ const AddHaircut = () => {
     }
 
     try {
-      const res = api.post("/haircuts", formData, {
+      const res = await api.post("/haircuts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      if (res.status === 201) {
+        toast.success(`Model ${name} berhasil ditambahkan.`);
+        setName("");
+        setDescription("");
+        setFile(null);
+        setPreview("");
+        window.location.reload();
+      }
     } catch (error) {
-      console.error("Error submitting haircut:", error);
+      toast.error("Gagal menambahkan model potongan rambut.", {
+        description: String(error),
+      });
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +87,9 @@ const AddHaircut = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button><Plus /> Tambah Model</Button>
+        <Button>
+          <Plus /> Tambah Model
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form action={handleSubmit}>
@@ -97,7 +110,7 @@ const AddHaircut = () => {
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={onDrop}
                 onClick={() => document.getElementById("image")?.click()}
-                className={`grid items-center justify-center aspect-square cursor-pointer rounded-xl border-2 border-dashed p-4 transition ${
+                className={`grid aspect-square cursor-pointer items-center justify-center rounded-xl border-2 border-dashed p-4 transition ${
                   isDragging
                     ? "border-primary bg-muted"
                     : "border-muted-foreground/30"
@@ -113,7 +126,7 @@ const AddHaircut = () => {
                   />
                 )}
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <Upload size={40} className="text-muted-foreground"/>
+                  <Upload size={40} className="text-muted-foreground" />
                   <p className="text-muted-foreground text-center text-sm">
                     Drag & drop image here, or click to replace
                   </p>

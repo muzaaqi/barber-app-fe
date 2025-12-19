@@ -6,6 +6,7 @@ import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
+import { toast } from "sonner";
 
 type Products = {
   id: string;
@@ -23,7 +24,9 @@ const Products = () => {
         const response = await api.get("/products");
         setProducts(response.data.data.data);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        toast.error("Gagal memuat produk.", {
+          description: String(error),
+        });
       } finally {
         setIsLoading(false);
       }

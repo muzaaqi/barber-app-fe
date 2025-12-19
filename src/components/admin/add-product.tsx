@@ -19,6 +19,7 @@ import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { Plus, Trash2, Upload } from "lucide-react";
 import { Textarea } from "../ui/textarea";
+import { toast } from "sonner";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -48,7 +49,8 @@ const AddProduct = () => {
     setPreview("");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
     const formData = new FormData();
     if (file) {
@@ -63,13 +65,25 @@ const AddProduct = () => {
     }
 
     try {
-      const res = api.post("/products", formData, {
+      const res = await api.post("/products", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      if (res.status === 201) {
+        toast.success(`Produk ${name} berhasil ditambahkan.`);
+        setName("");
+        setPrice(0);
+        setStock(0);
+        setDescription("");
+        setFile(null);
+        setPreview("");
+        window.location.reload();
+      }
     } catch (error) {
-      console.error("Error submitting product:", error);
+      toast.error("Gagal menambahkan produk.", {
+        description: String(error),
+      });
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +97,7 @@ const AddProduct = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
-        <form action={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Tambah Produk</DialogTitle>
             <DialogDescription>
