@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
 import { Skeleton } from "./ui/skeleton";
+import { BookCheck } from "lucide-react";
 
 type Haircut = {
   id: string;
@@ -55,7 +56,7 @@ const Haircuts = () => {
             <h2 className="text-xl md:text-2xl font-semibold">{name}</h2>
           </CardContent>
           <CardFooter>
-            <Button className="w-full">PILIH</Button>
+            <Button className="w-full"><BookCheck /> Pilih</Button>
           </CardFooter>
         </Card>
       ))}

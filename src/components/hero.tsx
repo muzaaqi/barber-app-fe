@@ -27,7 +27,7 @@ const HeroSection = () => {
           <div className="grid grid-cols-2 gap-5">
             <Link href="/services?options=haircuts">
               <Button className="w-full gap-3 py-6 text-lg md:py-6 md:text-2xl">
-                <Scissors /> POTONG SEKARANG
+                <Scissors/> POTONG SEKARANG
               </Button>
             </Link>
             <Link href="/services?options=products">
