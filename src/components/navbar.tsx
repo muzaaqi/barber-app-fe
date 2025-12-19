@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Home, Info, Scissors, Menu, MapPin, Package } from "lucide-react";
 import { AuthButton, MobileAuthButton } from "./auth-button";
+import { getProfile } from "@/actions/auth/get-profile";
 const Navbar = async () => {
+  const user = await getProfile();
   const liClass = "hover:text-primary transition-color duration-300";
   const navItems = [
     {
@@ -42,7 +44,7 @@ const Navbar = async () => {
   return (
     <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b px-5 py-4 backdrop-blur-sm 2xl:px-0">
       <div className="container flex justify-between font-mono lg:grid lg:grid-cols-3">
-        <div className="text-primary text-2xl font-extrabold">
+        <div className="text-primary text-2xl font-extrabold items-center flex">
           <Link href="/">
             <h1>BERGAS</h1>
           </Link>
@@ -54,6 +56,11 @@ const Navbar = async () => {
                 <Link href={url}>{name}</Link>
               </li>
             ))}
+            {user.role === "admin" && (
+              <li className={liClass}>
+                <Link href="/dashboard">Dashboard</Link>
+              </li>
+            )}
           </ul>
           <div className="lg:hidden">
             <DropdownMenu>

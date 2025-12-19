@@ -6,8 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,7 +36,6 @@ const HaircutsTable = async () => {
             <TableCell>NO</TableCell>
             <TableCell>Nama Model</TableCell>
             <TableCell>Deskripsi</TableCell>
-            <TableCell>Gambar</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHeader>
@@ -46,26 +43,23 @@ const HaircutsTable = async () => {
           {haircuts.map(({ id, name, description, image_url }, index) => (
             <TableRow key={id}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>{name}</TableCell>
+              <TableCell>
+                <div className="grid w-fit grid-cols-3 items-center gap-4">
+                  <Image
+                    src={image_url}
+                    alt={name}
+                    width={50}
+                    height={50}
+                  />
+                  <div className="col-span-2">
+                    <span>{name}</span>
+                  </div>
+                </div>
+              </TableCell>
               <TableCell>
                 {description.length > 50
                   ? description.substring(0, 50) + "..."
                   : description}
-              </TableCell>
-              <TableCell>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="secondary">Lihat Gambar</Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-fit">
-                    <Image
-                      src={image_url}
-                      alt={name}
-                      width={200}
-                      height={200}
-                    />
-                  </PopoverContent>
-                </Popover>
               </TableCell>
               <TableCell>
                 <DropdownMenu>

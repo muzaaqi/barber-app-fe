@@ -1,12 +1,12 @@
-import Sidebar from "@/components/admin/sidebar";
+import Navbar from "@/components/navbar";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div>
-      <Sidebar />
-      <div className="ml-15">{children}</div>
+      <Navbar />
+      {children}
     </div>
   );
 }
