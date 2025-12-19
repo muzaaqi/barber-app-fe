@@ -6,7 +6,7 @@ export default function DashboardLayout({
   return (
     <div>
       <Sidebar />
-      {children}
+      <div className="ml-15">{children}</div>
     </div>
   );
 }
