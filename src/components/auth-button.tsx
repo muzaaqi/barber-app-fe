@@ -63,7 +63,7 @@ const MobileAuthButton = async () => {
           </div>
         </div>
       ) : (
-        <ButtonGroup className="w-full flex-col gap-2 hover:bg-transparent">
+        <ButtonGroup className="w-full flex-col gap-2">
           <Link href="/login">
             <Button variant="default" className="w-full">
               Masuk
