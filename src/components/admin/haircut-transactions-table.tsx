@@ -45,14 +45,13 @@ const HaircutTransactionsTable = async () => {
         <TableHeader>
           <TableRow>
             <TableCell>NO</TableCell>
-            <TableCell>Nama Customer</TableCell>
             <TableCell>Model Rambut</TableCell>
+            <TableCell>Nama Customer</TableCell>
             <TableCell>Waktu Reservasi</TableCell>
             <TableCell>Status Reservasi</TableCell>
             <TableCell>Metode Pembayaran</TableCell>
             <TableCell>Status Pembayaran</TableCell>
             <TableCell>Total Harga</TableCell>
-            <TableCell>Gambar</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -72,28 +71,25 @@ const HaircutTransactionsTable = async () => {
             ) => (
               <TableRow key={id}>
                 <TableCell>{index + 1}</TableCell>
+                <TableCell className="w-fit">
+                  <div className="grid grid-cols-3 items-center gap-4 w-fit">
+                    <Image
+                      src={haircut.image_url}
+                      alt={haircut.name}
+                      width={50}
+                      height={50}
+                    />
+                    <div className="col-span-2">
+                      <span>{haircut.name}</span>
+                    </div>
+                  </div>
+                </TableCell>
                 <TableCell>{user.name}</TableCell>
-                <TableCell>{haircut.name}</TableCell>
                 <TableCell>{reservation_time}</TableCell>
                 <TableCell>{reservation_status}</TableCell>
                 <TableCell>{payment_method}</TableCell>
                 <TableCell>{payment_status}</TableCell>
                 <TableCell>{total_price}</TableCell>
-                <TableCell>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="secondary">Lihat Gambar</Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-fit">
-                      <Image
-                        src={haircut.image_url}
-                        alt={haircut.name}
-                        width={200}
-                        height={200}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </TableCell>
               </TableRow>
             ),
           )}
