@@ -14,8 +14,8 @@ const TransactionsNav = () => {
         <ArrowLeftRight />
       </button>
       <div className={isClicked ? "flex flex-col" : "hidden"}>
-        <Link href="/dashboard/haircut-transactions" className="hover:bg-accent hover:text-accent-foreground p-4"><Scissors /></Link>
-        <Link href="/dashboard/product-transactions" className="hover:bg-accent hover:text-accent-foreground p-4"><ShoppingBag /></Link>
+        <Link href="/dashboard/transactions/haircuts" className="hover:bg-accent hover:text-accent-foreground p-4"><Scissors /></Link>
+        <Link href="/dashboard/transactions/products" className="hover:bg-accent hover:text-accent-foreground p-4"><ShoppingBag /></Link>
       </div>
     </div>
   );
