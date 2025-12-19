@@ -31,7 +31,7 @@ const Products = () => {
     fetchProducts();
   }, [])
   return (
-    <div className="grid xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
       {isLoading || !products ? (
         Array.from({ length: 10 }).map((_, index) => (
           <Card key={index}>
@@ -54,11 +54,11 @@ const Products = () => {
               height={1000}
               className=""
             />
-            <h2 className="text-2xl font-semibold">{name}</h2>
+            <h2 className="text-xl md:text-2xl font-semibold">{name}</h2>
           </CardContent>
           <CardFooter>
           <ButtonGroup className="grid grid-cols-2 gap-2 w-full">
-              <Button variant="secondary"><ShoppingCart />Tambah</Button>
+              <Button variant="secondary"><ShoppingCart />Troli</Button>
               <Button><ShoppingBag />Beli</Button>
             </ButtonGroup>
           </CardFooter>

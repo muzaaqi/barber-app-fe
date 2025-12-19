@@ -30,7 +30,7 @@ const Haircuts = () => {
     fetchHaircuts();
   }, [])
   return (
-    <div className="grid xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
       {isLoading || !haircuts ? (
         Array.from({ length: 10 }).map((_, index) => (
           <Card key={index}>
@@ -53,7 +53,7 @@ const Haircuts = () => {
               height={1000}
               className=""
             />
-            <h2 className="text-2xl font-semibold">{name}</h2>
+            <h2 className="text-xl md:text-2xl font-semibold">{name}</h2>
           </CardContent>
           <CardFooter>
             <Button className="w-full">PILIH</Button>
