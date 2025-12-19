@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import Haircuts from "@/components/haircuts";
-import Products from "@/components/productss";
+import Products from "@/components/products";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { useSearchParams, useRouter } from "next/navigation";
