@@ -44,14 +44,13 @@ const Haircuts = () => {
           </Card>
         ))
       ) : haircuts.map(({ id, name, image_url }) => (
-        <Card key={id}>
+        <Card key={id} className="hover:border-primary transition-colors duration-300">
           <CardContent className="text-center">
             <Image
               src={image_url}
               alt={name}
               width={1000}
               height={1000}
-              className=""
             />
             <h2 className="text-xl md:text-2xl font-semibold">{name}</h2>
           </CardContent>

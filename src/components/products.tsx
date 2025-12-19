@@ -45,7 +45,7 @@ const Products = () => {
           </Card>
         ))
       ) : products.map(({ id, name, image_url }) => (
-        <Card key={id}>
+        <Card key={id} className="hover:border-primary transition-colors duration-300">
           <CardContent className="text-center">
             <Image
               src={image_url}

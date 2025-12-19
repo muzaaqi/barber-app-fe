@@ -54,13 +54,11 @@ const Services = () => {
                 {name}
               </span>
             </CardHeader>
-
             <CardContent className="grow">
               <p className="text-muted-foreground">
                 {desc || "No description available."}
               </p>
             </CardContent>
-
             <CardFooter className="mt-auto flex items-center justify-between border-t">
               <div className="flex flex-col">
                 <span className="text-muted-foreground text-xs tracking-wide uppercase">
