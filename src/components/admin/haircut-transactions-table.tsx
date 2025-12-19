@@ -6,8 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
 import { api } from "@/lib/axios-instance";
 import GlobalPagination from "../global-pagination";
 import getAuthHeader from "@/features/get-jwt-token";
