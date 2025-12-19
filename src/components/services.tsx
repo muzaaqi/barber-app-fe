@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import SectionTitle from "./ui/text";
-import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import Image from "next/image";
 

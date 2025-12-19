@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Spinner } from "./ui/spinner";
 import Link from "next/link";
+import { registerAction } from "@/actions/register";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
@@ -28,29 +29,30 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
 
-  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   setRegisterLoading(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setRegisterLoading(true);
 
-  //   if (!name || !email || !password || !confirmPassword) {
-  //     setMsg("All fields are required.");
-  //     return;
-  //   }
+    if (!name || !email || !password || !confirmPassword) {
+      setMsg("All fields are required.");
+      setRegisterLoading(false);
+      return;
+    }
 
-  //   if (password !== confirmPassword) {
-  //     setMsg("Passwords do not match.");
-  //     return;
-  //   }
+    if (password !== confirmPassword) {
+      setMsg("Passwords do not match.");
+      return;
+    }
 
-  //   const result = await registerAction(name, email, password);
+    const result = await registerAction(name, email, password);
 
-  //   if (result.success) {
-  //     router.push("/login");
-  //   } else {
-  //     setMsg(result.message);
-  //   }
-  //   setRegisterLoading(false);
-  // }
+    if (result.success) {
+      router.push("/login");
+    } else {
+      setMsg(result.message);
+    }
+    setRegisterLoading(false);
+  }
   return (
     <Card {...props}>
       <CardHeader className="text-center">
@@ -62,7 +64,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={handleSubmit}>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="name">Nama</FieldLabel>
