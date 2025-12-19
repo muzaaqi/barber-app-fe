@@ -7,6 +7,7 @@ import { api } from "@/lib/axios-instance";
 import { Skeleton } from "./ui/skeleton";
 import { BookCheck } from "lucide-react";
 import { toast } from "sonner";
+import HaircutDialog from "./user/haircut-dialog";
 
 type Haircut = {
   id: string;
@@ -48,7 +49,7 @@ const Haircuts = () => {
               </CardFooter>
             </Card>
           ))
-        : haircuts.map(({ id, name, image_url }) => (
+        : haircuts.map(({ id, name, image_url, description }) => (
             <Card
               key={id}
               className="hover:border-primary transition-colors duration-300"
@@ -58,9 +59,7 @@ const Haircuts = () => {
                 <h2 className="text-xl font-semibold md:text-2xl">{name}</h2>
               </CardContent>
               <CardFooter>
-                <Button className="w-full">
-                  <BookCheck /> Pilih
-                </Button>
+                <HaircutDialog name={name} image_url={image_url} description={description} />
               </CardFooter>
             </Card>
           ))}
