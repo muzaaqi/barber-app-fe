@@ -3,23 +3,60 @@ import { Card, CardContent, CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/axios-instance";
+// const products = [
+//   {
+//     id: 1,
+//     name: "Hair Tonic",
+//     image_url: "/products/hair-tonic.png",
+//   },
+//   {
+//     id: 2,
+//     name: "Pomade",
+//     image_url: "/products/pomade.png",
+//   }
+// ];
+
+type Products = {
+  id: number;
+  name: string;
+  image_url: string;
+};
 
 const Products = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Hair Tonic",
-      image_url: "/products/hair-tonic.png",
-    },
-    {
-      id: 2,
-      name: "Pomade",
-      image_url: "/products/pomade.png",
-    }
-  ];
+  const [products, setProducts ] = useState<Products[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get("/products");
+        setProducts(response.data.data.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProducts();
+  }, [])
   return (
     <div className="grid xl:grid-cols-4 gap-4">
-      {products.map(({ id, name, image_url }) => (
+      {isLoading || !products ? (
+        Array.from({ length: 10 }).map((_, index) => (
+          <Card key={index}>
+            <CardContent className="text-center">
+              <Skeleton className="aspect-square mb-3"/>
+              <Skeleton className="h-10 w-full"/>
+            </CardContent>
+            <CardFooter>
+              <Skeleton className="w-full h-10"/>
+            </CardFooter>
+          </Card>
+        ))
+      ) : products.map(({ id, name, image_url }) => (
         <Card key={id}>
           <CardContent className="text-center">
             <Image
@@ -32,7 +69,7 @@ const Products = () => {
             <h2 className="text-2xl font-semibold">{name}</h2>
           </CardContent>
           <CardFooter>
-            <ButtonGroup className="grid grid-cols-2 gap-2 w-full">
+          <ButtonGroup className="grid grid-cols-2 gap-2 w-full">
               <Button variant="secondary"><ShoppingCart />Tambah</Button>
               <Button><ShoppingBag />Beli</Button>
             </ButtonGroup>
