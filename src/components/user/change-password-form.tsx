@@ -44,8 +44,12 @@ const ChangePasswordForm = () => {
       const res = await changePassword(payload);
       if (!res.success) {
         setErrorMessage(res.message);
+      } else {
+        toast.success(res.message);
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
       }
-      toast.success(res.message);
     } catch {
       setErrorMessage("Terjadi kesalahan saat mengubah password.");
     }
@@ -67,51 +71,62 @@ const ChangePasswordForm = () => {
               className="animate-in fade-in slide-in-from-top-1"
             >
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Gagal Masuk</AlertTitle>
+              <AlertTitle>Gagal</AlertTitle>
               <AlertDescription>{errorMessage}</AlertDescription>
             </Alert>
           )}
           <FieldGroup>
             <Field>
               <Label htmlFor="current-password">Password Saat Ini</Label>
-              <Lock className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
-              <Input
-                id="current-password"
-                type="password"
-                className="pl-9"
-                placeholder="Masukkan password saat ini"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-              />
+              <div className="relative">
+                <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                  id="current-password"
+                  type="password"
+                  className="pl-9"
+                  placeholder="Masukkan password saat ini"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+              </div>
             </Field>
             <Field>
               <Label htmlFor="new-password">Password Baru</Label>
-              <Lock className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
-              <Input
-                id="new-password"
-                type="password"
-                className="pl-9"
-                placeholder="Masukkan password baru"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
+              <div className="relative">
+                <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                  id="new-password"
+                  type="password"
+                  className="pl-9"
+                  placeholder="Masukkan password baru"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
             </Field>
             <Field>
               <Label htmlFor="confirm-password">Konfirmasi Password</Label>
-              <Lock className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
-              <Input
-                id="confirm-password"
-                type="password"
-                className="pl-9"
-                placeholder="Konfirmasi password baru"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
+              <div className="relative">
+                <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  className="pl-9"
+                  placeholder="Konfirmasi password baru"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
             </Field>
           </FieldGroup>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-2 pt-2">
-          <Button variant="secondary">Batal</Button>
+          <Button
+            variant="secondary"
+            type="button"
+          >
+            Reset
+          </Button>
           <Button type="submit">Perbarui Password</Button>
         </CardFooter>
       </form>
