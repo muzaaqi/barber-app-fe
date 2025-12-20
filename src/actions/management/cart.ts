@@ -21,11 +21,14 @@ const getCartData = async (): Promise<CartResponse | null> => {
 const addToCart = async (productId: string, quantity: number) => {
   try {
     const token = await getAuthHeader();
-    await api.post(
+    const res = await api.post(
       "/carts",
       { product_id: productId, quantity },
       { headers: { Authorization: `Bearer ${token}` } },
     );
+    if (res.status !== 201) {
+      throw new Error("Failed to add to cart");
+    }
     revalidatePath("/cart");
     return { success: true };
   } catch {
