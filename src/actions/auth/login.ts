@@ -10,9 +10,11 @@ export async function loginAction(email: string, password: string) {
       email,
       password,
     });
-
+    if (res.status !== 200) {
+      return { success: false, message: "Login error" };
+    }
+    
     const token = res.data.data.token;
-
     const cookieStore = await cookies();
     cookieStore.set("token", token, {
       httpOnly: true,

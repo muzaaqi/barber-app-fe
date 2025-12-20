@@ -19,6 +19,7 @@ import { useState } from "react";
 import { Spinner } from "./ui/spinner";
 import Link from "next/link";
 import { registerAction } from "@/actions/auth/register";
+import { toast } from "sonner";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
@@ -44,12 +45,13 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       return;
     }
 
-    const result = await registerAction(name, email, password);
+    const res = await registerAction(name, email, password);
 
-    if (result.success) {
+    if (res.success) {
+      toast.success("Akun berhasil dibuat. Silakan masuk.");
       router.push("/login");
     } else {
-      setMsg(result.message);
+      setMsg(res.message);
     }
     setRegisterLoading(false);
   };
@@ -117,7 +119,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               </Field>
               <Field>
                 <Button type="submit" disabled={registerLoading}>
-                  {registerLoading ? <Spinner /> : "Create Account"}
+                  {registerLoading ? <Spinner /> : "Buat Akun"}
                 </Button>
                 <FieldDescription className="px-6 text-center">
                   Sudah punya akun? <Link href="/login">Masuk</Link>

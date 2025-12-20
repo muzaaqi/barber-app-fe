@@ -20,6 +20,7 @@ import { useState } from "react";
 import { loginAction } from "@/actions/auth/login";
 import { useRouter } from "next/navigation";
 import { Spinner } from "./ui/spinner";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -44,6 +45,7 @@ export function LoginForm({
     const result = await loginAction(email, password);
 
     if (result.success) {
+      toast.success("Berhasil masuk.");
       router.push("/");
     } else {
       setMsg(result.message);

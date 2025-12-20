@@ -9,7 +9,9 @@ export async function registerAction(name: string, email: string, password: stri
       email,
       password,
     });
-
+    if (res.status !== 201) {
+      return { success: false, message: "Registrasi gagal." };
+    }
     return { success: true, message: "Akun berhasil dibuat." };
   } catch (err: unknown) {
     return {

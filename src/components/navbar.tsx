@@ -98,7 +98,11 @@ const Navbar = async () => {
         </div>
         <div className="hidden items-center justify-end gap-3 lg:flex">
           <AuthButton user={user} />
-
+          {user && user.role === "user" && (
+            <Link href="/me/my-cart">
+              <ShoppingCart className="text-primary"/>
+            </Link>
+          )}
           <ThemeSwitch />
         </div>
       </div>
