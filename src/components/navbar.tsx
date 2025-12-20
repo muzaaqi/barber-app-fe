@@ -86,12 +86,12 @@ const Navbar = async () => {
                   <>
                     <DropdownMenuItem asChild>
                       <Link href="/me/cart">
-                        <ShoppingCart /> My Cart
+                        <ShoppingCart /> Troli
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/me/history">
-                        <Clock /> History
+                        <Clock /> Riwayat
                       </Link>
                     </DropdownMenuItem>
                   </>
@@ -119,7 +119,7 @@ const Navbar = async () => {
         <div className="hidden items-center justify-end gap-3 lg:flex">
           <AuthButton user={user} />
           {user && user.role === "user" && (
-            <Link href="/me/my-cart">
+            <Link href="/me/cart">
               <ShoppingCart className="text-primary" />
             </Link>
           )}
