@@ -7,9 +7,8 @@ import getAuthHeader from "@/features/get-jwt-token";
 
 const getCartData = async (): Promise<CartResponse | null> => {
   try {
-    const token = await getAuthHeader();
     const res = await api.get("/carts/", {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
     if (res.status !== 200) {
       throw new Error("Failed to fetch cart");
@@ -23,11 +22,10 @@ const getCartData = async (): Promise<CartResponse | null> => {
 
 const addToCart = async (productId: string, quantity: number) => {
   try {
-    const token = await getAuthHeader();
     const res = await api.post(
       "/carts",
       { product_id: productId, quantity },
-      { headers: { Authorization: `Bearer ${token}` } },
+      { headers: { Authorization: `Bearer ${await getAuthHeader()}` } },
     );
     if (res.status !== 201) {
       throw new Error("Failed to add to cart");
@@ -41,11 +39,10 @@ const addToCart = async (productId: string, quantity: number) => {
 
 const updateCartQuantity = async (cartId: string, quantity: number) => {
   try {
-    const token = await getAuthHeader();
     const res = await api.put(
       `/carts/${cartId}`,
       { quantity },
-      { headers: { Authorization: `Bearer ${token}` } },
+      { headers: { Authorization: `Bearer ${await getAuthHeader()}` } },
     );
     if (res.status !== 200) {
       throw new Error("Failed to update cart quantity");
@@ -59,9 +56,8 @@ const updateCartQuantity = async (cartId: string, quantity: number) => {
 
 const deleteCartItem = async (cartId: string) => {
   try {
-    const token = await getAuthHeader();
     const res = await api.delete(`/carts/${cartId}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
     if (res.status !== 200) {
       throw new Error("Failed to delete cart item");
