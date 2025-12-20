@@ -1,8 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Loader2 } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
@@ -18,6 +20,44 @@ type Products = {
   stock: number;
   price: number;
   image_url: string;
+};
+
+const AddToCartButton = ({ productId }: { productId: string }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsSubmitting(true);
+
+    try {
+      await api.post("/carts", {
+        product_id: productId,
+        quantity: 1,
+      });
+      toast.success("Produk berhasil ditambahkan ke troli");
+    } catch {
+      toast.error("Gagal menambahkan ke troli");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Button
+      variant="secondary"
+      onClick={handleAddToCart}
+      disabled={isSubmitting}
+      className="pointer-events-auto"
+    >
+      {isSubmitting ? (
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      ) : (
+        <ShoppingCart className="mr-2 h-4 w-4" />
+      )}
+      Troli
+    </Button>
+  );
 };
 
 const Products = () => {
@@ -39,6 +79,7 @@ const Products = () => {
     };
     fetchProducts();
   }, []);
+
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
       {isLoading || !products
@@ -59,45 +100,43 @@ const Products = () => {
               key={id}
               className="no-underline"
             >
-              <Card
-                key={id}
-                className="hover:border-primary transition-colors duration-300"
-              >
-                <CardContent className="text-center">
-                  <Image
-                    src={image_url}
-                    alt={name}
-                    width={1000}
-                    height={1000}
-                    className=""
-                  />
+              <Card className="hover:border-primary flex h-full flex-col justify-between transition-colors duration-300">
+                <CardContent className="p-4 text-center">
+                  <div className="bg-muted relative mb-4 aspect-square w-full overflow-hidden rounded-md">
+                    <Image
+                      src={image_url}
+                      alt={name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div>
-                    <h2 className="text-xl font-semibold md:text-2xl">
+                    <h2 className="line-clamp-2 min-h-[3rem] text-base font-semibold md:text-xl">
                       {name}
                     </h2>
-                    <h2>{formatIDR(price)}</h2>
+                    <h2 className="text-primary mt-2 font-bold">
+                      {formatIDR(price)}
+                    </h2>
                   </div>
                 </CardContent>
-                <CardFooter>
-                  <ButtonGroup
-                    className="grid w-full grid-cols-2 gap-2 pointer-events-none md:pointer-events-auto"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    <Button variant="secondary">
-                      <ShoppingCart />
-                      Troli
-                    </Button>
-                    <ProductDialog
-                      id={id}
-                      name={name}
-                      description={description}
-                      stock={stock}
-                      price={price}
-                      image_url={image_url}
-                    />
+                <CardFooter className="p-4 pt-0">
+                  <ButtonGroup className="grid w-full grid-cols-2 gap-2">
+                    <AddToCartButton productId={id} />
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                    >
+                      <ProductDialog
+                        id={id}
+                        name={name}
+                        description={description}
+                        stock={stock}
+                        price={price}
+                        image_url={image_url}
+                      />
+                    </div>
                   </ButtonGroup>
                 </CardFooter>
               </Card>
