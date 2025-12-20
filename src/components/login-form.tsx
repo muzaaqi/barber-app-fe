@@ -21,6 +21,8 @@ import { loginAction } from "@/actions/auth/login";
 import { useRouter } from "next/navigation";
 import { Spinner } from "./ui/spinner";
 import { toast } from "sonner";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export function LoginForm({
   className,
@@ -28,7 +30,7 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const router = useRouter();
 
@@ -37,7 +39,7 @@ export function LoginForm({
     setLoginLoading(true);
 
     if (!email || !password) {
-      setMsg("All fields are required.");
+      setErrorMessage("All fields are required.");
       setLoginLoading(false);
       return;
     }
@@ -48,7 +50,7 @@ export function LoginForm({
       toast.success("Berhasil masuk.");
       router.push("/");
     } else {
-      setMsg(result.message);
+      setErrorMessage(result.message);
     }
     setLoginLoading(false);
   };
@@ -64,6 +66,16 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {errorMessage && (
+            <Alert
+              variant="destructive"
+              className="animate-in fade-in slide-in-from-top-1"
+            >
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Gagal Masuk</AlertTitle>
+              <AlertDescription>{errorMessage}</AlertDescription>
+            </Alert>
+          )}
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>

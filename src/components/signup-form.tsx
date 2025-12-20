@@ -20,10 +20,12 @@ import { Spinner } from "./ui/spinner";
 import Link from "next/link";
 import { registerAction } from "@/actions/auth/register";
 import { toast } from "sonner";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
-  const [msg, setMsg] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,13 +37,13 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     setRegisterLoading(true);
 
     if (!name || !email || !password || !confirmPassword) {
-      setMsg("All fields are required.");
+      setErrorMessage("All fields are required.");
       setRegisterLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      setMsg("Passwords do not match.");
+      setErrorMessage("Passwords do not match.");
       return;
     }
 
@@ -51,7 +53,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       toast.success("Akun berhasil dibuat. Silakan masuk.");
       router.push("/login");
     } else {
-      setMsg(res.message);
+      setErrorMessage(res.message);
     }
     setRegisterLoading(false);
   };
@@ -66,6 +68,16 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {errorMessage && (
+          <Alert
+            variant="destructive"
+            className="animate-in fade-in slide-in-from-top-1"
+          >
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Gagal Masuk</AlertTitle>
+            <AlertDescription>{errorMessage}</AlertDescription>
+          </Alert>
+        )}
         <form onSubmit={handleSubmit}>
           <FieldGroup>
             <Field>
@@ -114,9 +126,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               <FieldDescription>Konfirmasi password anda</FieldDescription>
             </Field>
             <FieldGroup>
-              <Field>
-                {msg && <p className="text-destructive text-sm">{msg}</p>}
-              </Field>
               <Field>
                 <Button type="submit" disabled={registerLoading}>
                   {registerLoading ? <Spinner /> : "Buat Akun"}
