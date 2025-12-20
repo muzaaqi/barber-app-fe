@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Mail, Shield, User as UserIcon, LogOut, Settings } from "lucide-react";
 import { getInitials } from '@/features/formatter';
+import { redirect } from 'next/navigation';
 
 type User = {
   id: string;
@@ -23,15 +24,14 @@ type User = {
 
 const MyProfilePage = async () => {
   const user: User = await getProfile();
-
   if (!user) {
-    return <div className="p-10 text-center">User not found. Please login.</div>;
+    return redirect('/login');
   }
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-muted/40 p-4">
+    <div className="flex min-h-screen w-full items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="flex flex-col items-center gap-4 pb-2">
-          <Avatar className="h-24 w-24 border-4 border-background shadow-sm">
+          <Avatar className="size-24 border-4 shadow-sm">
             <AvatarImage src="" alt={user.name} />
             <AvatarFallback className="text-2xl font-bold bg-primary/10 text-primary">
               {getInitials(user.name)}
