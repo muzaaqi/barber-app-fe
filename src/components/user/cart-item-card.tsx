@@ -41,7 +41,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
 
   return (
     <Card className="mb-4 overflow-hidden border shadow-sm">
-      <CardContent className="p-0 sm:flex">
+      <CardContent className="sm:flex">
         <div className="relative h-32 w-full shrink-0 bg-muted sm:w-32">
           <Image
             src={item.product_image || "/placeholder.jpg"}
