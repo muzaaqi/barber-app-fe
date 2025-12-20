@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Home, Info, Scissors, Menu, MapPin } from "lucide-react";
+import { Home, Info, Scissors, Menu, MapPin, ShoppingCart, LayoutDashboard } from "lucide-react";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { getProfile } from "@/actions/auth/get-profile";
 const Navbar = async () => {
@@ -39,7 +39,7 @@ const Navbar = async () => {
   return (
     <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b px-5 py-4 backdrop-blur-sm 2xl:px-0">
       <div className="container flex justify-between font-mono lg:grid lg:grid-cols-3">
-        <div className="text-primary text-2xl font-extrabold items-center flex">
+        <div className="text-primary flex items-center text-2xl font-extrabold">
           <Link href="/">
             <h1>BERGAS</h1>
           </Link>
@@ -67,6 +67,15 @@ const Navbar = async () => {
                   NAVIGASI
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                {user?.role === "admin" ? (
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard"><LayoutDashboard /> Dashboard</Link>
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem asChild>
+                    <Link href="/me/my-cart"><ShoppingCart /> My Cart</Link>
+                  </DropdownMenuItem>
+                )}
                 {navItems.map(({ name, url, icon }) => (
                   <DropdownMenuItem key={name} asChild>
                     <Link href={url}>
@@ -81,14 +90,15 @@ const Navbar = async () => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <MobileAuthButton />
+                  <MobileAuthButton user={user} />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
         <div className="hidden items-center justify-end gap-3 lg:flex">
-          <AuthButton />
+          <AuthButton user={user} />
+
           <ThemeSwitch />
         </div>
       </div>

@@ -1,11 +1,9 @@
-import { getProfile } from "@/actions/auth/get-profile";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
 import Link from "next/link";
 import Image from "next/image";
 
-export default async function AuthButton() {
-  const user = await getProfile();
+export default async function AuthButton({user}: {user?: {name: string; email: string, role: string}}) {
   return (
     <>
       {user ? (
@@ -42,8 +40,7 @@ export default async function AuthButton() {
   );
 }
 
-const MobileAuthButton = async () => {
-  const user = await getProfile();
+const MobileAuthButton = async ({user}: {user?: {name: string; email: string, role: string}}) => {
   return (
     <>
       {user ? (
