@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "./ui/card";
-import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
-import { ShoppingCart } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
@@ -12,8 +10,7 @@ import { toast } from "sonner";
 import ProductDialog from "./user/product-dialog";
 import { formatIDR } from "@/features/formatter";
 import Link from "next/link";
-import { Spinner } from "./ui/spinner";
-import { addToCart } from "@/actions/management/cart";
+import AddToCartButton from "./user/add-to-cart-btn";
 
 type Products = {
   id: string;
@@ -22,41 +19,6 @@ type Products = {
   stock: number;
   price: number;
   image_url: string;
-};
-
-const AddToCartButton = ({ productId }: { productId: string }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleAddToCart = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsSubmitting(true);
-
-    try {
-      const res = await addToCart(productId, 1);
-      if (!res.success) {
-        toast.error(res.message);
-        return;
-      }
-      toast.success("Produk berhasil ditambahkan ke troli");
-    } catch {
-      toast.error("Gagal menambahkan ke troli");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <Button
-      variant="secondary"
-      onClick={handleAddToCart}
-      disabled={isSubmitting}
-      className="pointer-events-auto"
-    >
-      {isSubmitting ? <Spinner /> : <ShoppingCart className="mr-2 h-4 w-4" />}
-      Troli
-    </Button>
-  );
 };
 
 const Products = () => {
