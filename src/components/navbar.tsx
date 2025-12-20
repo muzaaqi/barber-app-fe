@@ -85,7 +85,7 @@ const Navbar = async () => {
                 ) : (
                   <>
                     <DropdownMenuItem asChild>
-                      <Link href="/me/my-cart">
+                      <Link href="/me/cart">
                         <ShoppingCart /> My Cart
                       </Link>
                     </DropdownMenuItem>
