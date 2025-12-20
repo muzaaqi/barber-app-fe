@@ -9,7 +9,7 @@ export async function proxy(req: NextRequest) {
 
   const pathname = nextUrl.pathname;
 
-  const protectedRoutes = ["/my-todos"];
+  const protectedRoutes = ["/me"];
 
   const authPath = ["/login", "/signup"];
 
