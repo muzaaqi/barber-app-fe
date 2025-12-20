@@ -1,11 +1,13 @@
 "use client";
 
+import { Suspense } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 import HaircutHistory from "@/components/user/haircut-history";
 import ProductHistory from "@/components/user/product-history";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function HistoryPage() {
+function HistoryContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -39,5 +41,27 @@ export default function HistoryPage() {
         </TabsContent>
       </Tabs>
     </div>
+  );
+}
+
+const HistoryPageSkeleton = () => (
+  <div className="container max-w-4xl mx-auto py-8 px-4 sm:px-6">
+    <div className="mb-8 space-y-2">
+      <Skeleton className="h-10 w-48" />
+      <Skeleton className="h-5 w-96" />
+    </div>
+    <Skeleton className="h-10 w-full mb-8" />
+    <div className="space-y-4">
+      <Skeleton className="h-40 w-full rounded-xl" />
+      <Skeleton className="h-40 w-full rounded-xl" />
+    </div>
+  </div>
+);
+
+export default function HistoryPage() {
+  return (
+    <Suspense fallback={<HistoryPageSkeleton />}>
+      <HistoryContent />
+    </Suspense>
   );
 }
