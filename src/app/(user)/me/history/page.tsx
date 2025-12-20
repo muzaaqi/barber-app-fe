@@ -11,7 +11,7 @@ function HistoryContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  const handleTabChange = (val: string) => {
+  const handleTabChange = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", "1"); 
     router.replace(`?${params.toString()}`);
@@ -25,7 +25,6 @@ function HistoryContent() {
           Lihat semua status pemesanan layanan dan pembelian produk Anda.
         </p>
       </div>
-
       <Tabs defaultValue="haircut" className="w-full" onValueChange={handleTabChange}>
         <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="haircut">Layanan Potong Rambut</TabsTrigger>

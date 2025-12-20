@@ -14,7 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
-import { Package, Truck } from "lucide-react";
+import { Truck } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import { Separator } from "@/components/ui/separator";
 import getAuthHeader from "@/features/get-jwt-token";

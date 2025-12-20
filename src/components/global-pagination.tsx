@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   currentPage: number;
@@ -16,7 +16,6 @@ type Props = {
 };
 
 const GlobalPagination = ({ currentPage, totalPages }: Props) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const createPageLink = (page: number) => {
