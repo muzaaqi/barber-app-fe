@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
-import { ShoppingCart, Loader2 } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
@@ -12,6 +12,8 @@ import { toast } from "sonner";
 import ProductDialog from "./user/product-dialog";
 import { formatIDR } from "@/features/formatter";
 import Link from "next/link";
+import { Spinner } from "./ui/spinner";
+import { addToCart } from "@/actions/management/cart";
 
 type Products = {
   id: string;
@@ -31,10 +33,11 @@ const AddToCartButton = ({ productId }: { productId: string }) => {
     setIsSubmitting(true);
 
     try {
-      await api.post("/carts", {
-        product_id: productId,
-        quantity: 1,
-      });
+      const res = await addToCart(productId, 1);
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
       toast.success("Produk berhasil ditambahkan ke troli");
     } catch {
       toast.error("Gagal menambahkan ke troli");
@@ -50,11 +53,7 @@ const AddToCartButton = ({ productId }: { productId: string }) => {
       disabled={isSubmitting}
       className="pointer-events-auto"
     >
-      {isSubmitting ? (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      ) : (
-        <ShoppingCart className="mr-2 h-4 w-4" />
-      )}
+      {isSubmitting ? <Spinner /> : <ShoppingCart className="mr-2 h-4 w-4" />}
       Troli
     </Button>
   );
@@ -101,7 +100,7 @@ const Products = () => {
               className="no-underline"
             >
               <Card className="hover:border-primary flex h-full flex-col justify-between transition-colors duration-300">
-                <CardContent className="p-4 text-center">
+                <CardContent className="text-center">
                   <div className="bg-muted relative mb-4 aspect-square w-full overflow-hidden rounded-md">
                     <Image
                       src={image_url}
@@ -111,7 +110,7 @@ const Products = () => {
                     />
                   </div>
                   <div>
-                    <h2 className="line-clamp-2 min-h-[3rem] text-base font-semibold md:text-xl">
+                    <h2 className="line-clamp-2 text-base font-semibold md:text-xl">
                       {name}
                     </h2>
                     <h2 className="text-primary mt-2 font-bold">
@@ -119,7 +118,7 @@ const Products = () => {
                     </h2>
                   </div>
                 </CardContent>
-                <CardFooter className="p-4 pt-0">
+                <CardFooter>
                   <ButtonGroup className="grid w-full grid-cols-2 gap-2">
                     <AddToCartButton productId={id} />
                     <div
