@@ -61,7 +61,7 @@ const ProfileCard = async () => {
       <Separator className="my-4" />
       <CardContent className="space-y-4">
         <div className="text-muted-foreground mb-2 text-sm font-medium tracking-wider uppercase">
-          Account Details
+          Detail Akun
         </div>
         <div className="bg-card/50 flex items-center gap-3 rounded-lg border p-3">
           <div className="bg-accent flex h-9 w-9 items-center justify-center rounded-full">
@@ -79,7 +79,7 @@ const ProfileCard = async () => {
             <Mail className="text-muted-foreground h-4 w-4" />
           </div>
           <div className="flex flex-col">
-            <span className="text-muted-foreground text-xs">Email Address</span>
+            <span className="text-muted-foreground text-xs">Alamat Email</span>
             <span className="text-sm font-medium">{user.email}</span>
           </div>
         </div>
@@ -88,7 +88,7 @@ const ProfileCard = async () => {
             <Shield className="text-muted-foreground h-4 w-4" />
           </div>
           <div className="flex flex-col">
-            <span className="text-muted-foreground text-xs">Access Level</span>
+            <span className="text-muted-foreground text-xs">Level Akses</span>
             <span className="text-sm font-medium capitalize">
               {user.role} Privilege
             </span>

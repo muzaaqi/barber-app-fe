@@ -16,7 +16,7 @@ const MyProfilePage = async () => {
     <div className="flex min-h-screen w-full items-center justify-center p-4 bg-muted/20">
       <Tabs defaultValue="profile" className="w-full max-w-md">
         <TabsList className="grid w-full grid-cols-2 mb-4">
-          <TabsTrigger value="profile"><UserIcon /> Profile</TabsTrigger>
+          <TabsTrigger value="profile"><UserIcon /> Profil</TabsTrigger>
           <TabsTrigger value="security"><Lock /> Password</TabsTrigger>
         </TabsList>
         <TabsContent value="profile">

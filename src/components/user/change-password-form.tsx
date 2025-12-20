@@ -15,52 +15,52 @@ const ChangePasswordForm = () => {
   return (
     <Card className="shadow-lg">
       <CardHeader>
-        <CardTitle>Change Password</CardTitle>
+        <CardTitle>Ubah Password</CardTitle>
         <CardDescription>
-          Update your password to keep your account secure.
+          Pastikan password Anda kuat dan aman.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="current-password">Current Password</Label>
+          <Label htmlFor="current-password">Password Saat Ini</Label>
           <div className="relative">
             <Lock className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
             <Input
               id="current-password"
               type="password"
               className="pl-9"
-              placeholder="Enter current password"
+              placeholder="Masukkan password saat ini"
             />
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="new-password">New Password</Label>
+          <Label htmlFor="new-password">Password Baru</Label>
           <div className="relative">
             <Lock className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
             <Input
               id="new-password"
               type="password"
               className="pl-9"
-              placeholder="Enter new password"
+              placeholder="Masukkan password baru"
             />
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="confirm-password">Confirm Password</Label>
+          <Label htmlFor="confirm-password">Konfirmasi Password</Label>
           <div className="relative">
             <Lock className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
             <Input
               id="confirm-password"
               type="password"
               className="pl-9"
-              placeholder="Confirm new password"
+              placeholder="Konfirmasi password baru"
             />
           </div>
         </div>
       </CardContent>
       <CardFooter className="grid grid-cols-2 gap-2 pt-2">
-        <Button variant="secondary">Cancel</Button>
-        <Button>Update Password</Button>
+        <Button variant="secondary">Batal</Button>
+        <Button>Perbarui Password</Button>
       </CardFooter>
     </Card>
   );
