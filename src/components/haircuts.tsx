@@ -1,13 +1,12 @@
 "use client";
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "./ui/card";
-import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/axios-instance";
 import { Skeleton } from "./ui/skeleton";
-import { BookCheck } from "lucide-react";
 import { toast } from "sonner";
 import HaircutDialog from "./user/haircut-dialog";
+import Link from "next/link";
 
 type Haircut = {
   id: string;
@@ -50,18 +49,39 @@ const Haircuts = () => {
             </Card>
           ))
         : haircuts.map(({ id, name, image_url, description }) => (
-            <Card
+            <Link
+              href={`/services/haircut/${id}`}
               key={id}
-              className="hover:border-primary transition-colors duration-300"
+              className="no-underline"
             >
-              <CardContent className="text-center">
-                <Image src={image_url} alt={name} width={1000} height={1000} />
-                <h2 className="text-xl font-semibold md:text-2xl">{name}</h2>
-              </CardContent>
-              <CardFooter>
-                <HaircutDialog name={name} image_url={image_url} description={description} />
-              </CardFooter>
-            </Card>
+              <Card className="hover:border-primary transition-colors duration-300">
+                <CardContent className="text-center">
+                  <Image
+                    src={image_url}
+                    alt={name}
+                    width={1000}
+                    height={1000}
+                  />
+                  <h2 className="text-xl font-semibold md:text-2xl">{name}</h2>
+                </CardContent>
+                <CardFooter>
+                  <div
+                    className="w-full pointer-events-none md:pointer-events-auto"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  >
+                    <HaircutDialog
+                      id={id}
+                      name={name}
+                      image_url={image_url}
+                      description={description}
+                    />
+                  </div>
+                </CardFooter>
+              </Card>
+            </Link>
           ))}
     </div>
   );
