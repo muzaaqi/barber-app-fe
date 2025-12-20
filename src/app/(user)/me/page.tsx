@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Mail, Shield, User as UserIcon, LogOut, Settings } from "lucide-react";
+import { getInitials } from '@/features/formatter';
 
 type User = {
   id: string;
@@ -26,15 +27,6 @@ const MyProfilePage = async () => {
   if (!user) {
     return <div className="p-10 text-center">User not found. Please login.</div>;
   }
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
-  };
-
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-muted/40 p-4">
       <Card className="w-full max-w-md shadow-lg">
