@@ -8,7 +8,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Home, Info, Scissors, Menu, MapPin, ShoppingCart, LayoutDashboard } from "lucide-react";
+import {
+  Home,
+  Info,
+  Scissors,
+  Menu,
+  MapPin,
+  ShoppingCart,
+  LayoutDashboard,
+  Clock,
+} from "lucide-react";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { getProfile } from "@/actions/auth/get-profile";
 const Navbar = async () => {
@@ -69,12 +78,23 @@ const Navbar = async () => {
                 <DropdownMenuSeparator />
                 {user?.role === "admin" ? (
                   <DropdownMenuItem asChild>
-                    <Link href="/dashboard"><LayoutDashboard /> Dashboard</Link>
+                    <Link href="/dashboard">
+                      <LayoutDashboard /> Dashboard
+                    </Link>
                   </DropdownMenuItem>
                 ) : (
-                  <DropdownMenuItem asChild>
-                    <Link href="/me/my-cart"><ShoppingCart /> My Cart</Link>
-                  </DropdownMenuItem>
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link href="/me/my-cart">
+                        <ShoppingCart /> My Cart
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/me/history">
+                        <Clock /> History
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
                 )}
                 {navItems.map(({ name, url, icon }) => (
                   <DropdownMenuItem key={name} asChild>
@@ -100,7 +120,7 @@ const Navbar = async () => {
           <AuthButton user={user} />
           {user && user.role === "user" && (
             <Link href="/me/my-cart">
-              <ShoppingCart className="text-primary"/>
+              <ShoppingCart className="text-primary" />
             </Link>
           )}
           <ThemeSwitch />
