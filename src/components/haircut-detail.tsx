@@ -76,12 +76,12 @@ const HaircutDetail = () => {
       finalDateTime.setHours(parseInt(hours), parseInt(minutes));
 
       const payload = {
-        haircut_id: haircut?.id,
-        haircut_name: haircut?.name,
-        booking_datetime: finalDateTime.toISOString(),
+        haircut_id: haircutId,
+        reservation_time: finalDateTime.toISOString(),
         payment_method: paymentMethod,
-        add_on_keramas: isKeramas === "true",
-        total_price: isKeramas === "true" ? 50000 : 35000,
+        payment_status: paymentMethod === "cash" ? "pending" : "paid",
+        hairwash: isKeramas === "true",
+        total_price: isKeramas === "true" ? 20000 : 15000,
       };
 
       const res = await api.post("/haircut-transactions", payload);
@@ -317,7 +317,7 @@ const HaircutDetail = () => {
                               <span>Potong Saja</span>
                             </span>
                             <span className="text-sm font-medium">
-                              Rp35.000
+                              Rp15.000
                             </span>
                           </Label>
 
@@ -334,7 +334,7 @@ const HaircutDetail = () => {
                               <span>Potong + Keramas</span>
                             </span>
                             <span className="text-sm font-medium">
-                              Rp50.000
+                              Rp20.000
                             </span>
                           </Label>
                         </RadioGroup>
@@ -347,7 +347,7 @@ const HaircutDetail = () => {
                         Total Estimasi
                       </span>
                       <span className="text-primary text-2xl font-bold">
-                        {isKeramas === "true" ? "Rp50.000" : "Rp35.000"}
+                        {isKeramas === "true" ? "Rp20.000" : "Rp15.000"}
                       </span>
                     </div>
                     <Button

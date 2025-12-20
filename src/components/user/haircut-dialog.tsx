@@ -65,7 +65,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
       payment_method: paymentMethod,
       payment_status: paymentMethod === "cash" ? "pending" : "paid",
       hairwash: isKeramas === "true",
-      total_price: isKeramas === "true" ? 50000 : 35000,
+      total_price: isKeramas === "true" ? 20000 : 15000,
     };
 
     try {
@@ -211,7 +211,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
                         <RadioGroupItem value="false" id="dialog-r1" />
                         <span className="text-sm">Potong Saja</span>
                       </span>
-                      <span className="text-sm font-medium">Rp35.000</span>
+                      <span className="text-sm font-medium">Rp15.000</span>
                     </Label>
 
                     <Label
@@ -226,7 +226,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
                         <RadioGroupItem value="true" id="dialog-r2" />
                         <span className="text-sm">Potong + Keramas</span>
                       </span>
-                      <span className="text-sm font-medium">Rp50.000</span>
+                      <span className="text-sm font-medium">Rp20.000</span>
                     </Label>
                   </RadioGroup>
                 </Field>
@@ -235,7 +235,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
                     Total Estimasi
                   </span>
                   <span className="text-primary text-xl font-bold">
-                    {isKeramas === "true" ? "Rp50.000" : "Rp35.000"}
+                    {isKeramas === "true" ? "Rp20.000" : "Rp15.000"}
                   </span>
                 </div>
               </FieldGroup>
