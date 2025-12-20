@@ -341,7 +341,7 @@ const HaircutDetail = () => {
                       </Field>
                     </FieldGroup>
                   </CardContent>
-                  <CardFooter className="flex flex-col gap-4">
+                  <CardFooter className="flex flex-col gap-4 border-t">
                     <div className="flex w-full items-center justify-between">
                       <span className="text-muted-foreground text-sm">
                         Total Estimasi
