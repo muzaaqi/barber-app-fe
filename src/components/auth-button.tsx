@@ -2,6 +2,8 @@ import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
 import Link from "next/link";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { getInitials } from "@/features/formatter";
 
 export default async function AuthButton({
   user,
@@ -18,13 +20,12 @@ export default async function AuthButton({
               <p className="text-muted-foreground text-sm">{user.email}</p>
             </div>
             <div className="flex items-center">
-              <Image
-                src="/default_avatar.svg"
-                alt="User Avatar"
-                width={40}
-                height={40}
-                className="aspect-square rounded-full object-cover"
-              />
+              <Avatar className="aspect-square size-12 border shadow-sm">
+                <AvatarImage src="" alt={user.name} />
+                <AvatarFallback className="bg-primary/10 text-primary text-2xl font-bold">
+                  {getInitials(user.name)}
+                </AvatarFallback>
+              </Avatar>
             </div>
           </div>
         </Link>
