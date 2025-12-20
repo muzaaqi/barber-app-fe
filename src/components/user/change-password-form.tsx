@@ -25,6 +25,11 @@ const ChangePasswordForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setErrorMessage("Semua field harus diisi.");
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       setErrorMessage("Password baru dan konfirmasi tidak sesuai.");
       return;
