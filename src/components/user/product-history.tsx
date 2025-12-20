@@ -18,6 +18,7 @@ import { Package, Truck } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import { Separator } from "@/components/ui/separator";
 import getAuthHeader from "@/features/get-jwt-token";
+import { toast } from "sonner";
 
 export default function ProductHistory() {
   const searchParams = useSearchParams();
@@ -39,11 +40,12 @@ export default function ProductHistory() {
             },
           }
         );
-        // Akses response.data.data karena struktur API anda: { data: { data: [], pagination: {} } }
         setData(res.data.data.data);
         setMeta(res.data.data.pagination);
       } catch (error) {
-        console.error("Failed to fetch product history", error);
+        toast.error("Gagal memuat riwayat pembelian produk.", {
+          description: String(error),
+        });
       } finally {
         setLoading(false);
       }
@@ -65,7 +67,7 @@ export default function ProductHistory() {
   return (
     <div className="space-y-6">
       {data.map((transaction) => (
-        <Card key={transaction.id} className="border shadow-sm">
+        <Card key={transaction.id} className="border shadow-sm py-0">
           <CardHeader className="bg-muted/30 flex flex-row items-center justify-between border-b p-4">
             <div className="flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:gap-4">
               <span className="text-muted-foreground font-semibold">

@@ -12,6 +12,7 @@ import Image from "next/image";
 import { CalendarDays, Clock, Scissors } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import getAuthHeader from "@/features/get-jwt-token";
+import { toast } from "sonner";
 
 export default function HaircutHistory() {
   const searchParams = useSearchParams();
@@ -26,17 +27,20 @@ export default function HaircutHistory() {
       setLoading(true);
       try {
         const res = await api.get(
-          `/haircut-transactions/user?page=${page}&limit=5`, {
+          `/haircut-transactions/user?page=${page}&limit=5`,
+          {
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${await getAuthHeader()}`
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${await getAuthHeader()}`,
             },
-          }
+          },
         );
         setData(res.data.data.data);
         setMeta(res.data.data.pagination);
       } catch (error) {
-        console.error("Failed to fetch haircut history", error);
+        toast.error("Gagal memuat riwayat booking.", {
+          description: String(error),
+        });
       } finally {
         setLoading(false);
       }
@@ -63,7 +67,7 @@ export default function HaircutHistory() {
           className="hover:border-primary/50 overflow-hidden transition-colors"
         >
           <CardContent className="sm:flex">
-            <div className="bg-muted relative h-40 w-full shrink-0 sm:w-48">
+            <div className="bg-muted relative h-48 w-full shrink-0 sm:h-auto sm:w-48 rounded-xl overflow-hidden">
               <Image
                 src={item.haircut?.image_url || "/placeholder.jpg"}
                 alt={item.haircut?.name || "Service"}
@@ -128,7 +132,6 @@ export default function HaircutHistory() {
     </div>
   );
 }
-
 
 const StatusBadge = ({
   status,
