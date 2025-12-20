@@ -11,6 +11,9 @@ const getCartData = async (): Promise<CartResponse | null> => {
     const res = await api.get("/carts/", {
       headers: { Authorization: `Bearer ${token}` },
     });
+    if (res.status !== 200) {
+      throw new Error("Failed to fetch cart");
+    }
     return res.data.data;
   } catch (error) {
     console.error("Failed to fetch cart:", error);
@@ -39,11 +42,14 @@ const addToCart = async (productId: string, quantity: number) => {
 const updateCartQuantity = async (cartId: string, quantity: number) => {
   try {
     const token = await getAuthHeader();
-    await api.put(
+    const res = await api.put(
       `/carts/${cartId}`,
       { quantity },
       { headers: { Authorization: `Bearer ${token}` } },
     );
+    if (res.status !== 200) {
+      throw new Error("Failed to update cart quantity");
+    }
     revalidatePath("/cart");
     return { success: true };
   } catch {
@@ -54,9 +60,12 @@ const updateCartQuantity = async (cartId: string, quantity: number) => {
 const deleteCartItem = async (cartId: string) => {
   try {
     const token = await getAuthHeader();
-    await api.delete(`/carts/${cartId}`, {
+    const res = await api.delete(`/carts/${cartId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    if (res.status !== 200) {
+      throw new Error("Failed to delete cart item");
+    }
     revalidatePath("/cart");
     return { success: true };
   } catch {
