@@ -22,7 +22,7 @@ const ServicesContent = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center gap-4 pt-25 px-5">
+    <div className="flex min-h-screen flex-col items-center gap-4 pt-5 px-5">
       <ButtonGroup>
         <Button
           onClick={() => handleSwitch("POTONG")}
