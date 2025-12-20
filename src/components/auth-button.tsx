@@ -3,25 +3,31 @@ import { ButtonGroup } from "./ui/button-group";
 import Link from "next/link";
 import Image from "next/image";
 
-export default async function AuthButton({user}: {user?: {name: string; email: string, role: string}}) {
+export default async function AuthButton({
+  user,
+}: {
+  user?: { name: string; email: string; role: string };
+}) {
   return (
     <>
       {user ? (
-        <div className="flex gap-2">
-          <div className="text-right">
-            <span>{user.name}</span>
-            <p className="text-muted-foreground text-sm">{user.email}</p>
+        <Link href="/me">
+          <div className="flex gap-2">
+            <div className="text-right">
+              <span>{user.name}</span>
+              <p className="text-muted-foreground text-sm">{user.email}</p>
+            </div>
+            <div className="flex items-center">
+              <Image
+                src="/default_avatar.svg"
+                alt="User Avatar"
+                width={40}
+                height={40}
+                className="aspect-square rounded-full object-cover"
+              />
+            </div>
           </div>
-          <div className="flex items-center">
-            <Image
-              src="/default_avatar.svg"
-              alt="User Avatar"
-              width={40}
-              height={40}
-              className="aspect-square rounded-full object-cover"
-            ></Image>
-          </div>
-        </div>
+        </Link>
       ) : (
         <ButtonGroup className="flex gap-2 hover:bg-transparent">
           <Link href="/login">
@@ -40,25 +46,31 @@ export default async function AuthButton({user}: {user?: {name: string; email: s
   );
 }
 
-const MobileAuthButton = async ({user}: {user?: {name: string; email: string, role: string}}) => {
+const MobileAuthButton = async ({
+  user,
+}: {
+  user?: { name: string; email: string; role: string };
+}) => {
   return (
     <>
       {user ? (
-        <div className="flex gap-2">
-          <div className="flex items-center">
-            <Image
-              src="/default_avatar.svg"
-              alt="User Avatar"
-              width={40}
-              height={40}
-              className="aspect-square rounded-full object-cover"
-            ></Image>
+        <Link href="/me">
+          <div className="flex gap-2">
+            <div className="flex items-center">
+              <Image
+                src="/default_avatar.svg"
+                alt="User Avatar"
+                width={40}
+                height={40}
+                className="aspect-square rounded-full object-cover"
+              />
+            </div>
+            <div>
+              <span>{user.name}</span>
+              <p className="text-muted-foreground text-sm">{user.email}</p>
+            </div>
           </div>
-          <div>
-            <span>{user.name}</span>
-            <p className="text-muted-foreground text-sm">{user.email}</p>
-          </div>
-        </div>
+        </Link>
       ) : (
         <ButtonGroup className="w-full flex-col gap-2">
           <Link href="/login">
