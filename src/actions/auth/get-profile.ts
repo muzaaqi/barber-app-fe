@@ -3,7 +3,7 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 
-export async function getProfile() {
+const getProfile = async () => {
   const token = await getAuthHeader();
 
   if (!token) return null;
@@ -17,4 +17,30 @@ export async function getProfile() {
   if (res.status !== 200) return null;
 
   return res.data.data;
-}
+};
+
+const changePassword = async (payload: {
+  current_password: string;
+  new_password: string;
+}) => {
+  const token = await getAuthHeader();
+
+  if (!token) return { success: false, message: "Unauthorized" };
+
+  try {
+    const res = await api.post("/user/change-password", payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status !== 200) {
+      return { success: false, message: "Gagal mengubah password." };
+    }
+    return { success: true, message: "Password berhasil diubah." };
+  } catch {
+    return { success: false, message: "Gagal mengubah password." };
+  }
+};
+
+export { getProfile, changePassword };
