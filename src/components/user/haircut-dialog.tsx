@@ -61,10 +61,10 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
 
     const payload = {
       haircut_id: id,
-      haircut_name: name,
-      booking_datetime: finalDateTime.toISOString(),
+      reservation_time: finalDateTime.toISOString(),
       payment_method: paymentMethod,
-      add_on_keramas: isKeramas === "true",
+      payment_status: paymentMethod === "cash" ? "pending" : "paid",
+      hairwash: isKeramas === "true",
       total_price: isKeramas === "true" ? 50000 : 35000,
     };
 
