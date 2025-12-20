@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { CartResponse } from "@/types/cart";
 import getAuthHeader from "@/features/get-jwt-token";
 
-export async function getCartData(): Promise<CartResponse | null> {
+const getCartData = async (): Promise<CartResponse | null> => {
   try {
     const token = await getAuthHeader();
     const res = await api.get("/carts/", {
@@ -16,24 +16,39 @@ export async function getCartData(): Promise<CartResponse | null> {
     console.error("Failed to fetch cart:", error);
     return null;
   }
-}
+};
 
-export async function updateCartQuantity(cartId: string, quantity: number) {
+const addToCart = async (productId: string, quantity: number) => {
+  try {
+    const token = await getAuthHeader();
+    await api.post(
+      "/carts",
+      { product_id: productId, quantity },
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+    revalidatePath("/cart");
+    return { success: true };
+  } catch {
+    return { success: false, message: "Gagal menambahkan ke troli" };
+  }
+};
+
+const updateCartQuantity = async (cartId: string, quantity: number) => {
   try {
     const token = await getAuthHeader();
     await api.put(
       `/carts/${cartId}`,
       { quantity },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${token}` } },
     );
     revalidatePath("/cart");
     return { success: true };
   } catch {
     return { success: false, message: "Gagal update quantity" };
   }
-}
+};
 
-export async function deleteCartItem(cartId: string) {
+const deleteCartItem = async (cartId: string) => {
   try {
     const token = await getAuthHeader();
     await api.delete(`/carts/${cartId}`, {
@@ -44,4 +59,6 @@ export async function deleteCartItem(cartId: string) {
   } catch {
     return { success: false, message: "Gagal menghapus item" };
   }
-}
+};
+
+export { getCartData, addToCart, updateCartQuantity, deleteCartItem };
