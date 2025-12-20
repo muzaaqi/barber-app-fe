@@ -28,7 +28,7 @@ const changePassword = async (payload: {
   if (!token) return { success: false, message: "Unauthorized" };
 
   try {
-    const res = await api.post("/user/change-password", payload, {
+    const res = await api.post("/me/password", payload, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
