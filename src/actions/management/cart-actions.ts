@@ -2,7 +2,7 @@
 
 import { api } from "@/lib/axios-instance";
 import { revalidatePath } from "next/cache";
-import { CartResponse } from "@/types/cart";
+import { CartCheckoutPayload, CartResponse } from "@/types/cart";
 import getAuthHeader from "@/features/get-jwt-token";
 
 const getCartData = async (): Promise<CartResponse | null> => {
@@ -27,7 +27,7 @@ const addToCart = async (productId: string, quantity: number) => {
       { product_id: productId, quantity },
       { headers: { Authorization: `Bearer ${await getAuthHeader()}` } },
     );
-    if (res.status !== 201) {
+    if (res.status !== 200) {
       throw new Error("Failed to add to cart");
     }
     revalidatePath("/cart");
@@ -69,4 +69,19 @@ const deleteCartItem = async (cartId: string) => {
   }
 };
 
-export { getCartData, addToCart, updateCartQuantity, deleteCartItem };
+const checkoutCart = async (payload: CartCheckoutPayload) => {
+  try {
+    const res = await api.post("/product-transactions", payload, {
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+    });
+    if (res.status !== 200) {
+      throw new Error("Failed to checkout cart");
+    }
+    revalidatePath("/cart");
+    return { success: true };
+  } catch {
+    return { success: false, message: "Gagal checkout troli" };
+  }
+};
+
+export { getCartData, addToCart, updateCartQuantity, deleteCartItem, checkoutCart };

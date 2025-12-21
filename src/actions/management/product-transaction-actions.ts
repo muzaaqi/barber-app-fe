@@ -1,0 +1,119 @@
+"use server";
+
+import getAuthHeader from "@/features/get-jwt-token";
+import { api } from "@/lib/axios-instance";
+import { ProductPayload } from "@/types/transactions";
+
+const addNewProcuctTransaction = async (payload: ProductPayload) => {
+  try {
+    const res = await api.post("/product-transactions", payload, {
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+    });
+    if (res.status !== 201) {
+      throw new Error("Failed to add product transaction");
+    }
+    return {
+      data: res.data.data.data,
+      message: "Berhasil menambahkan transaksi produk",
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "Gagal menambahkan transaksi produk",
+    };
+  }
+};
+
+const getProductTransactions = async () => {
+  try {
+    const res = await api.get("/product-transactions");
+    if (res.status !== 200) {
+      throw new Error("Failed to fetch product transactions");
+    }
+    return {
+      data: res.data.data.data,
+      pagination: res.data.data.pagination,
+      success: true,
+      message: "Berhasil mengambil data transaksi produk",
+    };
+  } catch (error) {
+    console.error("Failed to fetch product transactions:", error);
+    return {
+      success: false,
+      message: "Gagal mengambil data transaksi produk",
+    };
+  }
+};
+
+const getProductTransactionById = async (id: string) => {
+  try {
+    const res = await api.get(`/product-transactions/${id}`);
+    if (res.status !== 200) {
+      throw new Error("Failed to fetch product transaction");
+    }
+    return {
+      data: res.data.data.data,
+      success: true,
+      message: "Berhasil mengambil data transaksi produk",
+    };
+  } catch (error) {
+    console.error("Failed to fetch product transaction:", error);
+    return {
+      success: false,
+      message: "Gagal mengambil data transaksi produk",
+    };
+  }
+};
+
+const getProductTransactionsByUserId = async () => {
+  try {
+    const res = await api.get("/product-transactions/me/", {
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+    });
+    if (res.status !== 200) {
+      throw new Error("Failed to fetch product transactions by user");
+    }
+    return {
+      data: res.data.data.data,
+      pagination: res.data.data.pagination,
+      success: true,
+      message: "Berhasil mengambil data transaksi produk",
+    };
+  } catch (error) {
+    console.error("Failed to fetch product transactions by user:", error);
+    return {
+      success: false,
+      message: "Gagal mengambil data transaksi produk",
+    };
+  }
+};
+
+const deleteHaircutTransaction = async (id: string) => {
+  try {
+    const res = await api.delete(`/haircut-transactions/${id}`, {
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+    });
+    if (res.status !== 200) {
+      throw new Error("Failed to delete haircut transaction");
+    }
+    return {
+      success: true,
+      message: "Berhasil menghapus transaksi potong rambut",
+    };
+  } catch (error) {
+    console.error("Failed to delete haircut transaction:", error);
+    return {
+      success: false,
+      message: "Gagal menghapus transaksi potong rambut",
+    };
+  }
+};
+
+export {
+  addNewProcuctTransaction,
+  getProductTransactions,
+  getProductTransactionById,
+  getProductTransactionsByUserId,
+  deleteHaircutTransaction,
+};
