@@ -34,6 +34,7 @@ import {
 } from "./ui/card";
 import { toast } from "sonner";
 import { formatIDR } from "@/features/formatter";
+import { addNewProcuctTransaction } from "@/actions/management/product-transaction-actions";
 
 type Product = {
   id: string;
@@ -45,7 +46,7 @@ type Product = {
 };
 
 const ProductDetail = () => {
-  const { productId } = useParams();
+  const { productId } : { productId: string } = useParams();
   const router = useRouter();
 
   const [product, setProduct] = useState<Product | null>(null);
@@ -119,19 +120,19 @@ const ProductDetail = () => {
     }
 
     setIsSubmitting(true);
+    const payload = {
+      product_id: productId,
+      quantity: getValidQuantity(),
+      payment_method: paymentMethod,
+      payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
+      expedition_service: expeditionService,
+      shipping_address: address,
+      total_price: estimatedTotal,
+    };
 
     try {
-      const payload = {
-        product_id: productId,
-        quantity: getValidQuantity(),
-        payment_method: paymentMethod,
-        payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
-        expedition_service: expeditionService,
-        shipping_address: address,
-      };
-
-      const res = await api.post("/product-transactions/checkout", payload);
-      if (res.status === 200 || res.status === 201) {
+      const res = await addNewProcuctTransaction(payload);
+      if (res.success) {
         toast.success("Pesanan berhasil dibuat!");
         router.push("/dashboard");
       }
@@ -174,7 +175,7 @@ const ProductDetail = () => {
               />
             </div>
             <div className="space-y-4">
-              <div className="flex gap-2 flex-row md:items-start justify-between">
+              <div className="flex flex-row justify-between gap-2 md:items-start">
                 <h1 className="text-foreground text-3xl font-bold tracking-tight md:text-4xl">
                   {product.name}
                 </h1>

@@ -23,6 +23,7 @@ import {
   CardDescription,
 } from "./ui/card";
 import { toast } from "sonner";
+import { getHaircutById } from "@/actions/management/haircut-actions";
 
 type Haircut = {
   id: string;
@@ -33,7 +34,7 @@ type Haircut = {
 };
 
 const HaircutDetail = () => {
-  const { haircutId } = useParams();
+  const { haircutId } : { haircutId: string } = useParams();
   const router = useRouter();
 
   const [haircut, setHaircut] = useState<Haircut | null>(null);
@@ -49,8 +50,12 @@ const HaircutDetail = () => {
   useEffect(() => {
     const fetchHaircutDetail = async () => {
       try {
-        const res = await api.get(`/haircuts/${haircutId}`);
-        setHaircut(res.data.data);
+        const { data } = await getHaircutById(haircutId);
+        setHaircut(data);
+        if (!data) {
+          toast.error("Layanan tidak ditemukan.");
+          router.push("/services?options=haircuts");
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -58,7 +63,7 @@ const HaircutDetail = () => {
       }
     };
     if (haircutId) fetchHaircutDetail();
-  }, [haircutId]);
+  }, [haircutId, router]);
 
   const handleReservation = async (e: React.FormEvent) => {
     e.preventDefault();

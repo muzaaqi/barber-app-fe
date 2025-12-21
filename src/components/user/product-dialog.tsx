@@ -37,7 +37,7 @@ import { addNewProcuctTransaction } from "@/actions/management/product-transacti
 import { Spinner } from "../ui/spinner";
 
 type Product = {
-  id: string
+  id: string;
   name: string;
   description: string;
   stock: number;
@@ -164,9 +164,9 @@ const ProductDialog = ({
                 />
               </div>
               <div className="mt-4 space-y-2">
-                <div className="flex justify-between items-start">
-                  <h2 className="text-xl font-bold text-foreground">{name}</h2>
-                  <span className="text-lg font-semibold text-primary">
+                <div className="flex items-start justify-between">
+                  <h2 className="text-foreground text-xl font-bold">{name}</h2>
+                  <span className="text-primary text-lg font-semibold">
                     {formatIDR(price)}
                   </span>
                 </div>
@@ -179,7 +179,10 @@ const ProductDialog = ({
 
             <div className="flex flex-col gap-4">
               {errorMessage && (
-                <Alert variant="destructive" className="animate-in fade-in zoom-in-95">
+                <Alert
+                  variant="destructive"
+                  className="animate-in fade-in zoom-in-95"
+                >
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle className="ml-2 font-semibold">Gagal</AlertTitle>
                   <AlertDescription className="ml-2">
@@ -189,40 +192,42 @@ const ProductDialog = ({
               )}
               <FieldGroup className="gap-5">
                 <Field>
-                  <FieldLabel className="mb-2 block text-sm font-medium">Jumlah Pembelian</FieldLabel>
-                  <div className="flex items-center gap-3 p-3 border rounded-lg bg-card">
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      size="icon" 
+                  <FieldLabel className="mb-2 block text-sm font-medium">
+                    Jumlah Pembelian
+                  </FieldLabel>
+                  <div className="bg-card flex items-center gap-3 rounded-lg border p-3">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
                       className="h-9 w-9 shrink-0"
                       onClick={decrementQty}
                       disabled={getValidQuantity() <= 1}
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    
-                    <Input 
+
+                    <Input
                       type="number"
                       value={quantity}
                       onChange={handleQtyChange}
                       onBlur={handleQtyBlur}
-                      className="h-9 text-center font-semibold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      className="h-9 [appearance:textfield] text-center font-semibold [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                       min={1}
                       max={stock}
                     />
 
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      size="icon" 
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
                       className="h-9 w-9 shrink-0"
                       onClick={incrementQty}
                       disabled={getValidQuantity() >= stock}
                     >
                       <Plus className="h-4 w-4" />
                     </Button>
-                    <span className="text-xs text-muted-foreground ml-auto whitespace-nowrap">
+                    <span className="text-muted-foreground ml-auto text-xs whitespace-nowrap">
                       Stok: {stock}
                     </span>
                   </div>
@@ -233,10 +238,10 @@ const ProductDialog = ({
                     Alamat Pengiriman
                   </FieldLabel>
                   <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <MapPin className="text-muted-foreground absolute top-3 left-3 h-4 w-4" />
                     <Textarea
                       placeholder="Masukkan alamat lengkap pengiriman..."
-                      className="min-h-[80px] pl-9 resize-none"
+                      className="min-h-[80px] resize-none pl-9"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                     />
@@ -263,7 +268,7 @@ const ProductDialog = ({
                         <RadioGroupItem value="JNE" id="exp-jne" />
                         <span className="text-sm font-medium">JNE</span>
                       </div>
-                      <Truck className="h-4 w-4 text-muted-foreground" />
+                      <Truck className="text-muted-foreground h-4 w-4" />
                     </Label>
                     <Label
                       htmlFor="exp-jnt"
@@ -277,7 +282,7 @@ const ProductDialog = ({
                         <RadioGroupItem value="JNT" id="exp-jnt" />
                         <span className="text-sm font-medium">J&T</span>
                       </div>
-                      <Truck className="h-4 w-4 text-muted-foreground" />
+                      <Truck className="text-muted-foreground h-4 w-4" />
                     </Label>
                   </RadioGroup>
                 </Field>
@@ -301,7 +306,9 @@ const ProductDialog = ({
                       <div className="flex items-center gap-3">
                         <RadioGroupItem value="transfer" id="prod-transfer" />
                         <div className="flex flex-col">
-                          <span className="text-sm font-medium">Transfer Bank</span>
+                          <span className="text-sm font-medium">
+                            Transfer Bank
+                          </span>
                           <span className="text-muted-foreground text-xs">
                             Cek otomatis
                           </span>
@@ -331,12 +338,12 @@ const ProductDialog = ({
                   </RadioGroup>
                 </Field>
                 <Separator />
-                <div className="bg-muted/40 flex items-center justify-between rounded-lg p-4 border">
+                <div className="bg-muted/40 flex items-center justify-between rounded-lg border p-4">
                   <div className="flex flex-col">
                     <span className="text-muted-foreground text-sm font-medium">
                       Total Pembayaran
                     </span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-muted-foreground text-xs">
                       {getValidQuantity()} barang x {formatIDR(price)}
                     </span>
                   </div>
@@ -353,7 +360,12 @@ const ProductDialog = ({
                 Batal
               </Button>
             </DialogClose>
-            <Button form="product-checkout-form" type="submit" disabled={isLoading}>
+            <Button
+              form="product-checkout-form"
+              type="submit"
+              disabled={isLoading}
+              onClick={handlePurchase}
+            >
               {isLoading ? (
                 <>
                   <Spinner /> Memproses...

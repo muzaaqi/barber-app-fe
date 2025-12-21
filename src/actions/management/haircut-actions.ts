@@ -3,7 +3,6 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 
-
 const getAllHaircuts = async () => {
   try {
     const res = await api.get("/haircuts");
@@ -13,13 +12,17 @@ const getAllHaircuts = async () => {
     return {
       data: res.data.data.data,
       pagination: res.data.data.pagination,
+      success: true,
       message: "Berhasil mengambil semua data potong rambut",
     };
   } catch (error) {
     console.error("Failed to fetch haircuts:", error);
-    return null;
+    return {
+      success: false,
+      message: "Gagal mengambil data potong rambut",
+    };
   }
-}
+};
 
 const getHaircutById = async (id: string) => {
   try {
@@ -27,10 +30,17 @@ const getHaircutById = async (id: string) => {
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut");
     }
-    return { data: res.data.data, message: "Berhasil mengambil data potong rambut" };
+    return {
+      data: res.data.data,
+      success: true,
+      message: "Berhasil mengambil data potong rambut",
+    };
   } catch (error) {
     console.error("Failed to fetch haircut:", error);
-    return null;
+    return {
+      success: false,
+      message: "Gagal mengambil data potong rambut",
+    };
   }
 };
 
@@ -45,7 +55,10 @@ const deleteHaircutById = async (id: string) => {
     return { message: "Berhasil menghapus data potong rambut" };
   } catch (error) {
     console.error("Failed to delete haircut:", error);
-    return null;
+    return {
+      success: false,
+      message: "Gagal menghapus data potong rambut",
+    };
   }
 };
 
