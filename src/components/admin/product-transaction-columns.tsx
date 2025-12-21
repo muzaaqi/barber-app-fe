@@ -207,7 +207,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
     accessorKey: "total_price",
     header: "Total",
     cell: ({ row }) => (
-      <div className="flex flex-col items-end gap-1">
+      <div className="flex flex-col items-end lg:items-start gap-1">
         <span className="text-sm font-bold md:text-base">
           {formatIDR(row.original.total_price)}
         </span>
