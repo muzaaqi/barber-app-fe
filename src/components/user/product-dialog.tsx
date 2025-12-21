@@ -287,21 +287,21 @@ const ProductDialog = ({
                     className="grid grid-cols-1 gap-3"
                   >
                     <Label
-                      htmlFor="prod-transfer"
+                      htmlFor="prod-cod"
                       className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
-                        paymentMethod === "transfer"
+                        paymentMethod === "cod"
                           ? "border-primary bg-primary/5 ring-primary ring-1"
                           : "bg-transparent"
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <RadioGroupItem value="transfer" id="prod-transfer" />
+                        <RadioGroupItem value="cod" id="prod-cod" />
                         <div className="flex flex-col">
                           <span className="text-sm font-medium">
-                            Transfer Bank
+                            COD
                           </span>
                           <span className="text-muted-foreground text-xs">
-                            Cek otomatis
+                            Bayar di tempat saat barang diterima
                           </span>
                         </div>
                       </div>

@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 const addNewProcuctTransaction = async (payload: ProductPayload) => {
   try {
-    const res = await api.post("/product-transactions", payload, {
+    const res = await api.post("/product-transactions/checkout", payload, {
       headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
     if (res.status === 401) {

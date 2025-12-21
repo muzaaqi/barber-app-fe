@@ -64,11 +64,12 @@ export default function ProductHistory() {
         <Empty>
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <ShoppingBag className="h-10 w-10 text-muted-foreground" />
+              <ShoppingBag className="text-muted-foreground h-10 w-10" />
             </EmptyMedia>
             <EmptyTitle>Belum Ada Riwayat Belanja</EmptyTitle>
             <EmptyDescription>
-              Riwayat pembelian produk perawatan rambut Anda akan muncul di sini.
+              Riwayat pembelian produk perawatan rambut Anda akan muncul di
+              sini.
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
@@ -82,9 +83,9 @@ export default function ProductHistory() {
   }
 
   return (
-    <div className="space-y-6 md:grid md:grid-cols-2 gap-4">
+    <div className="gap-4 space-y-6 md:grid md:grid-cols-2">
       {data.map((transaction) => (
-        <Card key={transaction.id} className="border shadow-sm py-0">
+        <Card key={transaction.id} className="border py-0 shadow-sm">
           <CardHeader className="bg-muted/30 flex flex-row items-center justify-between border-b p-4">
             <div className="flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:gap-4">
               <span className="text-muted-foreground font-semibold">
@@ -147,11 +148,13 @@ export default function ProductHistory() {
           </CardFooter>
         </Card>
       ))}
-      {meta && (
-        <GlobalPagination
-          currentPage={meta.page}
-          totalPages={Math.ceil(meta.total / meta.limit)}
-        />
+      {meta && meta.total > meta.limit && (
+        <div className="flex justify-center py-4">
+          <GlobalPagination
+            currentPage={meta.page}
+            totalPages={Math.ceil(meta.total / meta.limit)}
+          />
+        </div>
       )}
     </div>
   );
