@@ -1,12 +1,12 @@
 "use client";
 
 import { Suspense } from "react";
-import Haircuts from "@/components/haircuts";
-import Products from "@/components/products";
+import HaircutsCards from "@/components/haircuts";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
+import ProductsCards from "@/components/products";
 
 const ServicesContent = () => {
   const params = useSearchParams();
@@ -40,12 +40,12 @@ const ServicesContent = () => {
       <div
         className={`${servicePage === "POTONG" ? "block" : "hidden"} container`}
       >
-        <Haircuts />
+        <HaircutsCards />
       </div>
       <div
         className={`${servicePage === "PRODUK" ? "block" : "hidden"} container`}
       >
-        <Products />
+        <ProductsCards />
       </div>
     </div>
   );

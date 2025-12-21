@@ -1,12 +1,16 @@
 "use client";
+
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { useEffect, useState } from "react";
-import { api } from "@/lib/axios-instance";
 import { Skeleton } from "./ui/skeleton";
 import { toast } from "sonner";
 import HaircutDialog from "./user/haircut-dialog";
 import Link from "next/link";
+import { getAllHaircuts } from "@/actions/management/haircut-actions";
+import { useSearchParams } from "next/navigation";
+import GlobalPagination from "@/components/global-pagination";
+import { PaginationMeta } from "@/types/transactions";
 
 type Haircut = {
   id: string;
@@ -15,15 +19,23 @@ type Haircut = {
   image_url: string;
 };
 
-const Haircuts = () => {
+const HaircutsCards = () => {
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+
   const [haircuts, setHaircuts] = useState<Haircut[]>([]);
+  const [meta, setMeta] = useState<PaginationMeta | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchHaircuts = async () => {
+      setIsLoading(true);
       try {
-        const res = await api.get("/haircuts");
-        setHaircuts(res.data.data.data);
+        const res = await getAllHaircuts(page, 8);
+        if (res && res.data) {
+          setHaircuts(res.data);
+          setMeta(res.pagination);
+        }
       } catch (error) {
         toast.error("Gagal memuat potongan rambut.", {
           description: String(error),
@@ -33,58 +45,74 @@ const Haircuts = () => {
       }
     };
     fetchHaircuts();
-  }, []);
+  }, [page]);
+
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-      {isLoading || !haircuts
-        ? Array.from({ length: 10 }).map((_, index) => (
-            <Card key={index}>
-              <CardContent className="text-center">
-                <Skeleton className="mb-3 aspect-square" />
-                <Skeleton className="h-10 w-full" />
-              </CardContent>
-              <CardFooter>
-                <Skeleton className="h-10 w-full" />
-              </CardFooter>
-            </Card>
-          ))
-        : haircuts.map(({ id, name, image_url, description }) => (
-            <Link
-              href={`/services/haircut/${id}`}
-              key={id}
-              className="no-underline"
-            >
-              <Card className="hover:border-primary transition-colors duration-300">
-                <CardContent className="text-center">
-                  <Image
-                    src={image_url}
-                    alt={name}
-                    width={1000}
-                    height={1000}
-                  />
-                  <h2 className="text-xl font-semibold md:text-2xl">{name}</h2>
+    <div className="space-y-8">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+        {isLoading
+          ? Array.from({ length: 8 }).map((_, index) => (
+              <Card key={index} className="flex flex-col justify-between">
+                <CardContent className="text-center p-4">
+                  <Skeleton className="mb-3 aspect-square w-full rounded-md" />
+                  <Skeleton className="h-6 w-3/4 mx-auto" />
                 </CardContent>
-                <CardFooter>
-                  <div
-                    className="w-full pointer-events-none md:pointer-events-auto"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    <HaircutDialog
-                      id={id}
-                      name={name}
-                      image_url={image_url}
-                      description={description}
-                    />
-                  </div>
+                <CardFooter className="p-4 pt-0">
+                  <Skeleton className="h-10 w-full" />
                 </CardFooter>
               </Card>
-            </Link>
-          ))}
+            ))
+          : haircuts.map(({ id, name, image_url, description }) => (
+              <Link
+                href={`/services/haircut/${id}`}
+                key={id}
+                className="no-underline"
+              >
+                <Card className="hover:border-primary flex h-full flex-col justify-between transition-colors duration-300">
+                  <CardContent className="text-center">
+                    <div className="bg-muted relative mb-4 aspect-square w-full overflow-hidden rounded-md border">
+                      <Image
+                        src={image_url}
+                        alt={name}
+                        fill
+                        className="object-cover transition-transform hover:scale-105 duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+                    <h2 className="text-lg font-semibold md:text-xl line-clamp-1">
+                      {name}
+                    </h2>
+                  </CardContent>
+                  <CardFooter>
+                    <div
+                      className="w-full pointer-events-none md:pointer-events-auto"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                    >
+                      <HaircutDialog
+                        id={id}
+                        name={name}
+                        image_url={image_url}
+                        description={description}
+                      />
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Link>
+            ))}
+      </div>
+      {!isLoading && meta && meta.total > meta.limit && (
+        <div className="flex justify-center py-4">
+          <GlobalPagination
+            currentPage={meta.page}
+            totalPages={Math.ceil(meta.total / meta.limit)}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
-export default Haircuts;
+export default HaircutsCards;
