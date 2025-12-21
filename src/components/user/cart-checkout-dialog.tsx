@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/lib/axios-instance";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +18,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"; // Asumsi component field custom anda
 import {
-  Loader2,
   ShoppingBag,
   MapPin,
   Truck,
@@ -28,8 +26,9 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { formatIDR } from "@/features/formatter";
-import getAuthHeader from "@/features/get-jwt-token";
+import { formatIDR } from "@/features/formatter";import { checkoutCart } from "@/actions/management/cart-actions";
+import { Spinner } from "../ui/spinner";
+;
 
 type Props = {
   totalItems: number;
@@ -65,16 +64,12 @@ export default function CartCheckoutDialog({
       shipping_address: address,
       expedition_service: expedition,
       payment_method: paymentMethod,
+      payment_status: paymentMethod === "qris" ? "paid" : "unpaid" ,
     };
 
     try {
-      const res = await api.post("/product-transactions/checkout", payload, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${await getAuthHeader()}`,
-        },
-      });
-      if (res.status === 200 || res.status === 201) {
+      const res = await checkoutCart(payload);
+      if (res.success) {
         toast.success("Checkout Berhasil!", {
           description: "Silakan lakukan pembayaran.",
         });
@@ -177,9 +172,9 @@ export default function CartCheckoutDialog({
                     <div className="flex items-center gap-3">
                       <RadioGroupItem value="transfer" id="pay-transfer" />
                       <div>
-                        <div className="text-sm font-medium">Transfer Bank</div>
+                        <div className="text-sm font-medium">COD</div>
                         <div className="text-muted-foreground text-xs">
-                          Cek otomatis
+                          Bayar di tempat saat barang diterima
                         </div>
                       </div>
                     </div>
@@ -227,7 +222,7 @@ export default function CartCheckoutDialog({
             <Button type="submit" disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Memproses...
+                  <Spinner /> Memproses...
                 </>
               ) : (
                 "Bayar Sekarang"
