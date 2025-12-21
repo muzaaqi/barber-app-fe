@@ -1,7 +1,7 @@
 import { getCartData } from "@/actions/management/cart-actions";
 import CartItemCard from "@/components/user/cart-item-card";
 import CartSummary from "@/components/user/cart-summary";
-import { AlertCircle, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
