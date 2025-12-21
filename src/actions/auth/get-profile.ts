@@ -2,6 +2,8 @@
 
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const getProfile = async () => {
   const token = await getAuthHeader();
@@ -43,4 +45,16 @@ const changePassword = async (payload: {
   }
 };
 
-export { getProfile, changePassword };
+const logOutAction = async () => {
+  const cookieStore = await cookies();
+  if (!cookieStore.get("token"))
+    return { success: false, message: "Unauthorized" };
+  try {
+    cookieStore.delete("token");
+    return redirect("/login");
+  } catch {
+    return { success: false, message: "Gagal logout." };
+  }
+};
+
+export { getProfile, changePassword, logOutAction };
