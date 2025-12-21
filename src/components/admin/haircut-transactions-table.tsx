@@ -17,8 +17,8 @@ const HaircutTransactionsTable = async () => {
     });
 
     if (res?.data?.data) {
-        transactions = res.data.data.data;
-        pagination = res.data.data.pagination;
+      transactions = res.data.data.data;
+      pagination = res.data.data.pagination;
     }
   } catch (error) {
     console.error("Error fetching transactions:", error);
@@ -27,12 +27,14 @@ const HaircutTransactionsTable = async () => {
   return (
     <div className="w-full space-y-4">
       <DataTable columns={columns} data={transactions} />
-      <div className="flex justify-center">
-        <GlobalPagination
-          currentPage={pagination.page}
-          totalPages={Math.ceil(pagination.total / pagination.limit)}
-        />
-      </div>
+      {pagination && pagination.total > pagination.limit && (
+        <div className="flex justify-center">
+          <GlobalPagination
+            currentPage={pagination.page}
+            totalPages={Math.ceil(pagination.total / pagination.limit)}
+          />
+        </div>
+      )}
     </div>
   );
 };
