@@ -1,31 +1,9 @@
-import Image from "next/image";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
-import { api } from "@/lib/axios-instance";
-import EditProduct from "./edit-product";
-import GlobalPagination from "../global-pagination";
-import DeleteDialog from "../delete-dialog";
-import { formatIDR } from "@/features/formatter";
+// components/admin/products-table.tsx
 
-type Product = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  image_url: string;
-};
+import { api } from "@/lib/axios-instance";
+import { DataTable } from "../ui/data-table";
+import { columns, Product } from "./product-columns";
+import GlobalPagination from "../global-pagination";
 
 type Props = {
   page?: string;
@@ -33,71 +11,31 @@ type Props = {
 
 const ProductsTable = async ({ page }: Props) => {
   const currentPage = Number(page) || 1;
-  const res = (await api.get(`/products?page=${currentPage}`)) || [];
-  
-  const products: Product[] = res.data.data.data;
-  const pagination = res.data.data.pagination;
+  const limit = 10;
+
+  let products: Product[] = [];
+  let pagination = { page: 1, limit: 10, total: 0 };
+
+  try {
+    const res = await api.get(`/products?page=${currentPage}&limit=${limit}`);
+    if (res?.data?.data) {
+        products = res.data.data.data;
+        pagination = res.data.data.pagination;
+    }
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+
   return (
-    <>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableCell>NO</TableCell>
-            <TableCell>Nama Produk</TableCell>
-            <TableCell>Deskripsi</TableCell>
-            <TableCell>Stok</TableCell>
-            <TableCell>Harga</TableCell>
-            <TableCell>Action</TableCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {products.map(
-            ({ id, name, description, price, stock, image_url }, index) => (
-              <TableRow key={id}>
-                <TableCell>{(currentPage - 1) * 10 + index + 1}</TableCell>
-                <TableCell>
-                  <div className="grid w-fit grid-cols-3 items-center gap-4">
-                    <Image src={image_url} alt={name} width={50} height={50} />
-                    <div className="col-span-2">
-                      <span>{name}</span>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  {description.length > 50
-                    ? description.substring(0, 50) + "..."
-                    : description}
-                </TableCell>
-                <TableCell>{stock}</TableCell>
-                <TableCell>{formatIDR(price)}</TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <Ellipsis />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="grid w-fit">
-                      <EditProduct
-                        id={id}
-                        product_name={name}
-                        product_description={description}
-                        product_price={price}
-                        product_stock={stock}
-                        image_url={image_url}
-                      />
-                      <DeleteDialog id={id} variant="product" />
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-      <GlobalPagination
-        currentPage={pagination.page}
-        totalPages={pagination.total}
-      />
-    </>
+    <div className="w-full space-y-4">
+      <DataTable columns={columns} data={products} />
+      <div className="flex justify-center">
+        <GlobalPagination
+          currentPage={pagination.page}
+          totalPages={Math.ceil(pagination.total / pagination.limit)}
+        />
+      </div>
+    </div>
   );
 };
 
