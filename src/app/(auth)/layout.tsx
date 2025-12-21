@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar";
 
-export default function UserLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
