@@ -32,7 +32,9 @@ const addNewProcuctTransaction = async (payload: ProductPayload) => {
 
 const getProductTransactions = async () => {
   try {
-    const res = await api.get("/product-transactions");
+    const res = await api.get("/product-transactions", {
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+    });
     if (res.status !== 200) {
       throw new Error("Failed to fetch product transactions");
     }

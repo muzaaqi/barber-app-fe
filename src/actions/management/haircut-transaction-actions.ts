@@ -33,7 +33,9 @@ const addNewHaircutTransaction = async (payload: HaircutPayload) => {
 
 const getHaircutTransactions = async () => {
   try {
-    const res = await api.get("/haircut-transactions");
+    const res = await api.get("/haircut-transactions", {
+      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+    });
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut transactions");
     }
