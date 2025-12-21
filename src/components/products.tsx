@@ -11,7 +11,7 @@ import { formatIDR } from "@/features/formatter";
 import Link from "next/link";
 import AddToCartButton from "./user/add-to-cart-btn";
 import { getAllProducts } from "@/actions/management/product-actions";
-import { ProductsType } from "@/types/products";
+import { ProductType } from "@/types/products";
 import GlobalPagination from "@/components/global-pagination";
 import { useSearchParams } from "next/navigation";
 import { PaginationMeta } from "@/types/transactions"; 
@@ -20,7 +20,7 @@ const ProductsCards = () => {
   const searchParams = useSearchParams();
   const page = Number(searchParams.get("page")) || 1;
 
-  const [products, setProducts] = useState<ProductsType[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [meta, setMeta] = useState<PaginationMeta | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

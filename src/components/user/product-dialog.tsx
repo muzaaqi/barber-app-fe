@@ -34,15 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { addNewProcuctTransaction } from "@/actions/management/product-transaction-actions";
 import { Spinner } from "../ui/spinner";
-
-type Product = {
-  id: string;
-  name: string;
-  description: string;
-  stock: number;
-  price: number;
-  image_url: string;
-};
+import { ProductType } from "@/types/products";
 
 const ProductDialog = ({
   id,
@@ -51,7 +43,7 @@ const ProductDialog = ({
   stock,
   price,
   image_url,
-}: Product) => {
+}: ProductType) => {
   const [isOpen, setIsOpen] = useState(false);
   const [quantity, setQuantity] = useState<number | string>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
