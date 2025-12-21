@@ -13,6 +13,7 @@ import { CalendarDays, Clock, Scissors } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import getAuthHeader from "@/features/get-jwt-token";
 import { toast } from "sonner";
+import { getHaircutTransactionsByUserId } from "@/actions/management/haircut-transaction-actions";
 
 export default function HaircutHistory() {
   const searchParams = useSearchParams();
@@ -26,17 +27,9 @@ export default function HaircutHistory() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await api.get(
-          `/haircut-transactions/user?page=${page}&limit=5`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${await getAuthHeader()}`,
-            },
-          },
-        );
-        setData(res.data.data.data);
-        setMeta(res.data.data.pagination);
+        const res = await getHaircutTransactionsByUserId(page, 5);
+        setData(res.data);
+        setMeta(res.pagination);
       } catch (error) {
         toast.error("Gagal memuat riwayat booking.", {
           description: String(error),
@@ -123,11 +116,13 @@ export default function HaircutHistory() {
           </CardContent>
         </Card>
       ))}
-      {meta && (
-        <GlobalPagination
-          currentPage={meta.page}
-          totalPages={Math.ceil(meta.total / meta.limit)}
-        />
+      {meta && meta.total > meta.limit && (
+        <div className="flex justify-center py-4">
+          <GlobalPagination
+            currentPage={meta.page}
+            totalPages={Math.ceil(meta.total / meta.limit)}
+          />
+        </div>
       )}
     </div>
   );

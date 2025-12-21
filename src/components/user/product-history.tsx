@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { api } from "@/lib/axios-instance";
 import { ProductTransaction, PaginationMeta } from "@/types/transactions";
 import GlobalPagination from "@/components/global-pagination";
 import {
@@ -17,8 +16,8 @@ import Image from "next/image";
 import { Truck } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import { Separator } from "@/components/ui/separator";
-import getAuthHeader from "@/features/get-jwt-token";
 import { toast } from "sonner";
+import { getProductTransactionsByUserId } from "@/actions/management/product-transaction-actions";
 
 export default function ProductHistory() {
   const searchParams = useSearchParams();
@@ -32,16 +31,9 @@ export default function ProductHistory() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await api.get(
-          `/product-transactions/me?page=${page}&limit=5`, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${await getAuthHeader()}`
-            },
-          }
-        );
-        setData(res.data.data.data);
-        setMeta(res.data.data.pagination);
+        const res = await getProductTransactionsByUserId(page, 5);
+        setData(res.data);
+        setMeta(res.pagination);
       } catch (error) {
         toast.error("Gagal memuat riwayat pembelian produk.", {
           description: String(error),
