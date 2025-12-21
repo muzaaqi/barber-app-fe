@@ -67,7 +67,7 @@ export default function HaircutHistory() {
           </EmptyHeader>
           <EmptyContent>
             <Button asChild>
-              <Link href="/services">Buat Reservasi Baru</Link>
+              <Link href="/services?options=haircuts">Buat Reservasi Baru</Link>
             </Button>
           </EmptyContent>
         </Empty>

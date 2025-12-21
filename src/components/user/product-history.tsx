@@ -73,7 +73,7 @@ export default function ProductHistory() {
           </EmptyHeader>
           <EmptyContent>
             <Button asChild>
-              <Link href="/products">Mulai Belanja</Link>
+              <Link href="/services?options=products">Mulai Belanja</Link>
             </Button>
           </EmptyContent>
         </Empty>

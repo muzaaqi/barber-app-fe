@@ -35,7 +35,7 @@ export default async function CartPage() {
           </EmptyHeader>
           <EmptyContent>
             <Button size="lg" asChild>
-              <Link href="/products">Lihat Katalog Produk</Link>
+              <Link href="/services?options=products">Lihat Katalog Produk</Link>
             </Button>
           </EmptyContent>
         </Empty>
