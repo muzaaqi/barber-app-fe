@@ -20,6 +20,7 @@ import { Textarea } from "../ui/textarea";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { toast } from "sonner";
+import getAuthHeader from "@/features/get-jwt-token";
 
 type Props = {
   id: string;
@@ -72,13 +73,20 @@ const EditProduct = ({
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
+    formData.append("price", price.toString());
+    formData.append("stock", stock.toString());
 
     if (file) {
       formData.append("image", file);
     }
 
     try {
-      const res = await api.put(`/products/${id}`, formData);
+      const res = await api.put(`/products/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${await getAuthHeader()}`,
+        },
+      });
       if (res.status === 200) {
         toast.success(`Produk ${name} berhasil diperbarui.`);
         window.location.reload();

@@ -20,6 +20,7 @@ import { Textarea } from "../ui/textarea";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { toast } from "sonner";
+import getAuthHeader from "@/features/get-jwt-token";
 
 type Props = {
   id: string;
@@ -72,7 +73,12 @@ const EditHaircut = ({
     }
 
     try {
-      const res = await api.put(`/haircuts/${id}`, formData);
+      const res = await api.put(`/haircuts/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${await getAuthHeader()}`,
+        },
+      });
       if (res.status === 200) {
         toast.success(`Model ${name} berhasil diperbarui.`);
         window.location.reload();
@@ -98,7 +104,7 @@ const EditHaircut = ({
           <DialogHeader>
             <DialogTitle>Edit Haircut Model</DialogTitle>
             <DialogDescription>
-              Update haircut data and image.
+              Ubah detail model potongan rambut.
             </DialogDescription>
           </DialogHeader>
 
@@ -155,12 +161,12 @@ const EditHaircut = ({
                   className="mt-2 w-full gap-2 text-destructive"
                   onClick={handleRemoveImage}
                 >
-                  <Trash2 size={16} /> Remove Image
+                  <Trash2 size={16} /> Hapus Gambar
                 </Button>
               )}
             </Field>
             <Field>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <FieldLabel htmlFor="name">Nama</FieldLabel>
               <Input
                 id="name"
                 value={name}
@@ -169,12 +175,12 @@ const EditHaircut = ({
               />
             </Field>
             <Field>
-              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <FieldLabel htmlFor="description">Deskripsi</FieldLabel>
               <Textarea
                 id="description"
                 rows={5}
                 value={description}
-                placeholder="Change description about this haircut model(max. 255 characters)"
+                placeholder="Ubah deskripsi tentang model potongan rambut ini (maks. 255 karakter)"
                 onChange={(e) => setDescription(e.target.value)}
               />
             </Field>
@@ -182,11 +188,11 @@ const EditHaircut = ({
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" disabled={isLoading}>
-                Cancel
+                Batal
               </Button>
             </DialogClose>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? <Spinner /> : "Save"}
+              {isLoading ? <Spinner /> : "Simpan"}
             </Button>
           </DialogFooter>
         </form>

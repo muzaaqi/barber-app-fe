@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@/lib/axios-instance";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,6 +23,8 @@ import {
 } from "./ui/card";
 import { toast } from "sonner";
 import { getHaircutById } from "@/actions/management/haircut-actions";
+import { format } from "date-fns";
+import { addNewHaircutTransaction } from "@/actions/management/haircut-transaction-actions";
 
 type Haircut = {
   id: string;
@@ -82,15 +83,15 @@ const HaircutDetail = () => {
 
       const payload = {
         haircut_id: haircutId,
-        reservation_time: finalDateTime.toISOString(),
+        reservation_time: format(finalDateTime, "yyyy-MM-dd HH:mm:ss"),
         payment_method: paymentMethod,
         payment_status: paymentMethod === "cash" ? "pending" : "paid",
         hairwash: isKeramas === "true",
         total_price: isKeramas === "true" ? 20000 : 15000,
       };
 
-      const res = await api.post("/haircut-transactions", payload);
-      if (res.status === 201) {
+      const res = await addNewHaircutTransaction(payload);
+      if (res.success) {
         toast.success(
           `Sukses! Booking untuk ${finalDateTime.toLocaleString("id-ID")}`,
         );

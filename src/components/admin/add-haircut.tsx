@@ -20,6 +20,7 @@ import Image from "next/image";
 import { Plus, Trash2, Upload } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
+import getAuthHeader from "@/features/get-jwt-token";
 
 const AddHaircut = () => {
   const [name, setName] = useState("");
@@ -65,6 +66,7 @@ const AddHaircut = () => {
       const res = await api.post("/haircuts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${await getAuthHeader()}`,
         },
       });
       if (res.status === 201) {
