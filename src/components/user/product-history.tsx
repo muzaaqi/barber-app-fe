@@ -82,7 +82,7 @@ export default function ProductHistory() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 md:grid md:grid-cols-2 gap-4">
       {data.map((transaction) => (
         <Card key={transaction.id} className="border shadow-sm py-0">
           <CardHeader className="bg-muted/30 flex flex-row items-center justify-between border-b p-4">

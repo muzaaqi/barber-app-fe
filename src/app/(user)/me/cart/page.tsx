@@ -11,7 +11,8 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingBag, ShoppingCart } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 export const metadata = {
   title: "Keranjang Belanja",
@@ -48,13 +49,23 @@ export default async function CartPage() {
 
   return (
     <div className="bg-background min-h-screen">
-      <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-8 flex items-center gap-4">
-          <ShoppingCart size={50} />
-          <h1 className="text-3xl font-bold tracking-tight">
-            Keranjang Belanja
-          </h1>
+      <div className="container mx-auto max-w-6xl px-4 pt-5 sm:px-6">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-3">
+            <ShoppingCart className="size-10 md:size-15" />
+            <h1 className="text-xl md:text-3xl font-bold tracking-tight">
+              Keranjang Belanja
+            </h1>
+          </div>
+          <div>
+            <Link href="/services?options=products">
+              <Button>
+                <ShoppingBag /> Lihat Katalog Produk
+              </Button>
+            </Link>
+          </div>
         </div>
+        <Separator className="mb-8" />
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="space-y-4 lg:col-span-2">
             {cartData.items.map((item) => (

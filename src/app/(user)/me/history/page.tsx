@@ -7,6 +7,9 @@ import HaircutHistory from "@/components/user/haircut-history";
 import ProductHistory from "@/components/user/product-history";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Clock, Scissors, ShoppingBag } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 function HistoryContent() {
   const router = useRouter();
@@ -19,38 +22,43 @@ function HistoryContent() {
   };
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 sm:px-6">
-      <div className="mb-8">
-        <div className="flex gap-3 items-center">
-          <Clock size={50}/>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Riwayat Transaksi
-          </h1>
+    <div className="bg-background min-h-screen">
+      <div className="container mx-auto max-w-6xl px-4 pt-5 sm:px-6">
+        <div className="flex justify-between item-center mb-5">
+          <div className="flex items-center gap-3">
+            <Clock size={50} />
+            <h1 className="text-xl font-bold tracking-tight md:text-3xl">
+              Riwayat Transaksi
+            </h1>
+          </div>
+          <div className="flex items-center">
+            <Link href="/services">
+              <Button>Lihat Katalog</Button>
+            </Link>
+          </div>
         </div>
-        <p className="text-muted-foreground mt-2">
-          Lihat semua status pemesanan layanan dan pembelian produk Anda.
-        </p>
+        <Separator className="mb-8" />
+        <Tabs
+          defaultValue="haircut"
+          className="w-full"
+          onValueChange={handleTabChange}
+        >
+          <TabsList className="mb-8 grid w-full grid-cols-2">
+            <TabsTrigger value="haircut">
+              <Scissors /> Potong
+            </TabsTrigger>
+            <TabsTrigger value="product">
+              <ShoppingBag /> Produk
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="haircut" className="min-h-[400px]">
+            <HaircutHistory />
+          </TabsContent>
+          <TabsContent value="product" className="min-h-[400px]">
+            <ProductHistory />
+          </TabsContent>
+        </Tabs>
       </div>
-      <Tabs
-        defaultValue="haircut"
-        className="w-full"
-        onValueChange={handleTabChange}
-      >
-        <TabsList className="mb-8 grid w-full grid-cols-2">
-          <TabsTrigger value="haircut">
-            <Scissors /> Potong
-          </TabsTrigger>
-          <TabsTrigger value="product">
-            <ShoppingBag /> Produk
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="haircut" className="min-h-[400px]">
-          <HaircutHistory />
-        </TabsContent>
-        <TabsContent value="product" className="min-h-[400px]">
-          <ProductHistory />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }

@@ -76,11 +76,11 @@ export default function HaircutHistory() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 md:grid md:grid-cols-2 gap-4">
       {data.map((item) => (
         <Card
           key={item.id}
-          className="hover:border-primary/50 overflow-hidden transition-colors pt-0"
+          className="hover:border-primary/50 overflow-hidden transition-colors py-0"
         >
           <CardContent className="sm:flex px-0">
             <div className="bg-muted relative h-60 w-full shrink-0 sm:h-auto sm:w-48 rounded-xl overflow-hidden">
