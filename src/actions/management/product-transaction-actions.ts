@@ -3,12 +3,16 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 import { ProductPayload } from "@/types/transactions";
+import { redirect } from "next/navigation";
 
 const addNewProcuctTransaction = async (payload: ProductPayload) => {
   try {
     const res = await api.post("/product-transactions", payload, {
       headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
+    if (res.status === 401) {
+      return redirect("/login");
+    }
     if (res.status !== 201) {
       throw new Error("Failed to add product transaction");
     }
@@ -68,9 +72,12 @@ const getProductTransactionById = async (id: string) => {
 
 const getProductTransactionsByUserId = async (page: number, limit: number) => {
   try {
-    const res = await api.get(`/product-transactions/me?page=${page}&limit=${limit}`, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
-    });
+    const res = await api.get(
+      `/product-transactions/me?page=${page}&limit=${limit}`,
+      {
+        headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      },
+    );
     if (res.status !== 200) {
       throw new Error("Failed to fetch product transactions by user");
     }

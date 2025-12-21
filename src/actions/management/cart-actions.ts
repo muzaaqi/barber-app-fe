@@ -11,7 +11,7 @@ const getCartData = async (): Promise<CartResponse | null> => {
       headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
     if (res.status !== 200) {
-      throw new Error("Failed to fetch cart");
+      return null;
     }
     return res.data.data;
   } catch (error) {

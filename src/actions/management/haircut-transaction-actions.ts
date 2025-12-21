@@ -3,12 +3,16 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 import { HaircutPayload } from "@/types/transactions";
+import { redirect } from "next/navigation";
 
 const addNewHaircutTransaction = async (payload: HaircutPayload) => {
   try {
     const res = await api.post("/haircut-transactions", payload, {
       headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
+    if (res.status === 401) {
+      return redirect("/login");
+    }
     if (res.status !== 201) {
       throw new Error("Failed to add haircut transaction");
     }
