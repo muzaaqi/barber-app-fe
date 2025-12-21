@@ -74,6 +74,14 @@ const Navbar = async () => {
                   NAVIGASI
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                {navItems.map(({ name, url, icon }) => (
+                  <DropdownMenuItem key={name} asChild>
+                    <Link href={url}>
+                      {icon}
+                      {name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
                 {user?.role === "admin" ? (
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard">
@@ -91,7 +99,7 @@ const Navbar = async () => {
                       <DropdownMenuItem asChild>
                         <Link
                           href="/me/cart"
-                          className="group hover:text-primary justify-between"
+                          className="group justify-between"
                         >
                           <div className="flex items-center gap-2">
                             <ShoppingCart /> Troli
@@ -109,14 +117,6 @@ const Navbar = async () => {
                     </>
                   )
                 )}
-                {navItems.map(({ name, url, icon }) => (
-                  <DropdownMenuItem key={name} asChild>
-                    <Link href={url}>
-                      {icon}
-                      {name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <MobileThemeSwitch />

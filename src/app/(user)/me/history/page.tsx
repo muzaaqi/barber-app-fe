@@ -19,7 +19,7 @@ function HistoryContent() {
   };
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-8 sm:px-6">
+    <div className="container mx-auto max-w-4xl px-4 sm:px-6">
       <div className="mb-8">
         <div className="flex gap-3 items-center">
           <Clock size={50}/>
