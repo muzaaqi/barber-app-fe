@@ -21,7 +21,7 @@ export const metadata = {
 export default async function CartPage() {
   const cartData = await getCartData();
 
-  if (!cartData || cartData.items.length === 0) {
+  if (!cartData || !cartData.data || cartData.data.items.length === 0) {
     return (
       <div className="container mx-auto max-w-4xl px-4 py-20">
         <Empty>
@@ -50,10 +50,10 @@ export default async function CartPage() {
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto max-w-6xl px-4 pt-5 sm:px-6">
-        <div className="flex items-center justify-between mb-5">
+        <div className="mb-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <ShoppingCart className="size-10 md:size-15" />
-            <h1 className="text-xl md:text-3xl font-bold tracking-tight">
+            <h1 className="text-xl font-bold tracking-tight md:text-3xl">
               Keranjang Belanja
             </h1>
           </div>
@@ -68,12 +68,12 @@ export default async function CartPage() {
         <Separator className="mb-8" />
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="space-y-4 lg:col-span-2">
-            {cartData.items.map((item) => (
+            {cartData.data.items.map((item) => (
               <CartItemCard key={item.cart_id} item={item} />
             ))}
           </div>
           <div className="relative lg:col-span-1">
-            <CartSummary summary={cartData.summary} />
+            <CartSummary summary={cartData.data.summary} />
           </div>
         </div>
       </div>
