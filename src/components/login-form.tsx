@@ -69,7 +69,7 @@ export function LoginForm({
           {errorMessage && (
             <Alert
               variant="destructive"
-              className="animate-in fade-in slide-in-from-top-1"
+              className="animate-in fade-in slide-in-from-top-1 mb-3"
             >
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Gagal Masuk</AlertTitle>
