@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { api } from "@/lib/axios-instance";
 import { HaircutTransaction, PaginationMeta } from "@/types/transactions";
 import GlobalPagination from "@/components/global-pagination";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,7 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { CalendarDays, Clock, Scissors } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
-import getAuthHeader from "@/features/get-jwt-token";
 import { toast } from "sonner";
 import { getHaircutTransactionsByUserId } from "@/actions/management/haircut-transaction-actions";
 
