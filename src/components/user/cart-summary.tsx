@@ -1,18 +1,26 @@
 "use client";
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatIDR } from "@/features/formatter";
 import { CartSummary as SummaryType } from "@/types/cart";
-import CartCheckoutDialog from "./cart-checkout-dialog"; 
+import CartCheckoutDialog from "./cart-checkout-dialog";
 
 export default function CartSummary({ summary }: { summary: SummaryType }) {
   return (
-    <Card className="sticky top-24 h-fit border shadow-sm">
-      <CardHeader className="bg-muted/20 pb-4">
-        <CardTitle className="text-lg">Ringkasan Belanja</CardTitle>
+    <Card className="fixed right-4 bottom-5 left-4 z-50 h-fit w-auto shadow-sm lg:sticky lg:top-24 lg:right-auto lg:bottom-auto lg:left-auto lg:w-full">
+      <CardHeader>
+        <CardTitle className="text-primary text-2xl">
+          Ringkasan Belanja
+        </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 pt-6">
+      <CardContent className="space-y-4">
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Total Item</span>
           <span className="font-medium">{summary.total_items} barang</span>
@@ -22,18 +30,18 @@ export default function CartSummary({ summary }: { summary: SummaryType }) {
           <span className="font-medium">{formatIDR(summary.grand_total)}</span>
         </div>
         <Separator />
-        <div className="flex justify-between items-center">
-          <span className="font-bold text-lg">Grand Total</span>
-          <span className="font-bold text-xl text-primary">
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold">Grand Total</span>
+          <span className="text-primary text-xl font-bold">
             {formatIDR(summary.grand_total)}
           </span>
         </div>
       </CardContent>
-      <CardFooter className="p-4 bg-muted/10">
-        <CartCheckoutDialog 
-            totalItems={summary.total_items} 
-            grandTotal={summary.grand_total}
-            disabled={summary.total_items === 0} 
+      <CardFooter className="">
+        <CartCheckoutDialog
+          totalItems={summary.total_items}
+          grandTotal={summary.grand_total}
+          disabled={summary.total_items === 0}
         />
       </CardFooter>
     </Card>
