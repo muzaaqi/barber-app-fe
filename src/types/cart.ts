@@ -1,4 +1,4 @@
-export type CartItem = {
+type CartItem = {
   cart_id: string;
   product_id: string;
   product_name: string;
@@ -9,12 +9,21 @@ export type CartItem = {
   max_stock: number;
 };
 
-export type CartSummary = {
+type CartSummary = {
   total_items: number;
   grand_total: number;
 };
 
-export type CartResponse = {
+type CartResponse = {
   items: CartItem[];
   summary: CartSummary;
 };
+
+type CartCheckoutPayload = {
+  shipping_address: string;
+  expedition_service: string;
+  payment_method: string | "cod" | "qris";
+  payment_status: string | "paid" | "unpaid";
+};
+
+export type { CartItem, CartSummary, CartResponse, CartCheckoutPayload };

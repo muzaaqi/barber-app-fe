@@ -1,10 +1,10 @@
-export type PaginationMeta = {
+type PaginationMeta = {
   page: number;
   limit: number;
   total: number;
 };
 
-export type HaircutTransaction = {
+type HaircutTransaction = {
   id: string;
   reservation_time: string;
   payment_status: string;
@@ -17,7 +17,16 @@ export type HaircutTransaction = {
   };
 };
 
-export type ProductTransactionItem = {
+type HaircutPayload = {
+  haircut_id: string;
+  reservation_time: string;
+  payment_method: string;
+  payment_status: string;
+  hairwash: boolean;
+  total_price: number;
+};
+
+type ProductTransactionItem = {
   id: string;
   quantity: number;
   price_at_purchase: number;
@@ -27,7 +36,7 @@ export type ProductTransactionItem = {
   product_image: string;
 };
 
-export type ProductTransaction = {
+type ProductTransaction = {
   id: string;
   created_at: string;
   payment_status: string;
@@ -35,4 +44,23 @@ export type ProductTransaction = {
   expedition_service: string;
   total_price: number;
   items: ProductTransactionItem[];
+};
+
+type ProductPayload = {
+  product_id: string;
+  quantity: number;
+  payment_method: string;
+  payment_status: string;
+  expedition_service: string;
+  shipping_address: string;
+  total_price: number;
+};
+
+export type {
+  PaginationMeta,
+  HaircutTransaction,
+  HaircutPayload,
+  ProductTransaction,
+  ProductTransactionItem,
+  ProductPayload,
 };
