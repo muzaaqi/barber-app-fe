@@ -180,7 +180,7 @@ const HistorySkeleton = () => (
         key={i}
         className="flex h-auto flex-col overflow-hidden rounded-xl border sm:h-40 sm:flex-row"
       >
-        <Skeleton className="h-40 w-full sm:w-48" />
+        <Skeleton className="h-60 w-full sm:w-48" />
         <div className="flex-1 space-y-2 p-4">
           <Skeleton className="h-6 w-1/2" />
           <Skeleton className="h-4 w-1/3" />

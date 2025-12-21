@@ -47,7 +47,7 @@ const GroupThemeSwitch = () => {
 const MobileThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
   return (
-    <ButtonGroup className="w-full">
+    <ButtonGroup className="w-full gap-2 flex justify-center">
       <Button
         variant={theme === "light" ? "default" : "outline"}
         onClick={() => setTheme("light")}

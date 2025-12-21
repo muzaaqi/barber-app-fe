@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import HaircutHistory from "@/components/user/haircut-history";
 import ProductHistory from "@/components/user/product-history";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Scissors, ShoppingBag } from "lucide-react";
+import { Clock, Scissors, ShoppingBag } from "lucide-react";
 
 function HistoryContent() {
   const router = useRouter();
@@ -21,7 +21,12 @@ function HistoryContent() {
   return (
     <div className="container mx-auto max-w-4xl px-4 py-8 sm:px-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Riwayat Transaksi</h1>
+        <div className="flex gap-3 items-center">
+          <Clock size={50}/>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Riwayat Transaksi
+          </h1>
+        </div>
         <p className="text-muted-foreground mt-2">
           Lihat semua status pemesanan layanan dan pembelian produk Anda.
         </p>
