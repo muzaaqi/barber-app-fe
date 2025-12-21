@@ -88,7 +88,7 @@ const updateProductTransactionStatus = async (
 
     revalidatePath("/dashboard/transactions/products");
 
-    return { success: true, message: `Berhasil mengubah ${field}` };
+    return { success: true, message: `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status pengiriman"}` };
   } catch {
     return {
       success: false,

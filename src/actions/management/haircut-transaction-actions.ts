@@ -107,7 +107,7 @@ const updateHaircutTransactionStatus = async (
     if (res.status !== 200) throw new Error("Gagal update status");
     revalidatePath("/dashboard/transactions/haircuts");
 
-    return { success: true, message: `Berhasil mengubah ${field}` };
+    return { success: true, message: `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status reservasi"}` };
   } catch {
     return {
       success: false,
