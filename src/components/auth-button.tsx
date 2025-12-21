@@ -134,7 +134,7 @@ export default async function AuthButton({
         <div className="p-2">
           <Button
             variant="ghost"
-            className="text-destructive hover:text-destructive h-10 w-full justify-start px-2 hover:bg-red-50"
+            className="text-destructive hover:text-destructive h-10 w-full justify-start px-2 hover:bg-destructive/10"
             onClick={logOutAction}
           >
             <LogOutIcon className="mr-3 size-4" />
