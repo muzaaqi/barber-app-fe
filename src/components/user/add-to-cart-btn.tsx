@@ -1,7 +1,7 @@
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 import { Spinner } from "../ui/spinner";
-import { addToCart } from "@/actions/management/cart";
+import { addToCart } from "@/actions/management/cart-actions";
 import { useState } from "react";
 import { toast } from "sonner";
 
