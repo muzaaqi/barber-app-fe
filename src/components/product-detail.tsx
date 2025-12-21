@@ -134,7 +134,6 @@ const ProductDetail = () => {
       const res = await addNewProcuctTransaction(payload);
       if (res.success) {
         toast.success("Pesanan berhasil dibuat!");
-        router.push("/dashboard");
       }
     } catch (error) {
       console.error(error);

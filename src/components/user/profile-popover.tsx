@@ -39,7 +39,7 @@ const ProfilePopover = ({
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
-          {cartItems && cartItems.items.length > 0 && (
+          {cartItems && cartItems.data && cartItems.data.items.length > 0 && (
             <span className="bg-primary absolute top-0 right-0 size-3 rounded-full border-2 border-white"></span>
           )}
         </Button>
@@ -107,12 +107,12 @@ const ProfilePopover = ({
                     <ShoppingCart className="text-muted-foreground mr-3 size-4" />
                     Troli
                   </div>
-                  {cartItems && cartItems.items.length > 0 && (
+                  {cartItems && cartItems.data && cartItems.data.items.length > 0 && (
                     <Badge
                       variant="secondary"
                       className="group-hover:bg-primary group-hover:text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-md px-1.5 text-[10px] transition-colors"
                     >
-                      {cartItems.items.length}
+                      {cartItems.data.items.length}
                     </Badge>
                   )}
                 </Button>

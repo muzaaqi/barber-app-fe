@@ -19,6 +19,7 @@ const addNewProcuctTransaction = async (payload: ProductPayload) => {
     }
     return {
       data: res.data.data.data,
+      success: true,
       message: "Berhasil menambahkan transaksi produk",
     };
   } catch (error) {

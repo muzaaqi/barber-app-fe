@@ -15,8 +15,12 @@ type CartSummary = {
 };
 
 type CartResponse = {
-  items: CartItem[];
-  summary: CartSummary;
+  success: boolean;
+  message: string;
+  data?: {
+    items: CartItem[];
+    summary: CartSummary;
+  };
 };
 
 type CartCheckoutPayload = {

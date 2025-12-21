@@ -97,7 +97,6 @@ const HaircutDetail = () => {
         setDate(undefined);
         setPaymentMethod("");
         setIsKeramas("false");
-        router.push("/services");
       }
     } catch {
       toast.error("Gagal membuat reservasi. Silakan coba lagi.");

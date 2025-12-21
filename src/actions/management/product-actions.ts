@@ -13,11 +13,15 @@ const getAllProducts = async (page: number, limit: number) => {
     return {
       data: res.data.data.data as ProductType[],
       pagination: res.data.data.pagination,
+      success: true,
       message: "Berhasil mengambil semua data produk",
     };
   } catch (error) {
     console.error("Failed to fetch products:", error);
-    return null;
+    return {
+      success: false,
+      message: "Gagal mengambil data produk",
+    };
   }
 };
 
@@ -27,10 +31,17 @@ const getProductById = async (id: string) => {
     if (res.status !== 200) {
       throw new Error("Failed to fetch product");
     }
-    return { data: res.data.data, message: "Berhasil mengambil data produk" };
+    return {
+      data: res.data.data,
+      success: true,
+      message: "Berhasil mengambil data produk",
+    };
   } catch (error) {
     console.error("Failed to fetch product:", error);
-    return null;
+    return {
+      success: false,
+      message: "Gagal mengambil data produk",
+    };
   }
 };
 

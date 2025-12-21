@@ -52,7 +52,7 @@ const deleteHaircutById = async (id: string) => {
     if (res.status !== 200) {
       throw new Error("Failed to delete haircut");
     }
-    return { message: "Berhasil menghapus data potong rambut" };
+    return { success: true, message: "Berhasil menghapus data potong rambut" };
   } catch (error) {
     console.error("Failed to delete haircut:", error);
     return {

@@ -11,12 +11,19 @@ const getCartData = async (): Promise<CartResponse | null> => {
       headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
     if (res.status !== 200) {
-      return null;
+      return { success: false, message: "Gagal mengambil data troli" };
     }
-    return res.data.data;
+    return {
+      data: res.data.data,
+      success: true,
+      message: "Berhasil mengambil data troli",
+    };
   } catch (error) {
     console.error("Failed to fetch cart:", error);
-    return null;
+    return {
+      success: false,
+      message: "Gagal mengambil data troli",
+    }
   }
 };
 
@@ -31,7 +38,7 @@ const addToCart = async (productId: string, quantity: number) => {
       throw new Error("Failed to add to cart");
     }
     revalidatePath("/cart");
-    return { success: true };
+    return { success: true, message: "Berhasil menambahkan ke troli" };
   } catch {
     return { success: false, message: "Gagal menambahkan ke troli" };
   }
@@ -48,7 +55,7 @@ const updateCartQuantity = async (cartId: string, quantity: number) => {
       throw new Error("Failed to update cart quantity");
     }
     revalidatePath("/cart");
-    return { success: true };
+    return { success: true, message: "Berhasil update quantity" };
   } catch {
     return { success: false, message: "Gagal update quantity" };
   }
@@ -84,4 +91,10 @@ const checkoutCart = async (payload: CartCheckoutPayload) => {
   }
 };
 
-export { getCartData, addToCart, updateCartQuantity, deleteCartItem, checkoutCart };
+export {
+  getCartData,
+  addToCart,
+  updateCartQuantity,
+  deleteCartItem,
+  checkoutCart,
+};

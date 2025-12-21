@@ -104,12 +104,12 @@ const Navbar = async () => {
                           <div className="flex items-center gap-2">
                             <ShoppingCart /> Troli
                           </div>
-                          {cartItems && cartItems.items.length > 0 && (
+                          {cartItems?.data && cartItems.data.items.length > 0 && (
                             <Badge
                               variant="secondary"
                               className="group-hover:bg-primary group-hover:text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-md px-1.5 text-[10px] transition-colors"
                             >
-                              {cartItems.items.length}
+                              {cartItems.data.items.length}
                             </Badge>
                           )}
                         </Link>
