@@ -2,13 +2,17 @@
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
-import { Trash2, Minus, Plus, Loader2 } from "lucide-react";
+import { Trash2, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { updateCartQuantity, deleteCartItem } from "@/actions/management/cart";
+import {
+  updateCartQuantity,
+  deleteCartItem,
+} from "@/actions/management/cart-actions";
 import { CartItem } from "@/types/cart";
 import { formatIDR } from "@/features/formatter";
 import { toast } from "sonner";
+import { Spinner } from "../ui/spinner";
 
 export default function CartItemCard({ item }: { item: CartItem }) {
   const [isPending, startTransition] = useTransition();
@@ -16,7 +20,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
 
   const handleUpdate = (newQty: number) => {
     if (newQty < 1 || newQty > item.max_stock) return;
-    
+
     setOptimisticQty(newQty);
 
     startTransition(async () => {
@@ -41,8 +45,8 @@ export default function CartItemCard({ item }: { item: CartItem }) {
 
   return (
     <Card className="mb-4 overflow-hidden border shadow-sm">
-      <CardContent className="sm:flex">
-        <div className="relative h-32 w-full shrink-0 bg-muted sm:w-32">
+      <CardContent className="flex">
+        <div className="bg-muted relative h-32 shrink-0 w-32">
           <Image
             src={item.product_image || "/placeholder.jpg"}
             alt={item.product_name}
@@ -51,10 +55,12 @@ export default function CartItemCard({ item }: { item: CartItem }) {
           />
         </div>
         <div className="flex flex-1 flex-col justify-between p-4">
-          <div className="flex justify-between items-start mb-2">
+          <div className="mb-2 flex items-start justify-between">
             <div>
-              <h3 className="font-semibold text-lg line-clamp-1">{item.product_name}</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="line-clamp-1 text-lg font-semibold">
+                {item.product_name}
+              </h3>
+              <p className="text-muted-foreground text-sm">
                 Harga: {formatIDR(item.price)}
               </p>
             </div>
@@ -65,11 +71,15 @@ export default function CartItemCard({ item }: { item: CartItem }) {
               onClick={handleDelete}
               disabled={isPending}
             >
-              {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+              {isPending ? (
+                <Spinner />
+              ) : (
+                <Trash2 className="h-4 w-4" />
+              )}
             </Button>
           </div>
-          <div className="flex items-center justify-between mt-auto">
-            <div className="flex items-center gap-3 border rounded-lg px-2 py-1">
+          <div className="mt-auto flex items-center justify-between">
+            <div className="flex items-center gap-3 rounded-lg border px-2 py-1">
               <Button
                 variant="ghost"
                 size="icon"
@@ -79,7 +89,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
               >
                 <Minus className="h-3 w-3" />
               </Button>
-              <span className="text-sm font-medium w-4 text-center">
+              <span className="w-4 text-center text-sm font-medium">
                 {optimisticQty}
               </span>
               <Button
@@ -93,8 +103,8 @@ export default function CartItemCard({ item }: { item: CartItem }) {
               </Button>
             </div>
             <div className="text-right">
-              <p className="text-xs text-muted-foreground">Subtotal</p>
-              <p className="font-bold text-primary">
+              <p className="text-muted-foreground text-xs">Subtotal</p>
+              <p className="text-primary font-bold">
                 {formatIDR(item.price * optimisticQty)}
               </p>
             </div>
