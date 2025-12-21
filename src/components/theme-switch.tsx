@@ -2,9 +2,9 @@
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { Moon, Sun } from "lucide-react";
+import { Monitor, Moon, Sun } from "lucide-react";
 
-const ThemeSwitch = () => {
+const SimpleThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
   return (
     <Button
@@ -15,6 +15,32 @@ const ThemeSwitch = () => {
     >
       {theme === "light" ? <Sun /> : <Moon />}
     </Button>
+  );
+};
+
+const GroupThemeSwitch = () => {
+  const { theme, setTheme } = useTheme();
+  return (
+    <ButtonGroup>
+      <Button 
+        variant={theme === "system" ? "default" : "outline"}
+        onClick={() => setTheme("system")}
+      >
+        <Monitor />
+      </Button>
+      <Button
+        variant={theme === "light" ? "default" : "outline"}
+        onClick={() => setTheme("light")}
+      >
+        <Sun />
+      </Button>
+      <Button
+        variant={theme === "dark" ? "default" : "outline"}
+        onClick={() => setTheme("dark")}
+      >
+        <Moon />
+      </Button>
+    </ButtonGroup>
   );
 };
 
@@ -38,4 +64,4 @@ const MobileThemeSwitch = () => {
   );
 };
 
-export { ThemeSwitch, MobileThemeSwitch };
+export { SimpleThemeSwitch, GroupThemeSwitch, MobileThemeSwitch };

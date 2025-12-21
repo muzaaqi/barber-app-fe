@@ -1,7 +1,7 @@
 import { Scissors, ShoppingBasket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ThemeSwitch } from "../theme-switch";
+import { SimpleThemeSwitch } from "../theme-switch";
 import TransactionsNav from "./transactions-nav";
 
 const Sidebar = () => {
@@ -36,7 +36,7 @@ const Sidebar = () => {
       </div>
       <div>
         <div className="flex justify-center p-4">
-          <ThemeSwitch />
+          <SimpleThemeSwitch />
         </div>
         <div className="hover:bg-accent hover:text-accent-foreground p-4">
           <Image
