@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import HaircutHistory from "@/components/user/haircut-history";
 import ProductHistory from "@/components/user/product-history";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Clock, Scissors, ShoppingBag } from "lucide-react";
+import { Clock, Plus, Scissors, ShoppingBag } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,7 @@ function HistoryContent() {
           </div>
           <div className="flex items-center">
             <Link href="/services">
-              <Button>Lihat Katalog</Button>
+              <Button><Plus /> Lihat Katalog</Button>
             </Link>
           </div>
         </div>
