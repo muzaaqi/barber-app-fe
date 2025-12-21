@@ -8,7 +8,6 @@ import {
   ShoppingBasket,
   Menu,
   LayoutDashboard,
-  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -49,9 +48,9 @@ const SidebarContent = () => {
     <div className="flex h-full flex-col justify-between py-4">
       <div className="space-y-4">
         <div className="px-6 py-2">
-          <h2 className="text-primary text-2xl font-bold tracking-tight">
+          <Link href="/" className="text-primary text-2xl font-bold tracking-tight">
             BERGAS
-          </h2>
+          </Link>
         </div>
         <Separator />
         <ScrollArea className="px-3">
