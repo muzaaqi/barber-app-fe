@@ -3,6 +3,7 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 import { HaircutPayload } from "@/types/transactions";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const addNewHaircutTransaction = async (payload: HaircutPayload) => {
@@ -46,7 +47,7 @@ const getHaircutTransactions = async () => {
     return {
       success: false,
       message: "Gagal mengambil data transaksi potong rambut",
-    }
+    };
   }
 };
 
@@ -68,9 +69,12 @@ const getHaircutTransactionById = async (id: string) => {
 
 const getHaircutTransactionsByUserId = async (page: number, limit: number) => {
   try {
-    const res = await api.get(`/haircut-transactions/user?page=${page}&limit=${limit}`, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
-    });
+    const res = await api.get(
+      `/haircut-transactions/user?page=${page}&limit=${limit}`,
+      {
+        headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      },
+    );
     if (res.status !== 200) {
       throw new Error("Failed to fetch user's haircut transactions");
     }
@@ -78,30 +82,37 @@ const getHaircutTransactionsByUserId = async (page: number, limit: number) => {
       data: res.data.data.data,
       pagination: res.data.data.pagination,
       message: "Berhasil mengambil data transaksi potong rambut user",
-    }
+    };
   } catch (error) {
     console.error("Failed to fetch user's haircut transactions:", error);
     return {
       success: false,
       message: "Gagal mengambil data transaksi potong rambut user",
-    }
+    };
   }
 };
 
-const updateHaircutTransactionStatus = async (id: string, status: string) => {
+const updateHaircutTransactionStatus = async (
+  id: string,
+  field: "payment_status" | "reservation_status",
+  status: string,
+) => {
   try {
-    const res = await api.put(
-      `/haircut-transactions/${id}`,
-      { status },
-      { headers: { Authorization: `Bearer ${await getAuthHeader()}` } },
-    );
-    if (res.status !== 200) {
-      throw new Error("Failed to update haircut transaction status");
-    }
-    return { success: true };
-  } catch (error) {
-    console.error("Failed to update haircut transaction status:", error);
-    return { success: false, message: "Gagal mengupdate status transaksi" };
+    const token = await getAuthHeader();
+    const payload = { [field]: status };
+    const res = await api.put(`/haircut-transactions/${id}`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (res.status !== 200) throw new Error("Gagal update status");
+    revalidatePath("/dashboard/transactions/haircuts");
+
+    return { success: true, message: `Berhasil mengubah ${field}` };
+  } catch {
+    return {
+      success: false,
+      message: "Gagal mengubah status",
+    };
   }
 };
 

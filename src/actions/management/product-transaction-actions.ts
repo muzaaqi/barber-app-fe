@@ -3,6 +3,7 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 import { ProductPayload } from "@/types/transactions";
+import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
 import { redirect } from "next/navigation";
 
 const addNewProcuctTransaction = async (payload: ProductPayload) => {
@@ -70,6 +71,32 @@ const getProductTransactionById = async (id: string) => {
   }
 };
 
+const updateProductTransactionStatus = async (
+  id: string,
+  field: "payment_status" | "expedition_status",
+  status: string
+) => {
+  try {
+    const token = await getAuthHeader();
+    const payload = { [field]: status };
+
+    const res = await api.put(`/product-transactions/${id}`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (res.status !== 200) throw new Error("Gagal update status");
+
+    revalidatePath("/dashboard/transactions/products");
+
+    return { success: true, message: `Berhasil mengubah ${field}` };
+  } catch {
+    return {
+      success: false,
+      message: "Gagal mengubah status",
+    };
+  }
+}
+
 const getProductTransactionsByUserId = async (page: number, limit: number) => {
   try {
     const res = await api.get(
@@ -122,5 +149,6 @@ export {
   getProductTransactions,
   getProductTransactionById,
   getProductTransactionsByUserId,
+  updateProductTransactionStatus,
   deleteHaircutTransaction,
 };
