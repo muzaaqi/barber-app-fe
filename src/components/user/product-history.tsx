@@ -10,10 +10,20 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
-import { Truck } from "lucide-react";
+import { ShoppingBag, Truck } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
@@ -50,8 +60,23 @@ export default function ProductHistory() {
 
   if (!data || data.length === 0) {
     return (
-      <div className="text-muted-foreground py-10 text-center">
-        Belum ada riwayat pembelian produk.
+      <div className="py-10">
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <ShoppingBag className="h-10 w-10 text-muted-foreground" />
+            </EmptyMedia>
+            <EmptyTitle>Belum Ada Riwayat Belanja</EmptyTitle>
+            <EmptyDescription>
+              Riwayat pembelian produk perawatan rambut Anda akan muncul di sini.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button asChild>
+              <Link href="/products">Mulai Belanja</Link>
+            </Button>
+          </EmptyContent>
+        </Empty>
       </div>
     );
   }

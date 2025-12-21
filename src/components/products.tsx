@@ -1,20 +1,28 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { getAllProducts } from "@/actions/management/product-actions";
+import { formatIDR } from "@/features/formatter";
+import { toast } from "sonner";
 import { Card, CardContent, CardFooter } from "./ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { ButtonGroup } from "./ui/button-group";
 import { Skeleton } from "./ui/skeleton";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import ProductDialog from "./user/product-dialog";
-import { formatIDR } from "@/features/formatter";
-import Link from "next/link";
-import AddToCartButton from "./user/add-to-cart-btn";
-import { getAllProducts } from "@/actions/management/product-actions";
-import { ProductType } from "@/types/products";
-import GlobalPagination from "@/components/global-pagination";
-import { useSearchParams } from "next/navigation";
 import { PaginationMeta } from "@/types/transactions"; 
+import { ProductType } from "@/types/products";
+import ProductDialog from "./user/product-dialog";
+import AddToCartButton from "./user/add-to-cart-btn";
+import GlobalPagination from "@/components/global-pagination";
+import { PackageOpen } from "lucide-react";
 
 const ProductsCards = () => {
   const searchParams = useSearchParams();
@@ -44,6 +52,24 @@ const ProductsCards = () => {
     };
     fetchProducts();
   }, [page]);
+
+  if (!isLoading && products.length === 0) {
+    return (
+      <div className="col-span-full py-20">
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <PackageOpen className="h-10 w-10 text-muted-foreground" />
+            </EmptyMedia>
+            <EmptyTitle>Produk Tidak Ditemukan</EmptyTitle>
+            <EmptyDescription>
+              Saat ini belum ada produk yang tersedia di katalog kami.
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">

@@ -1,9 +1,17 @@
+import Link from "next/link";
 import { getCartData } from "@/actions/management/cart-actions";
 import CartItemCard from "@/components/user/cart-item-card";
 import CartSummary from "@/components/user/cart-summary";
-import { ShoppingCart } from "lucide-react";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { ShoppingCart } from "lucide-react";
 
 export const metadata = {
   title: "Keranjang Belanja",
@@ -14,19 +22,23 @@ export default async function CartPage() {
 
   if (!cartData || cartData.items.length === 0) {
     return (
-      <div className="container mx-auto max-w-4xl px-4 py-20 text-center">
-        <div className="mb-6 flex justify-center">
-          <div className="bg-muted flex h-24 w-24 items-center justify-center rounded-full">
-            <ShoppingCart className="text-muted-foreground h-10 w-10" />
-          </div>
-        </div>
-        <h1 className="mb-2 text-2xl font-bold">Keranjang Anda Kosong</h1>
-        <p className="text-muted-foreground mb-8">
-          Sepertinya Anda belum menambahkan produk apapun.
-        </p>
-        <Link href="/services?options=products">
-          <Button size="lg">Mulai Belanja</Button>
-        </Link>
+      <div className="container max-w-4xl mx-auto py-20 px-4">
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <ShoppingCart className="h-12 w-12 text-muted-foreground" />
+            </EmptyMedia>
+            <EmptyTitle>Keranjang Belanja Kosong</EmptyTitle>
+            <EmptyDescription>
+              Sepertinya Anda belum menambahkan produk apapun. Yuk isi keranjangmu!
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button size="lg" asChild>
+              <Link href="/products">Lihat Katalog Produk</Link>
+            </Button>
+          </EmptyContent>
+        </Empty>
       </div>
     );
   }

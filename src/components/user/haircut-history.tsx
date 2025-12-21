@@ -7,8 +7,18 @@ import GlobalPagination from "@/components/global-pagination";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import Image from "next/image";
-import { CalendarDays, Clock, Scissors } from "lucide-react";
+import { CalendarDays, CalendarX, Clock, Scissors } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import { toast } from "sonner";
 import { getHaircutTransactionsByUserId } from "@/actions/management/haircut-transaction-actions";
@@ -44,8 +54,23 @@ export default function HaircutHistory() {
 
   if (!data || data.length === 0) {
     return (
-      <div className="text-muted-foreground py-10 text-center">
-        Belum ada riwayat booking.
+      <div className="py-10">
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <CalendarX className="h-10 w-10 text-muted-foreground" />
+            </EmptyMedia>
+            <EmptyTitle>Belum Ada Riwayat Booking</EmptyTitle>
+            <EmptyDescription>
+              Anda belum pernah melakukan reservasi layanan potong rambut di sini.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button asChild>
+              <Link href="/services">Buat Reservasi Baru</Link>
+            </Button>
+          </EmptyContent>
+        </Empty>
       </div>
     );
   }

@@ -1,16 +1,24 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { Card, CardContent, CardFooter } from "./ui/card";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Card, CardContent, CardFooter } from "./ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Skeleton } from "./ui/skeleton";
 import { toast } from "sonner";
-import HaircutDialog from "./user/haircut-dialog";
-import Link from "next/link";
 import { getAllHaircuts } from "@/actions/management/haircut-actions";
-import { useSearchParams } from "next/navigation";
-import GlobalPagination from "@/components/global-pagination";
 import { PaginationMeta } from "@/types/transactions";
+import HaircutDialog from "./user/haircut-dialog";
+import GlobalPagination from "@/components/global-pagination";
+import { SearchX } from "lucide-react";
 
 type Haircut = {
   id: string;
@@ -46,6 +54,24 @@ const HaircutsCards = () => {
     };
     fetchHaircuts();
   }, [page]);
+
+  if (!isLoading && haircuts.length === 0) {
+    return (
+      <div className="col-span-full py-20">
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <SearchX className="h-10 w-10 text-muted-foreground" />
+            </EmptyMedia>
+            <EmptyTitle>Layanan Tidak Tersedia</EmptyTitle>
+            <EmptyDescription>
+              Belum ada model potongan rambut yang ditambahkan.
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
