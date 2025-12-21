@@ -49,8 +49,8 @@ const Navbar = async () => {
     },
   ];
   return (
-    <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b px-5 py-4 backdrop-blur-sm 2xl:px-0">
-      <div className="flex justify-between font-mono lg:grid lg:grid-cols-3 w-full px-5">
+    <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b py-4 backdrop-blur-sm">
+      <div className="flex w-full justify-between px-5 font-mono lg:grid lg:grid-cols-3">
         <div className="text-primary flex items-center text-2xl font-extrabold">
           <Link href="/">
             <h1>BERGAS</h1>
@@ -80,29 +80,34 @@ const Navbar = async () => {
                       <LayoutDashboard /> Dashboard
                     </Link>
                   </DropdownMenuItem>
-                ) : user?.role === "user" && (
-                  <>
-                    <DropdownMenuItem asChild>
-                      <Link href="/me/cart" className="justify-between group hover:text-primary">
-                        <div className="flex gap-2 items-center">
-                          <ShoppingCart /> Troli
-                        </div>
-                        {cartItems && cartItems.items.length > 0 && (
-                          <Badge
-                            variant="secondary"
-                            className="group-hover:bg-primary group-hover:text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-md px-1.5 text-[10px] transition-colors"
-                          >
-                            {cartItems.items.length}
-                          </Badge>
-                        )}
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/me/history">
-                        <Clock /> Riwayat
-                      </Link>
-                    </DropdownMenuItem>
-                  </>
+                ) : (
+                  user?.role === "user" && (
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link href="/me/history">
+                          <Clock /> Riwayat
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/me/cart"
+                          className="group hover:text-primary justify-between"
+                        >
+                          <div className="flex items-center gap-2">
+                            <ShoppingCart /> Troli
+                          </div>
+                          {cartItems && cartItems.items.length > 0 && (
+                            <Badge
+                              variant="secondary"
+                              className="group-hover:bg-primary group-hover:text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-md px-1.5 text-[10px] transition-colors"
+                            >
+                              {cartItems.items.length}
+                            </Badge>
+                          )}
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )
                 )}
                 {navItems.map(({ name, url, icon }) => (
                   <DropdownMenuItem key={name} asChild>

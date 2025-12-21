@@ -80,10 +80,10 @@ export default function HaircutHistory() {
       {data.map((item) => (
         <Card
           key={item.id}
-          className="hover:border-primary/50 overflow-hidden transition-colors"
+          className="hover:border-primary/50 overflow-hidden transition-colors pt-0"
         >
-          <CardContent className="sm:flex">
-            <div className="bg-muted relative h-48 w-full shrink-0 sm:h-auto sm:w-48 rounded-xl overflow-hidden">
+          <CardContent className="sm:flex px-0">
+            <div className="bg-muted relative h-60 w-full shrink-0 sm:h-auto sm:w-48 rounded-xl overflow-hidden">
               <Image
                 src={item.haircut?.image_url || "/placeholder.jpg"}
                 alt={item.haircut?.name || "Service"}
