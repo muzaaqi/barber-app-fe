@@ -1,4 +1,4 @@
-import { getProfile } from "@/actions/auth/get-profile";
+import { getProfile, logOutAction } from "@/actions/auth/get-profile";
 import {
   Card,
   CardContent,
@@ -11,13 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  Mail,
-  Shield,
-  UserIcon,
-  LogOut,
-  User,
-} from "lucide-react";
+import { Mail, Shield, UserIcon, LogOut, User } from "lucide-react";
 import { getInitials } from "@/features/formatter";
 import { redirect } from "next/navigation";
 
@@ -25,7 +19,7 @@ type User = {
   id: string;
   name: string;
   email: string;
-  role: 'user' | 'admin';
+  role: "user" | "admin";
 };
 
 const ProfileCard = async () => {
@@ -96,7 +90,11 @@ const ProfileCard = async () => {
         </div>
       </CardContent>
       <CardFooter className="grid gap-2 pt-2">
-        <Button variant="destructive" className="w-full gap-2">
+        <Button
+          variant="destructive"
+          className="w-full gap-2"
+          onClick={logOutAction}
+        >
           <LogOut className="h-4 w-4" /> Logout
         </Button>
       </CardFooter>
