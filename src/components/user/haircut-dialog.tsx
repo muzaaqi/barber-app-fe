@@ -13,24 +13,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import {
-  BookCheck,
-  Loader2,
-  Banknote,
-  QrCode,
-  AlertCircle,
-} from "lucide-react"; // Tambah Icon
+import { BookCheck, Banknote, QrCode, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Calendar24 } from "../ui/calendar24";
 import { Separator } from "@/components/ui/separator";
-import { api } from "@/lib/axios-instance";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { addNewHaircutTransaction } from "@/actions/management/haircut-transaction-actions";
+import { HaircutPayload } from "@/types/transactions";
+import { Spinner } from "../ui/spinner";
+import { format } from "date-fns";
 
 type Haircut = {
-  id: string | number;
+  id: string;
   name: string;
   description: string;
   image_url: string;
@@ -45,7 +42,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const handleReservation = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -59,9 +56,9 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
     const [hours, minutes] = time.split(":");
     finalDateTime.setHours(parseInt(hours), parseInt(minutes));
 
-    const payload = {
+    const payload: HaircutPayload = {
       haircut_id: id,
-      reservation_time: finalDateTime.toISOString(),
+      reservation_time: format(finalDateTime, "yyyy-MM-dd HH:mm:ss"),
       payment_method: paymentMethod,
       payment_status: paymentMethod === "cash" ? "pending" : "paid",
       hairwash: isKeramas === "true",
@@ -69,8 +66,8 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
     };
 
     try {
-      const res = await api.post("/haircut-transactions", payload);
-      if (res.status === 201) {
+      const res = await addNewHaircutTransaction(payload);
+      if (res.success) {
         toast.success(
           `Sukses! Booking untuk ${finalDateTime.toLocaleString("id-ID")}`,
         );
@@ -94,7 +91,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
-        <form id="reservation-form" onSubmit={handleReservation}>
+        <form id="reservation-form" onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-primary text-4xl">
               Reservasi
@@ -213,7 +210,6 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
                       </span>
                       <span className="text-sm font-medium">Rp15.000</span>
                     </Label>
-
                     <Label
                       htmlFor="dialog-r2"
                       className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-colors ${
@@ -247,10 +243,15 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
                 Batal
               </Button>
             </DialogClose>
-            <Button form="reservation-form" type="submit" disabled={isLoading}>
+            <Button
+              form="reservation-form"
+              type="submit"
+              disabled={isLoading}
+              onClick={handleSubmit}
+            >
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Memproses...
+                  <Spinner /> Memproses...
                 </>
               ) : (
                 "Konfirmasi Booking"
