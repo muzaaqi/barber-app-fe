@@ -3,9 +3,9 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 
-const getAllHaircuts = async () => {
+const getAllHaircuts = async (page: number, limit: number) => {
   try {
-    const res = await api.get("/haircuts");
+    const res = await api.get(`/haircuts?page=${page}&limit=${limit}`);
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircuts");
     }

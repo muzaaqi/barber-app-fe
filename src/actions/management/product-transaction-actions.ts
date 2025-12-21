@@ -66,9 +66,9 @@ const getProductTransactionById = async (id: string) => {
   }
 };
 
-const getProductTransactionsByUserId = async () => {
+const getProductTransactionsByUserId = async (page: number, limit: number) => {
   try {
-    const res = await api.get("/product-transactions/me/", {
+    const res = await api.get(`/product-transactions/me?page=${page}&limit=${limit}`, {
       headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
     if (res.status !== 200) {

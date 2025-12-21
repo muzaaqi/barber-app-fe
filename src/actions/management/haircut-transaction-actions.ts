@@ -62,9 +62,9 @@ const getHaircutTransactionById = async (id: string) => {
   }
 };
 
-const getHaircutTransactionsByUserId = async () => {
+const getHaircutTransactionsByUserId = async (page: number, limit: number) => {
   try {
-    const res = await api.get("/haircut-transactions/user/", {
+    const res = await api.get(`/haircut-transactions/user?page=${page}&limit=${limit}`, {
       headers: { Authorization: `Bearer ${await getAuthHeader()}` },
     });
     if (res.status !== 200) {

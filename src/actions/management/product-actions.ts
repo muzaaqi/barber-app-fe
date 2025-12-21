@@ -2,15 +2,16 @@
 
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
+import { ProductsType } from "@/types/products";
 
-const getAllProducts = async () => {
+const getAllProducts = async (page: number, limit: number) => {
   try {
-    const res = await api.get("/products");
+    const res = await api.get(`/products?page=${page}&limit=${limit}`);
     if (res.status !== 200) {
       throw new Error("Failed to fetch products");
     }
     return {
-      data: res.data.data.data,
+      data: res.data.data.data as ProductsType[],
       pagination: res.data.data.pagination,
       message: "Berhasil mengambil semua data produk",
     };
