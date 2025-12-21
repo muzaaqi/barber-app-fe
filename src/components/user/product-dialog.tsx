@@ -15,7 +15,6 @@ import {
 import { Label } from "@/components/ui/label";
 import {
   ShoppingBag,
-  Loader2,
   Banknote,
   QrCode,
   AlertCircle,
@@ -34,9 +33,11 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { formatIDR } from "@/features/formatter";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { addNewProcuctTransaction } from "@/actions/management/product-transaction-actions";
+import { Spinner } from "../ui/spinner";
 
 type Product = {
-  id: string | number;
+  id: string
   name: string;
   description: string;
   stock: number;
@@ -116,12 +117,12 @@ const ProductDialog = ({
       payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
       expedition_service: expeditionService,
       shipping_address: address,
+      total_price: price * finalQty,
     };
 
     try {
-      const res = await api.post("/product-transactions/checkout", payload);
-
-      if (res.status === 200 || res.status === 201) {
+      const res = await addNewProcuctTransaction(payload);
+      if (res.success) {
         toast.success("Pesanan berhasil dibuat!");
         setIsOpen(false);
         setQuantity(1);
@@ -355,7 +356,7 @@ const ProductDialog = ({
             <Button form="product-checkout-form" type="submit" disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Memproses...
+                  <Spinner /> Memproses...
                 </>
               ) : (
                 "Konfirmasi Booking"
