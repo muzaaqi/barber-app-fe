@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ThemeSwitch, MobileThemeSwitch } from "./theme-switch";
+import { MobileThemeSwitch } from "./theme-switch";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,8 +20,11 @@ import {
 } from "lucide-react";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { getProfile } from "@/actions/auth/get-profile";
+import { getCartData } from "@/actions/management/cart-actions";
+import { Badge } from "./ui/badge";
 const Navbar = async () => {
   const user = await getProfile();
+  const cartItems = await getCartData();
   const liClass = "hover:text-primary transition-color duration-300";
   const navItems = [
     {
@@ -47,7 +50,7 @@ const Navbar = async () => {
   ];
   return (
     <nav className="bg-background/50 border-border fixed z-50 flex w-full justify-center border-b px-5 py-4 backdrop-blur-sm 2xl:px-0">
-      <div className="container flex justify-between font-mono lg:grid lg:grid-cols-3">
+      <div className="flex justify-between font-mono lg:grid lg:grid-cols-3 w-full px-5">
         <div className="text-primary flex items-center text-2xl font-extrabold">
           <Link href="/">
             <h1>BERGAS</h1>
@@ -60,11 +63,6 @@ const Navbar = async () => {
                 <Link href={url}>{name}</Link>
               </li>
             ))}
-            {user?.role === "admin" && (
-              <li className={liClass}>
-                <Link href="/dashboard">Dashboard</Link>
-              </li>
-            )}
           </ul>
           <div className="lg:hidden">
             <DropdownMenu>
@@ -82,11 +80,21 @@ const Navbar = async () => {
                       <LayoutDashboard /> Dashboard
                     </Link>
                   </DropdownMenuItem>
-                ) : (
+                ) : user?.role === "user" && (
                   <>
                     <DropdownMenuItem asChild>
-                      <Link href="/me/cart">
-                        <ShoppingCart /> Troli
+                      <Link href="/me/cart" className="justify-between group hover:text-primary">
+                        <div className="flex gap-2 items-center">
+                          <ShoppingCart /> Troli
+                        </div>
+                        {cartItems && cartItems.items.length > 0 && (
+                          <Badge
+                            variant="secondary"
+                            className="group-hover:bg-primary group-hover:text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-md px-1.5 text-[10px] transition-colors"
+                          >
+                            {cartItems.items.length}
+                          </Badge>
+                        )}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
@@ -118,12 +126,6 @@ const Navbar = async () => {
         </div>
         <div className="hidden items-center justify-end gap-3 lg:flex">
           <AuthButton user={user} />
-          {user && user.role === "user" && (
-            <Link href="/me/cart">
-              <ShoppingCart className="text-primary" />
-            </Link>
-          )}
-          <ThemeSwitch />
         </div>
       </div>
     </nav>
