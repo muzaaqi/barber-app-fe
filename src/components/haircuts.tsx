@@ -79,11 +79,11 @@ const HaircutsCards = () => {
         {isLoading
           ? Array.from({ length: 8 }).map((_, index) => (
               <Card key={index} className="flex flex-col justify-between">
-                <CardContent className="text-center p-4">
+                <CardContent className="text-center">
                   <Skeleton className="mb-3 aspect-square w-full rounded-md" />
                   <Skeleton className="h-6 w-3/4 mx-auto" />
                 </CardContent>
-                <CardFooter className="p-4 pt-0">
+                <CardFooter>
                   <Skeleton className="h-10 w-full" />
                 </CardFooter>
               </Card>

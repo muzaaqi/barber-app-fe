@@ -82,7 +82,7 @@ const ProductsCards = () => {
                   <Skeleton className="h-6 w-3/4 mx-auto mb-2" />
                   <Skeleton className="h-6 w-1/2 mx-auto" />
                 </CardContent>
-                <CardFooter className="p-4 pt-0">
+                <CardFooter>
                   <Skeleton className="h-10 w-full" />
                 </CardFooter>
               </Card>
