@@ -38,7 +38,7 @@ export default async function AuthButton({
         >
           <Avatar className="hover:border-primary aspect-square size-10 cursor-pointer border shadow-sm transition-all hover:scale-105">
             <AvatarImage src="" alt={user.name} />
-            <AvatarFallback className="bg-primary/10 text-primary font-bold">
+            <AvatarFallback className="dark:bg-primary/20 bg-primary/50 dark:text-primary text-foreground font-bold">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
@@ -51,7 +51,7 @@ export default async function AuthButton({
         <div className="flex items-center gap-3 p-4">
           <Avatar className="size-12 border shadow-sm">
             <AvatarImage src="" alt={user.name} />
-            <AvatarFallback className="bg-primary/10 text-primary text-lg font-bold">
+            <AvatarFallback className="dark:bg-primary/20 bg-primary/50 dark:text-primary text-foreground text-lg font-bold">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
