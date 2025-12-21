@@ -6,11 +6,15 @@ import { Spinner } from "@/components/ui/spinner";
 export const dynamic = "force-dynamic";
 
 type PageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
-const ProductsDashboard = ({ searchParams }: PageProps) => {
-  const page = typeof searchParams.page === "string" ? searchParams.page : "1";
+const ProductsDashboard = async ({ searchParams }: PageProps) => {
+  const resolvedSearchParams = await searchParams; 
+  
+  const page = typeof resolvedSearchParams.page === "string" 
+    ? resolvedSearchParams.page 
+    : "1";
   return (
     <div className="p-10">
       <div className="flex justify-between">
