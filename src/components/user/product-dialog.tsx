@@ -120,6 +120,11 @@ const ProductDialog = ({
         setPaymentMethod("");
         setAddress("");
       }
+      if (!res.success) {
+        setErrorMessage(
+          res.message || "Gagal memproses pesanan. Silakan coba lagi.",
+        );
+      }
     } catch {
       setErrorMessage("Gagal memproses pesanan. Silakan coba lagi.");
     } finally {
