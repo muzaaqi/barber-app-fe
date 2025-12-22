@@ -6,10 +6,14 @@ import { CartCheckoutPayload, CartResponse } from "@/types/cart";
 import getAuthHeader from "@/features/get-jwt-token";
 
 const getCartData = async (): Promise<CartResponse | null> => {
+  const token = await getAuthHeader();
+  if (!token) {
+    return null;
+  }
   try {
     const res = await api.get("/carts/", {
       headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
+        Authorization: `Bearer ${token}}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
       },
     });
