@@ -35,13 +35,20 @@ const getCartData = async (): Promise<CartResponse | null> => {
 };
 
 const addToCart = async (productId: string, quantity: number) => {
+  const token = await getAuthHeader();
+  if (!token) {
+    return {
+      success: false,
+      message: "Login terlebih dahulu untuk menambahkan ke troli",
+    };
+  }
   try {
     const res = await api.post(
       "/carts",
       { product_id: productId, quantity },
       {
         headers: {
-          Authorization: `Bearer ${await getAuthHeader()}`,
+          Authorization: `Bearer ${token}`,
           "Permission-Key": process.env.SECRET_API_KEY || "",
         },
       },

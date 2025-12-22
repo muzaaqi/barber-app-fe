@@ -7,10 +7,14 @@ import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
 import { redirect } from "next/navigation";
 
 const addNewProcuctTransaction = async (payload: ProductPayload) => {
+  const token = await getAuthHeader();
+  if (!token) {
+    return redirect("/login");
+  }
   try {
     const res = await api.post("/product-transactions/checkout/", payload, {
       headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
+        Authorization: `Bearer ${token}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
       },
     });

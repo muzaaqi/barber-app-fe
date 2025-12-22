@@ -7,10 +7,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const addNewHaircutTransaction = async (payload: HaircutPayload) => {
+  const token = await getAuthHeader();
+  if (!token) {
+    return redirect("/login");
+  }
   try {
     const res = await api.post("/haircut-transactions/", payload, {
       headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
+        Authorization: `Bearer ${token}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
       },
     });
