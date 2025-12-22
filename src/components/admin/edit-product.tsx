@@ -226,7 +226,7 @@ const EditProduct = ({
                 Batal
               </Button>
             </DialogClose>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} onClick={handleSubmit}>
               {isLoading ? <Spinner /> : "Simpan"}
             </Button>
           </DialogFooter>
