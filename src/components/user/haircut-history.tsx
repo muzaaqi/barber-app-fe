@@ -58,11 +58,12 @@ export default function HaircutHistory() {
         <Empty>
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <CalendarX className="h-10 w-10 text-muted-foreground" />
+              <CalendarX className="text-muted-foreground h-10 w-10" />
             </EmptyMedia>
             <EmptyTitle>Belum Ada Riwayat Booking</EmptyTitle>
             <EmptyDescription>
-              Anda belum pernah melakukan reservasi layanan potong rambut di sini.
+              Anda belum pernah melakukan reservasi layanan potong rambut di
+              sini.
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
@@ -76,69 +77,71 @@ export default function HaircutHistory() {
   }
 
   return (
-    <div className="space-y-4 md:grid md:grid-cols-2 gap-4">
-      {data.map((item) => (
-        <Card
-          key={item.id}
-          className="hover:border-primary/50 overflow-hidden transition-colors py-0"
-        >
-          <CardContent className="sm:flex px-0">
-            <div className="bg-muted relative h-60 w-full shrink-0 sm:h-auto sm:w-48 rounded-xl overflow-hidden">
-              <Image
-                src={item.haircut?.image_url || "/placeholder.jpg"}
-                alt={item.haircut?.name || "Service"}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="flex w-full flex-col justify-between gap-3 p-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="text-lg font-bold">{item.haircut?.name}</h3>
-                  <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
-                    <CalendarDays className="h-4 w-4" />
-                    <span>
-                      {new Date(item.reservation_time).toLocaleDateString(
-                        "id-ID",
-                        { dateStyle: "long" },
-                      )}
-                    </span>
-                  </div>
-                  <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
-                    <Clock className="h-4 w-4" />
-                    <span>
-                      {new Date(item.reservation_time).toLocaleTimeString(
-                        "id-ID",
-                        { hour: "2-digit", minute: "2-digit" },
-                      )}
-                    </span>
-                  </div>
-                  {item.hairwash && (
-                    <div className="mt-2 flex w-fit items-center gap-1 rounded bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600">
-                      <Scissors className="h-3 w-3" />
-                      <span>+ Cuci Rambut</span>
+    <>
+      <div className="gap-4 space-y-4 md:grid md:grid-cols-2">
+        {data.map((item) => (
+          <Card
+            key={item.id}
+            className="hover:border-primary/50 overflow-hidden py-0 transition-colors"
+          >
+            <CardContent className="px-0 sm:flex">
+              <div className="bg-muted relative h-60 w-full shrink-0 overflow-hidden rounded-xl sm:h-auto sm:w-48">
+                <Image
+                  src={item.haircut?.image_url || "/placeholder.jpg"}
+                  alt={item.haircut?.name || "Service"}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex w-full flex-col justify-between gap-3 p-4">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold">{item.haircut?.name}</h3>
+                    <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
+                      <CalendarDays className="h-4 w-4" />
+                      <span>
+                        {new Date(item.reservation_time).toLocaleDateString(
+                          "id-ID",
+                          { dateStyle: "long" },
+                        )}
+                      </span>
                     </div>
-                  )}
+                    <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
+                      <Clock className="h-4 w-4" />
+                      <span>
+                        {new Date(item.reservation_time).toLocaleTimeString(
+                          "id-ID",
+                          { hour: "2-digit", minute: "2-digit" },
+                        )}
+                      </span>
+                    </div>
+                    {item.hairwash && (
+                      <div className="mt-2 flex w-fit items-center gap-1 rounded bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600">
+                        <Scissors className="h-3 w-3" />
+                        <span>+ Cuci Rambut</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <StatusBadge status={item.payment_status} type="payment" />
+                    <Badge variant="secondary" className="text-xs capitalize">
+                      {item.reservation_status}
+                    </Badge>
+                  </div>
                 </div>
-                <div className="flex flex-col items-end gap-2">
-                  <StatusBadge status={item.payment_status} type="payment" />
-                  <Badge variant="secondary" className="text-xs capitalize">
-                    {item.reservation_status}
-                  </Badge>
+                <div className="mt-auto flex items-end justify-between border-t border-dashed pt-2">
+                  <span className="text-muted-foreground font-mono text-xs">
+                    #{item.id.substring(0, 8)}
+                  </span>
+                  <span className="text-primary text-lg font-bold">
+                    {formatIDR(item.total_price)}
+                  </span>
                 </div>
               </div>
-              <div className="mt-auto flex items-end justify-between border-t border-dashed pt-2">
-                <span className="text-muted-foreground font-mono text-xs">
-                  #{item.id.substring(0, 8)}
-                </span>
-                <span className="text-primary text-lg font-bold">
-                  {formatIDR(item.total_price)}
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
       {meta && meta.total > meta.limit && (
         <div className="flex justify-center py-4">
           <GlobalPagination
@@ -147,7 +150,7 @@ export default function HaircutHistory() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
 

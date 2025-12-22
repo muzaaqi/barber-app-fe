@@ -11,9 +11,9 @@ const getCartData = async (): Promise<CartResponse | null> => {
     return null;
   }
   try {
-    const res = await api.get("/carts/", {
+    const res = await api.get("/carts", {
       headers: {
-        Authorization: `Bearer ${token}}`,
+        Authorization: `Bearer ${token}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
       },
     });
@@ -37,7 +37,7 @@ const getCartData = async (): Promise<CartResponse | null> => {
 const addToCart = async (productId: string, quantity: number) => {
   try {
     const res = await api.post(
-      "/carts/",
+      "/carts",
       { product_id: productId, quantity },
       {
         headers: {
@@ -98,17 +98,17 @@ const deleteCartItem = async (cartId: string) => {
 
 const checkoutCart = async (payload: CartCheckoutPayload) => {
   try {
-    const res = await api.post("/product-transactions/", payload, {
+    const res = await api.post("/product-transactions/checkout", payload, {
       headers: {
         Authorization: `Bearer ${await getAuthHeader()}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
       },
     });
-    if (res.status !== 200) {
+    if (res.status !== 201) {
       throw new Error("Failed to checkout cart");
     }
     revalidatePath("/cart");
-    return { success: true };
+    return { success: true, message: "Berhasil checkout troli" };
   } catch {
     return { success: false, message: "Gagal checkout troli" };
   }

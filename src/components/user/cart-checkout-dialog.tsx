@@ -74,7 +74,6 @@ export default function CartCheckoutDialog({
           description: "Silakan lakukan pembayaran.",
         });
         setIsOpen(false);
-        router.push("/dashboard");
         router.refresh();
       }
     } catch {

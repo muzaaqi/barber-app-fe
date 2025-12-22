@@ -83,71 +83,76 @@ export default function ProductHistory() {
   }
 
   return (
-    <div className="gap-4 space-y-6 md:grid md:grid-cols-2">
-      {data.map((transaction) => (
-        <Card key={transaction.id} className="border py-0 shadow-sm">
-          <CardHeader className="bg-muted/30 flex flex-row items-center justify-between border-b p-4">
-            <div className="flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:gap-4">
-              <span className="text-muted-foreground font-semibold">
-                {new Date(transaction.created_at).toLocaleDateString("id-ID", {
-                  dateStyle: "medium",
-                })}
-              </span>
-              <span className="text-muted-foreground/30 hidden sm:inline">
-                |
-              </span>
-              <span className="text-muted-foreground font-mono text-xs">
-                #{transaction.id.substring(0, 8)}
-              </span>
-            </div>
-            <div className="flex gap-2">
-              <StatusBadge status={transaction.payment_status} />
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4 p-4">
-            <div className="text-muted-foreground mb-4 flex w-fit items-center gap-2 rounded border border-blue-100 bg-blue-50/50 p-2 text-sm">
-              <Truck className="h-4 w-4 text-blue-600" />
-              <span className="font-medium text-blue-900">
-                {transaction.expedition_service}
-              </span>
-              <span className="text-blue-300">•</span>
-              <span className="text-blue-700 capitalize">
-                {transaction.expedition_status}
-              </span>
-            </div>
-            {transaction.items.map((item) => (
-              <div key={item.id} className="flex gap-4">
-                <div className="bg-muted relative h-16 w-16 shrink-0 overflow-hidden rounded-md border">
-                  <Image
-                    src={item.product_image || "/placeholder-product.jpg"}
-                    alt={item.product_name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h4 className="line-clamp-2 font-medium">
-                    {item.product_name}
-                  </h4>
-                  <div className="text-muted-foreground mt-1 text-sm">
-                    {item.quantity} x {formatIDR(item.price_at_purchase)}
+    <>
+      <div className="gap-4 space-y-6 md:grid md:grid-cols-2">
+        {data.map((transaction) => (
+          <Card key={transaction.id} className="border py-0 shadow-sm">
+            <CardHeader className="bg-muted/30 flex flex-row items-center justify-between border-b p-4">
+              <div className="flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:gap-4">
+                <span className="text-muted-foreground font-semibold">
+                  {new Date(transaction.created_at).toLocaleDateString(
+                    "id-ID",
+                    {
+                      dateStyle: "medium",
+                    },
+                  )}
+                </span>
+                <span className="text-muted-foreground/30 hidden sm:inline">
+                  |
+                </span>
+                <span className="text-muted-foreground font-mono text-xs">
+                  #{transaction.id.substring(0, 8)}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <StatusBadge status={transaction.payment_status} />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4 p-4">
+              <div className="text-muted-foreground mb-4 flex w-fit items-center gap-2 rounded border border-blue-100 bg-blue-50/50 p-2 text-sm">
+                <Truck className="h-4 w-4 text-blue-600" />
+                <span className="font-medium text-blue-900">
+                  {transaction.expedition_service}
+                </span>
+                <span className="text-blue-300">•</span>
+                <span className="text-blue-700 capitalize">
+                  {transaction.expedition_status}
+                </span>
+              </div>
+              {transaction.items.map((item) => (
+                <div key={item.id} className="flex gap-4">
+                  <div className="bg-muted relative h-16 w-16 shrink-0 overflow-hidden rounded-md border">
+                    <Image
+                      src={item.product_image || "/placeholder-product.jpg"}
+                      alt={item.product_name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="line-clamp-2 font-medium">
+                      {item.product_name}
+                    </h4>
+                    <div className="text-muted-foreground mt-1 text-sm">
+                      {item.quantity} x {formatIDR(item.price_at_purchase)}
+                    </div>
+                  </div>
+                  <div className="self-center text-sm font-semibold">
+                    {formatIDR(item.subtotal)}
                   </div>
                 </div>
-                <div className="self-center text-sm font-semibold">
-                  {formatIDR(item.subtotal)}
-                </div>
-              </div>
-            ))}
-          </CardContent>
-          <Separator />
-          <CardFooter className="bg-muted/10 flex items-center justify-between p-4">
-            <span className="text-sm font-medium">Total Belanja</span>
-            <span className="text-primary text-xl font-bold">
-              {formatIDR(transaction.total_price)}
-            </span>
-          </CardFooter>
-        </Card>
-      ))}
+              ))}
+            </CardContent>
+            <Separator />
+            <CardFooter className="bg-muted/10 flex items-center justify-between p-4">
+              <span className="text-sm font-medium">Total Belanja</span>
+              <span className="text-primary text-xl font-bold">
+                {formatIDR(transaction.total_price)}
+              </span>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
       {meta && meta.total > meta.limit && (
         <div className="flex justify-center py-4">
           <GlobalPagination
@@ -156,7 +161,7 @@ export default function ProductHistory() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
 
