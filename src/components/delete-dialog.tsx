@@ -33,16 +33,12 @@ const DeleteDialog = ({
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-
     setIsLoading(true);
-
     try {
       const res = await onDelete();
-
       if (res && typeof res === "object" && "success" in res && !res.success) {
         throw new Error(res.message || "Gagal menghapus");
       }
-
       toast.success("Berhasil menghapus data.");
       setIsOpen(false);
     } catch (error) {

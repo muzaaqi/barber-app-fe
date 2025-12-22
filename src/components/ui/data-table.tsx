@@ -36,18 +36,15 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      {/* Search Input (Optional) - Jika ingin Client Side Filtering */}
-      {/* <div className="flex items-center">
+      <div className="flex items-center">
         <Input
-          placeholder="Filter nama..."
+          placeholder="Cari..."
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
       </div> 
-      */}
-
       <div className="rounded-md border bg-background">
         <Table>
           <TableHeader>
