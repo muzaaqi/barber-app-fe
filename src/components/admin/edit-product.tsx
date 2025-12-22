@@ -142,13 +142,16 @@ const EditProduct = ({
                     alt="Preview"
                     className="mx-auto mb-3 w-full rounded-lg object-cover"
                   />
-                  <p className="text-muted-foreground text-center text-sm">
-                    Drag & drop image here, or click to replace
-                  </p>
-                  {file && (
+                  {file ? (
                     <p className="mt-1 text-center text-xs font-medium">
                       {file.name}
                     </p>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <p className="text-muted-foreground text-center text-sm">
+                        Drag & drop image here, or click to replace
+                      </p>
+                    </div>
                   )}
                 </div>
                 <Input

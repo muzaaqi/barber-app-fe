@@ -33,7 +33,7 @@ const getCartData = async (): Promise<CartResponse | null> => {
 const addToCart = async (productId: string, quantity: number) => {
   try {
     const res = await api.post(
-      "/carts",
+      "/carts/",
       { product_id: productId, quantity },
       {
         headers: {
@@ -94,7 +94,7 @@ const deleteCartItem = async (cartId: string) => {
 
 const checkoutCart = async (payload: CartCheckoutPayload) => {
   try {
-    const res = await api.post("/product-transactions", payload, {
+    const res = await api.post("/product-transactions/", payload, {
       headers: {
         Authorization: `Bearer ${await getAuthHeader()}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",

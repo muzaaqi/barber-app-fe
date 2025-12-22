@@ -119,16 +119,12 @@ const EditHaircut = ({
                 }}
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={onDrop}
-                onClick={() =>
-                  document.getElementById(`image-${id}`)?.click()
-                }
-                className={`aspect-square cursor-pointer rounded-xl border-2 border-dashed p-4 transition
-                  ${
-                    isDragging
-                      ? "border-primary bg-muted"
-                      : "border-muted-foreground/30"
-                  }
-                `}
+                onClick={() => document.getElementById(`image-${id}`)?.click()}
+                className={`aspect-square cursor-pointer rounded-xl border-2 border-dashed p-4 transition ${
+                  isDragging
+                    ? "border-primary bg-muted"
+                    : "border-muted-foreground/30"
+                } `}
               >
                 <Image
                   width={500}
@@ -137,13 +133,16 @@ const EditHaircut = ({
                   alt="Preview"
                   className="mx-auto mb-3 w-full rounded-lg object-cover"
                 />
-                <p className="text-center text-sm text-muted-foreground">
-                  Drag & drop image here, or click to replace
-                </p>
-                {file && (
+                {file ? (
                   <p className="mt-1 text-center text-xs font-medium">
                     {file.name}
                   </p>
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <p className="text-muted-foreground text-center text-sm">
+                      Drag & drop image here, or click to replace
+                    </p>
+                  </div>
                 )}
               </div>
               <Input
@@ -151,15 +150,13 @@ const EditHaircut = ({
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) =>
-                  handleFile(e.target.files?.[0] || null)
-                }
+                onChange={(e) => handleFile(e.target.files?.[0] || null)}
               />
               {file && (
                 <Button
                   type="button"
                   variant="ghost"
-                  className="mt-2 w-full gap-2 text-destructive"
+                  className="text-destructive mt-2 w-full gap-2"
                   onClick={handleRemoveImage}
                 >
                   <Trash2 size={16} /> Hapus Gambar

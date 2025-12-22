@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 const addNewHaircutTransaction = async (payload: HaircutPayload) => {
   try {
-    const res = await api.post("/haircut-transactions", payload, {
+    const res = await api.post("/haircut-transactions/", payload, {
       headers: {
         Authorization: `Bearer ${await getAuthHeader()}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
@@ -36,7 +36,7 @@ const addNewHaircutTransaction = async (payload: HaircutPayload) => {
 
 const getHaircutTransactions = async () => {
   try {
-    const res = await api.get("/haircut-transactions", {
+    const res = await api.get("/haircut-transactions/", {
       headers: {
         Authorization: `Bearer ${await getAuthHeader()}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",

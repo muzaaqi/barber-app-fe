@@ -57,16 +57,18 @@ const AddProduct = () => {
     if (file) {
       formData.append("image", file);
       formData.append("name", name);
+      formData.append("price", price.toString());
+      formData.append("stock", stock.toString());
       formData.append("description", description);
     }
 
-    if (!formData.has("image") === false && !formData.has("name") === false) {
+    if (!formData.has("image") && !formData.has("name")) {
       setIsLoading(false);
       return;
     }
 
     try {
-      const res = await api.post("/products", formData, {
+      const res = await api.post("/products/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${await getAuthHeader()}`,
@@ -134,16 +136,17 @@ const AddProduct = () => {
                       className="mx-auto mb-3 w-full rounded-lg object-cover"
                     />
                   )}
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <Upload size={40} className="text-muted-foreground" />
-                    <p className="text-muted-foreground text-center text-sm">
-                      Drag & drop image here, or click to replace
-                    </p>
-                  </div>
-                  {file && (
+                  {file ? (
                     <p className="mt-1 text-center text-xs font-medium">
                       {file.name}
                     </p>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <Upload size={40} className="text-muted-foreground" />
+                      <p className="text-muted-foreground text-center text-sm">
+                        Drag & drop image here, or click to replace
+                      </p>
+                    </div>
                   )}
                 </div>
                 <Input

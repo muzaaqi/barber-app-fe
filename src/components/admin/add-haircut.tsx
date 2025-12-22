@@ -48,8 +48,10 @@ const AddHaircut = () => {
     setPreview("");
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
+
     const formData = new FormData();
     if (file) {
       formData.append("image", file);
@@ -57,17 +59,17 @@ const AddHaircut = () => {
       formData.append("description", description);
     }
 
-    if (!formData.has("image") === false && !formData.has("name") === false) {
+    if (!formData.has("image") && !formData.has("name")) {
       setIsLoading(false);
       return;
     }
 
     try {
-      const res = await api.post("/haircuts", formData, {
+      const res = await api.post("/haircuts/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${await getAuthHeader()}`,
           "Permission-Key": process.env.SECRET_API_KEY || "",
+          Authorization: `Bearer ${await getAuthHeader()}`,
         },
       });
       if (res.status === 201) {
@@ -95,7 +97,7 @@ const AddHaircut = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <form action={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Tambah Model Potongan Rambut</DialogTitle>
             <DialogDescription>
@@ -128,16 +130,17 @@ const AddHaircut = () => {
                     className="mx-auto mb-3 w-full rounded-lg object-cover"
                   />
                 )}
-                <div className="flex flex-col items-center justify-center gap-2">
-                  <Upload size={40} className="text-muted-foreground" />
-                  <p className="text-muted-foreground text-center text-sm">
-                    Drag & drop image here, or click to replace
-                  </p>
-                </div>
-                {file && (
+                {file ? (
                   <p className="mt-1 text-center text-xs font-medium">
                     {file.name}
                   </p>
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <Upload size={40} className="text-muted-foreground" />
+                    <p className="text-muted-foreground text-center text-sm">
+                      Drag & drop image here, or click to replace
+                    </p>
+                  </div>
                 )}
               </div>
               <Input

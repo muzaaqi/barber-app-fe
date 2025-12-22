@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 const addNewProcuctTransaction = async (payload: ProductPayload) => {
   try {
-    const res = await api.post("/product-transactions/checkout", payload, {
+    const res = await api.post("/product-transactions/checkout/", payload, {
       headers: {
         Authorization: `Bearer ${await getAuthHeader()}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
@@ -36,7 +36,7 @@ const addNewProcuctTransaction = async (payload: ProductPayload) => {
 
 const getProductTransactions = async () => {
   try {
-    const res = await api.get("/product-transactions", {
+    const res = await api.get("/product-transactions/", {
       headers: {
         Authorization: `Bearer ${await getAuthHeader()}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
