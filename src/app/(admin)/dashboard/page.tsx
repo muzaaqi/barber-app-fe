@@ -39,8 +39,6 @@ interface ProductTransaction {
 }
 
 export default async function DashboardPage() {
-  // 1. FETCH DATA (Paralel)
-  // Mengambil data transaksi untuk kalkulasi statistik
   const [haircutRes, productRes] = await Promise.all([
     getHaircutTransactions(),
     getProductTransactions(),
@@ -48,10 +46,6 @@ export default async function DashboardPage() {
 
   const haircuts = haircutRes?.data || [];
   const products = productRes?.data || [];
-
-  // 2. DATA PREPARATION FOR STATS CARDS
-  // Hitung total hanya dari status yang sukses/paid (Optional: sesuaikan logika bisnis)
-  // Di sini saya hitung semua untuk simplicitas, Anda bisa filter misal: .filter(x => x.payment_status === 'paid')
   const totalHaircutRevenue = haircuts.reduce(
     (acc: number, curr: HaircutTransaction) => acc + curr.total_price,
     0,
@@ -63,9 +57,6 @@ export default async function DashboardPage() {
 
   const totalRevenue = totalHaircutRevenue + totalProductRevenue;
   const totalTxCount = haircuts.length + products.length;
-
-  // 3. DATA PREPARATION FOR SHADCN CHART
-  // Gabungkan semua transaksi
   const allTransactions = [
     ...haircuts.map((h: HaircutTransaction) => ({
       date: new Date(h.reservation_time || h.created_at || new Date())
@@ -78,8 +69,6 @@ export default async function DashboardPage() {
       amount: p.total_price,
     })),
   ];
-
-  // Grouping Amount per Tanggal
   const groupedData: Record<string, number> = {};
   allTransactions.forEach((trx) => {
     if (groupedData[trx.date]) {
@@ -88,20 +77,16 @@ export default async function DashboardPage() {
       groupedData[trx.date] = trx.amount;
     }
   });
-
-  // Format data agar sesuai dengan Chart Shadcn
   const chartData = Object.keys(groupedData)
-    .sort() // Urutkan tanggal
-    .slice(-7) // Ambil 7 hari terakhir
+    .sort()
+    .slice(-7)
     .map((date) => ({
       date: new Date(date).toLocaleDateString("id-ID", {
         day: "numeric",
         month: "short",
-      }), // Format: 20 Des
+      }),
       total: groupedData[date],
     }));
-
-  // 4. DATA PREPARATION FOR RECENT SALES LIST
   const recentSales = [
     ...haircuts.map((h: HaircutTransaction) => ({
       ...h,
@@ -118,24 +103,18 @@ export default async function DashboardPage() {
     .slice(0, 5);
 
   return (
-    <div className="flex-1 space-y-6 p-4 pt-6 md:p-8">
+    <div className="flex-1 space-y-6 p-4 pt-6 md:p-8 max-w-screen mx-auto">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
       </div>
-
-      {/* Bagian Statistik Ringkas */}
       <StatsCards
         totalRevenue={totalRevenue}
         totalHaircutOrders={haircuts.length}
         totalProductOrders={products.length}
         countAllTransactions={totalTxCount}
       />
-
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        {/* GRAFIK (Mengambil 4/7 lebar layar desktop) */}
         <RevenueChart data={chartData} />
-
-        {/* TRANSAKSI TERBARU (Mengambil 3/7 lebar layar desktop) */}
         <Card className="col-span-4 shadow-sm lg:col-span-3">
           <CardHeader>
             <CardTitle>Transaksi Terbaru</CardTitle>

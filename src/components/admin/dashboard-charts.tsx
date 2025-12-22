@@ -30,7 +30,7 @@ type ChartData = {
 
 export const RevenueChart = ({ data }: { data: ChartData[] }) => {
   return (
-    <Card className="col-span-4 shadow-sm">
+    <Card className="col-span-4 shadow-sm max-w-md sm:max-w-full">
       <CardHeader>
         <CardTitle>Pendapatan 7 Hari Terakhir</CardTitle>
         <CardDescription>
