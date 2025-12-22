@@ -8,7 +8,7 @@ const AboutSection = () => {
         <CardContent className="flex flex-col gap-10 md:flex-row p-8 md:p-10">
           <div className="md:w-1/2 shrink-0">
             <Image
-              src="/vibes/vibe-1.png"
+              src="/vibe.webp"
               alt="About BarberShop"
               width={500}
               height={500}

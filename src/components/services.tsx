@@ -16,14 +16,14 @@ const Services = () => {
     },
     {
       name: "HAIR CARE",
-      img: "/services/colorize.png",
+      img: "/services/colorize.webp",
       price: 10,
       desc: "Produk perawatan rambut berkualitas",
       url: "/services?options=products",
     },
     {
       name: "SEGERA HADIR",
-      img: "/services/washing.png",
+      img: "/services/washing.webp",
       price: "???",
       desc: "Harap tunggu informasi selanjutnya",
       url: "#",
