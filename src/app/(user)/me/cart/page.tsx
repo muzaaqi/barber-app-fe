@@ -15,7 +15,7 @@ import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 export const metadata = {
-  title: "Keranjang Belanja",
+  title: "Troli Belanja",
 };
 
 export default async function CartPage() {
@@ -29,10 +29,10 @@ export default async function CartPage() {
             <EmptyMedia variant="icon">
               <ShoppingCart className="text-muted-foreground h-12 w-12" />
             </EmptyMedia>
-            <EmptyTitle>Keranjang Belanja Kosong</EmptyTitle>
+            <EmptyTitle>Troli Belanja Kosong</EmptyTitle>
             <EmptyDescription>
               Sepertinya Anda belum menambahkan produk apapun. Yuk isi
-              keranjangmu!
+              trolimu!
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
@@ -54,7 +54,7 @@ export default async function CartPage() {
           <div className="flex items-center gap-3">
             <ShoppingCart className="size-10 md:size-15" />
             <h1 className="text-xl font-bold tracking-tight md:text-3xl">
-              Keranjang Belanja
+              Troli Belanja
             </h1>
           </div>
           <div>

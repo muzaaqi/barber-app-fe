@@ -26,10 +26,9 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { formatIDR } from "@/features/formatter";import { checkoutCart } from "@/actions/management/cart-actions";
+import { formatIDR } from "@/features/formatter";
+import { checkoutCart } from "@/actions/management/cart-actions";
 import { Spinner } from "../ui/spinner";
-;
-
 type Props = {
   totalItems: number;
   grandTotal: number;
@@ -64,7 +63,7 @@ export default function CartCheckoutDialog({
       shipping_address: address,
       expedition_service: expedition,
       payment_method: paymentMethod,
-      payment_status: paymentMethod === "qris" ? "paid" : "unpaid" ,
+      payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
     };
 
     try {
@@ -99,7 +98,7 @@ export default function CartCheckoutDialog({
           <DialogHeader>
             <DialogTitle>Konfirmasi Checkout</DialogTitle>
             <DialogDescription>
-              Lengkapi detail pengiriman untuk {totalItems} barang di keranjang.
+              Lengkapi detail pengiriman untuk {totalItems} barang di troli.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-6 py-4">

@@ -84,7 +84,7 @@ export default function ProductHistory() {
 
   return (
     <>
-      <div className="gap-4 space-y-6 md:grid md:grid-cols-2">
+      <div className="gap-4 space-y-5 md:grid md:grid-cols-2">
         {data.map((transaction) => (
           <Card key={transaction.id} className="border py-0 shadow-sm">
             <CardHeader className="bg-muted/30 flex flex-row items-center justify-between border-b p-4">
@@ -108,14 +108,14 @@ export default function ProductHistory() {
                 <StatusBadge status={transaction.payment_status} />
               </div>
             </CardHeader>
-            <CardContent className="space-y-4 p-4">
-              <div className="text-muted-foreground mb-4 flex w-fit items-center gap-2 rounded border border-blue-100 bg-blue-50/50 p-2 text-sm">
-                <Truck className="h-4 w-4 text-blue-600" />
-                <span className="font-medium text-blue-900">
+            <CardContent className="space-y-4 p-4 ">
+              <div className="text-muted-foreground mb-4 flex w-fit items-center gap-2 rounded bg-primary p-2 text-sm">
+                <Truck className="h-4 w-4 text-background" />
+                <span className="font-medium text-background">
                   {transaction.expedition_service}
                 </span>
-                <span className="text-blue-300">•</span>
-                <span className="text-blue-700 capitalize">
+                <span className="text-background">•</span>
+                <span className="text-background capitalize">
                   {transaction.expedition_status}
                 </span>
               </div>
@@ -145,7 +145,7 @@ export default function ProductHistory() {
             </CardContent>
             <Separator />
             <CardFooter className="bg-muted/10 flex items-center justify-between p-4">
-              <span className="text-sm font-medium">Total Belanja</span>
+              <span className="text-xl font-medium">Total Belanja</span>
               <span className="text-primary text-xl font-bold">
                 {formatIDR(transaction.total_price)}
               </span>
@@ -168,7 +168,7 @@ export default function ProductHistory() {
 const StatusBadge = ({ status }: { status: string }) => {
   const color =
     status === "paid"
-      ? "bg-green-100 text-green-800 hover:bg-green-100 border-green-200"
+      ? "bg-primary text-green-800 hover:bg-primary border-green-200"
       : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100 border-yellow-200";
   return (
     <Badge variant="outline" className={`capitalize shadow-none ${color}`}>

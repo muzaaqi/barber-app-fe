@@ -16,22 +16,27 @@ import { Field, FieldGroup } from "../ui/field";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { changePassword } from "@/actions/auth/get-profile";
 import { toast } from "sonner";
+import { Spinner } from "../ui/spinner";
 
 const ChangePasswordForm = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     if (!currentPassword || !newPassword || !confirmPassword) {
       setErrorMessage("Semua field harus diisi.");
+      setIsLoading(false);
       return;
     }
 
     if (newPassword !== confirmPassword) {
       setErrorMessage("Password baru dan konfirmasi tidak sesuai.");
+      setIsLoading(false);
       return;
     }
     setErrorMessage("");
@@ -52,14 +57,16 @@ const ChangePasswordForm = () => {
       }
     } catch {
       setErrorMessage("Terjadi kesalahan saat mengubah password.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <Card className="shadow-lg">
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle>Ubah Password</CardTitle>
+          <CardTitle className="text-primary text-3xl">Ubah Password</CardTitle>
           <CardDescription>
             Pastikan password Anda kuat dan aman.
           </CardDescription>
@@ -68,7 +75,7 @@ const ChangePasswordForm = () => {
           {errorMessage && (
             <Alert
               variant="destructive"
-              className="animate-in fade-in slide-in-from-top-1"
+              className="animate-in fade-in slide-in-from-top-1 mt-3"
             >
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Gagal</AlertTitle>
@@ -83,7 +90,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="current-password"
                   type="password"
-                  className="pl-9"
+                  className="pl-9 py-6"
                   placeholder="Masukkan password saat ini"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
@@ -97,7 +104,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="new-password"
                   type="password"
-                  className="pl-9"
+                  className="pl-9 py-6"
                   placeholder="Masukkan password baru"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -111,7 +118,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="confirm-password"
                   type="password"
-                  className="pl-9"
+                  className="pl-9 py-6"
                   placeholder="Konfirmasi password baru"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -120,17 +127,13 @@ const ChangePasswordForm = () => {
             </Field>
           </FieldGroup>
         </CardContent>
-        <CardFooter className="grid grid-cols-2 gap-2 pt-2">
-          <Button
-            variant="secondary"
-            type="button"
-          >
-            Reset
+        <CardFooter>
+          <Button className="w-full" type="submit" disabled={isLoading}>
+            {isLoading ? <Spinner /> : "Perbarui Password"}
           </Button>
-          <Button type="submit">Perbarui Password</Button>
         </CardFooter>
-      </form>
-    </Card>
+      </Card>
+    </form>
   );
 };
 

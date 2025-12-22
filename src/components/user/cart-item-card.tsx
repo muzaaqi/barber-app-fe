@@ -36,7 +36,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
     startTransition(async () => {
       const res = await deleteCartItem(item.cart_id);
       if (res.success) {
-        toast.success("Item dihapus dari keranjang");
+        toast.success("Item dihapus dari troli");
       } else {
         toast.error(res.message);
       }
@@ -46,7 +46,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
   return (
     <Card className="mb-4 overflow-hidden border shadow-sm">
       <CardContent className="flex">
-        <div className="bg-muted relative h-32 shrink-0 w-32">
+        <div className="bg-muted relative h-32 w-32 shrink-0">
           <Image
             src={item.product_image || "/placeholder.jpg"}
             alt={item.product_name}
@@ -71,11 +71,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
               onClick={handleDelete}
               disabled={isPending}
             >
-              {isPending ? (
-                <Spinner />
-              ) : (
-                <Trash2 className="h-4 w-4" />
-              )}
+              {isPending ? <Spinner /> : <Trash2 className="h-4 w-4" />}
             </Button>
           </div>
           <div className="mt-auto flex items-center justify-between">
