@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
-import { Trash2, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -12,7 +12,7 @@ import {
 import { CartItem } from "@/types/cart";
 import { formatIDR } from "@/features/formatter";
 import { toast } from "sonner";
-import { Spinner } from "../ui/spinner";
+import DeleteDialog from "../delete-dialog";
 
 export default function CartItemCard({ item }: { item: CartItem }) {
   const [isPending, startTransition] = useTransition();
@@ -28,17 +28,6 @@ export default function CartItemCard({ item }: { item: CartItem }) {
       if (!res.success) {
         toast.error(res.message);
         setOptimisticQty(item.quantity);
-      }
-    });
-  };
-
-  const handleDelete = () => {
-    startTransition(async () => {
-      const res = await deleteCartItem(item.cart_id);
-      if (res.success) {
-        toast.success("Item dihapus dari troli");
-      } else {
-        toast.error(res.message);
       }
     });
   };
@@ -64,15 +53,13 @@ export default function CartItemCard({ item }: { item: CartItem }) {
                 Harga: {formatIDR(item.price)}
               </p>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-destructive hover:bg-destructive/10"
-              onClick={handleDelete}
-              disabled={isPending}
-            >
-              {isPending ? <Spinner /> : <Trash2 className="h-4 w-4" />}
-            </Button>
+            <DeleteDialog
+              onDelete={async () => {
+                await deleteCartItem(item.cart_id);
+              }}
+              title="Hapus Item"
+              description="Apakah Anda yakin ingin menghapus item ini dari troli? Tindakan ini tidak dapat dibatalkan."
+            />
           </div>
           <div className="mt-auto flex items-center justify-between">
             <div className="flex items-center gap-3 rounded-lg border px-2 py-1">

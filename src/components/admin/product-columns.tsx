@@ -12,6 +12,7 @@ import {
 import { formatIDR } from "@/features/formatter";
 import EditProduct from "./edit-product";
 import DeleteDialog from "../delete-dialog";
+import { deleteProductById } from "@/actions/management/product-actions";
 
 export type Product = {
   id: string;
@@ -105,7 +106,13 @@ export const columns: ColumnDef<Product>[] = [
                 product_stock={product.stock}
                 image_url={product.image_url}
               />
-              <DeleteDialog id={product.id} variant="product" />
+              <DeleteDialog
+                title="Hapus Produk"
+                description="Apakah Anda yakin ingin menghapus produk ini? Tindakan ini tidak dapat dibatalkan."
+                onDelete={async () => {
+                  await deleteProductById(product.id);
+                }}
+              />
             </div>
           </DropdownMenuContent>
         </DropdownMenu>

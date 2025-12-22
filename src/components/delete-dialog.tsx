@@ -1,8 +1,8 @@
 "use client";
+
 import { useState } from "react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -11,69 +11,88 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "./ui/button";
-import { Trash } from "lucide-react";
-import { deleteItem } from "@/actions/management/delete";
-import { Spinner } from "./ui/spinner";
+import { Button } from "@/components/ui/button"; // Pastikan path benar
+import { Trash, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
+interface DeleteDialogProps {
+  onDelete: () => Promise<{ success: boolean; message?: string } | void>;
+  title?: string;
+  description?: string;
+  trigger?: React.ReactNode;
+}
+
 const DeleteDialog = ({
-  id,
-  variant,
-}: {
-  id: string;
-  variant: "haircut" | "product";
-}) => {
+  onDelete,
+  title = "Apakah kamu yakin?",
+  description = "Data yang dihapus tidak dapat dikembalikan. Tindakan ini bersifat permanen.",
+  trigger,
+}: DeleteDialogProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const handleDelete = async () => {
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
-      await deleteItem(id, variant);
-      toast.success(
-        `${variant === "haircut" ? "Model potongan rambut" : "Produk"} berhasil dihapus.`,
-      );
+      const res = await onDelete();
+
+      if (res && typeof res === "object" && "success" in res && !res.success) {
+        throw new Error(res.message || "Gagal menghapus");
+      }
+
+      toast.success("Berhasil menghapus data.");
+      setIsOpen(false);
     } catch (error) {
       toast.error("Gagal menghapus data.", {
-        description: String(error),
+        description:
+          error instanceof Error ? error.message : "Terjadi kesalahan server",
       });
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" className="justify-start gap-3">
-          <Trash /> Hapus
-        </Button>
+        {trigger ? (
+          trigger
+        ) : (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-destructive hover:text-destructive hover:bg-destructive/10 justify-start gap-2"
+          >
+            <Trash className="h-4 w-4" /> Hapus
+          </Button>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Apakah kamu yakin?</AlertDialogTitle>
-          <AlertDialogDescription>
-            {`Data ${variant === "haircut" ? "model potongan rambut" : "produk"} yang dihapus tidak dapat dikembalikan.`}
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Batal</AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button
-              variant="destructive"
-              onClick={() => handleDelete()}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Spinner />
-                  Menghapus...
-                </>
-              ) : (
-                <>
-                  <Trash /> Hapus
-                </>
-              )}
-            </Button>
-          </AlertDialogAction>
+          <AlertDialogCancel disabled={isLoading}>Batal</AlertDialogCancel>
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Menghapus...
+              </>
+            ) : (
+              <>
+                <Trash className="mr-2 h-4 w-4" /> Ya, Hapus
+              </>
+            )}
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
