@@ -84,12 +84,12 @@ const DeleteDialog = ({
           >
             {isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 Menghapus...
               </>
             ) : (
               <>
-                <Trash className="mr-2 h-4 w-4" /> Ya, Hapus
+                <Trash className="h-4 w-4" /> Ya, Hapus
               </>
             )}
           </Button>
