@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -20,11 +22,13 @@ import { logOutAction } from "@/actions/auth/get-profile";
 import { Separator } from "../ui/separator";
 import { GroupThemeSwitch } from "../theme-switch";
 import { CartResponse } from "@/types/cart";
+import ConfirmationDialog from "../confirmation-dialog";
 const ProfilePopover = ({
-  user, cartItems,
+  user,
+  cartItems,
 }: {
   user: { name: string; email: string; role: string };
-  cartItems: CartResponse | null; 
+  cartItems: CartResponse | null;
 }) => {
   return (
     <Popover>
@@ -107,14 +111,16 @@ const ProfilePopover = ({
                     <ShoppingCart className="text-muted-foreground mr-3 size-4" />
                     Troli
                   </div>
-                  {cartItems && cartItems.data && cartItems.data.items.length > 0 && (
-                    <Badge
-                      variant="secondary"
-                      className="group-hover:bg-primary group-hover:text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-md px-1.5 text-[10px] transition-colors"
-                    >
-                      {cartItems.data.items.length}
-                    </Badge>
-                  )}
+                  {cartItems &&
+                    cartItems.data &&
+                    cartItems.data.items.length > 0 && (
+                      <Badge
+                        variant="secondary"
+                        className="group-hover:bg-primary group-hover:text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-md px-1.5 text-[10px] transition-colors"
+                      >
+                        {cartItems.data.items.length}
+                      </Badge>
+                    )}
                 </Button>
               </Link>
             </>
@@ -129,14 +135,26 @@ const ProfilePopover = ({
         </div>
         <Separator />
         <div className="p-2">
-          <Button
-            variant="ghost"
-            className="text-destructive hover:text-destructive hover:bg-destructive/10 h-10 w-full justify-start px-2"
-            onClick={logOutAction}
-          >
-            <LogOutIcon className="mr-3 size-4" />
-            Keluar
-          </Button>
+          <ConfirmationDialog
+            onConfirm={logOutAction}
+            title="Keluar"
+            description="Apakah Anda yakin ingin keluar dari akun Anda?"
+            confirmText="Keluar"
+            cancelText="Batal"
+            successText="Anda telah berhasil keluar."
+            errorText="Gagal keluar. Silakan coba lagi."
+            trigger={
+              <Button
+                variant="ghost"
+                className="text-destructive hover:text-destructive hover:bg-destructive/10 h-10 w-full justify-start px-2"
+              >
+                <div className="flex items-center">
+                  <LogOutIcon className="mr-3 size-4" />
+                  Keluar
+                </div>
+              </Button>
+            }
+          />
         </div>
       </PopoverContent>
     </Popover>

@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatIDR } from "@/features/formatter";
 import EditProduct from "./edit-product";
-import DeleteDialog from "../delete-dialog";
+
 import { deleteProductById } from "@/actions/management/product-actions";
+import ConfirmationDialog from "../confirmation-dialog";
 
 export type Product = {
   id: string;
@@ -106,12 +107,20 @@ export const columns: ColumnDef<Product>[] = [
                 product_stock={product.stock}
                 image_url={product.image_url}
               />
-              <DeleteDialog
+              <ConfirmationDialog
+                onConfirm={() => deleteProductById(product.id)}
                 title="Hapus Produk"
                 description="Apakah Anda yakin ingin menghapus produk ini? Tindakan ini tidak dapat dibatalkan."
-                onDelete={async () => {
-                  await deleteProductById(product.id);
-                }}
+                confirmText="Hapus"
+                cancelText="Batal"
+                successText="Produk berhasil dihapus."
+                errorText="Gagal menghapus produk."
+                variant="destructive"
+                trigger={
+                  <Button variant="ghost" className="text-destructive">
+                    Hapus
+                  </Button>
+                }
               />
             </div>
           </DropdownMenuContent>

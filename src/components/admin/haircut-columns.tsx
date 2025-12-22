@@ -10,8 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import EditHaircut from "./edit-haircut";
-import DeleteDialog from "../delete-dialog";
 import { deleteHaircutById } from "@/actions/management/haircut-actions";
+import ConfirmationDialog from "../confirmation-dialog";
 
 export type Haircut = {
   id: string;
@@ -82,12 +82,22 @@ export const columns: ColumnDef<Haircut>[] = [
                 haircut_description={haircut.description}
                 image_url={haircut.image_url}
               />
-              <DeleteDialog
-                title="Hapus Model Rambut"
-                description="Apakah Anda yakin ingin menghapus model rambut ini? Tindakan ini tidak dapat dibatalkan."
-                onDelete={async () => {
+              <ConfirmationDialog
+                onConfirm={async () => {
                   await deleteHaircutById(haircut.id);
                 }}
+                title="Hapus Model Rambut"
+                description="Apakah Anda yakin ingin menghapus model rambut ini? Tindakan ini tidak dapat dibatalkan."
+                confirmText="Hapus"
+                cancelText="Batal"
+                successText="Model rambut berhasil dihapus."
+                errorText="Gagal menghapus model rambut."
+                variant="destructive"
+                trigger={
+                  <Button variant="ghost" className="text-destructive">
+                    Hapus
+                  </Button>
+                }
               />
             </div>
           </DropdownMenuContent>

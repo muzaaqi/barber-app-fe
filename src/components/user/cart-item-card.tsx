@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -12,7 +12,7 @@ import {
 import { CartItem } from "@/types/cart";
 import { formatIDR } from "@/features/formatter";
 import { toast } from "sonner";
-import DeleteDialog from "../delete-dialog";
+import ConfirmationDialog from "../confirmation-dialog";
 
 export default function CartItemCard({ item }: { item: CartItem }) {
   const [isPending, startTransition] = useTransition();
@@ -53,12 +53,20 @@ export default function CartItemCard({ item }: { item: CartItem }) {
                 Harga: {formatIDR(item.price)}
               </p>
             </div>
-            <DeleteDialog
-              onDelete={async () => {
-                await deleteCartItem(item.cart_id);
-              }}
+            <ConfirmationDialog
+              onConfirm={() => deleteCartItem(item.cart_id)}
               title="Hapus Item"
-              description="Apakah Anda yakin ingin menghapus item ini dari troli? Tindakan ini tidak dapat dibatalkan."
+              description="Apakah Anda yakin ingin menghapus item ini dari keranjang?"
+              confirmText="Hapus"
+              cancelText="Batal"
+              successText="Item berhasil dihapus dari keranjang."
+              errorText="Gagal menghapus item dari keranjang."
+              variant="destructive"
+              trigger={
+                <Button variant="ghost" className="text-destructive">
+                  <Trash2  />
+                </Button>
+              }
             />
           </div>
           <div className="mt-auto flex items-center justify-between">

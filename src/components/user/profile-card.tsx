@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Mail, Shield, UserIcon, LogOut, User } from "lucide-react";
 import { getInitials } from "@/features/formatter";
 import { redirect } from "next/navigation";
+import ConfirmationDialog from "../confirmation-dialog";
 
 type User = {
   id: string;
@@ -90,13 +91,19 @@ const ProfileCard = async () => {
         </div>
       </CardContent>
       <CardFooter className="grid gap-2 pt-2">
-        <Button
-          variant="destructive"
-          className="w-full gap-2"
-          onClick={logOutAction}
-        >
-          <LogOut className="h-4 w-4" /> Logout
-        </Button>
+        <ConfirmationDialog
+          onConfirm={logOutAction}
+          title="Keluar"
+          description="Apakah Anda yakin ingin keluar dari akun Anda?"
+          confirmText="Keluar"
+          cancelText="Batal"
+          trigger={
+            <Button variant="destructive" className="w-full">
+              <LogOut className="mr-2 size-4" />
+              Keluar
+            </Button>
+          }
+        />
       </CardFooter>
     </Card>
   );

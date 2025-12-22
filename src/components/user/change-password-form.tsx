@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Label } from "../ui/label";
-import { AlertCircle, Lock } from "lucide-react";
+import { AlertCircle, Lock, Save } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
@@ -16,54 +16,54 @@ import { Field, FieldGroup } from "../ui/field";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { changePassword } from "@/actions/auth/get-profile";
 import { toast } from "sonner";
-import { Spinner } from "../ui/spinner";
+import ConfirmationDialog from "../confirmation-dialog";
 
 const ChangePasswordForm = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  const handleConfirmAction = async () => {
     if (!currentPassword || !newPassword || !confirmPassword) {
-      setErrorMessage("Semua field harus diisi.");
-      setIsLoading(false);
-      return;
+      const msg = "Semua field harus diisi.";
+      setErrorMessage(msg);
+      return { success: false, message: msg };
     }
 
     if (newPassword !== confirmPassword) {
-      setErrorMessage("Password baru dan konfirmasi tidak sesuai.");
-      setIsLoading(false);
-      return;
+      const msg = "Password baru dan konfirmasi tidak sesuai.";
+      setErrorMessage(msg);
+      return { success: false, message: msg };
     }
+
     setErrorMessage("");
+
     const payload = {
       current_password: currentPassword,
       new_password: newPassword,
     };
-
     try {
       const res = await changePassword(payload);
-      if (!res.success) {
-        setErrorMessage(res.message);
-      } else {
-        toast.success(res.message);
+
+      if (res.success) {
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
+        toast.success("Password berhasil diubah!");
+      } else {
+        setErrorMessage(res.message);
       }
+      return res;
     } catch {
-      setErrorMessage("Terjadi kesalahan saat mengubah password.");
-    } finally {
-      setIsLoading(false);
+      setErrorMessage("Terjadi kesalahan sistem.");
+      return { success: false, message: "Terjadi kesalahan sistem." };
     }
   };
+  const isFormInvalid = !currentPassword || !newPassword || !confirmPassword;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <Card className="shadow-lg">
         <CardHeader>
           <CardTitle className="text-primary text-3xl">Ubah Password</CardTitle>
@@ -90,7 +90,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="current-password"
                   type="password"
-                  className="pl-9 py-6"
+                  className="py-6 pl-9"
                   placeholder="Masukkan password saat ini"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
@@ -104,7 +104,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="new-password"
                   type="password"
-                  className="pl-9 py-6"
+                  className="py-6 pl-9"
                   placeholder="Masukkan password baru"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -118,7 +118,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="confirm-password"
                   type="password"
-                  className="pl-9 py-6"
+                  className="py-6 pl-9"
                   placeholder="Konfirmasi password baru"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -128,9 +128,23 @@ const ChangePasswordForm = () => {
           </FieldGroup>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" type="submit" disabled={isLoading}>
-            {isLoading ? <Spinner /> : "Perbarui Password"}
-          </Button>
+          <ConfirmationDialog
+            onConfirm={handleConfirmAction}
+            title="Simpan Password Baru?"
+            description="Pastikan password baru Anda sudah dicatat. Anda harus login ulang setelah ini jika sesi habis."
+            confirmText="Simpan Perubahan"
+            variant="default"
+            trigger={
+              <Button
+                type="button"
+                className="w-full gap-2"
+                disabled={isFormInvalid}
+              >
+                <Save className="h-4 w-4" />
+                Ubah Password
+              </Button>
+            }
+          />
         </CardFooter>
       </Card>
     </form>

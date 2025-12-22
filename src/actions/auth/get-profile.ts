@@ -53,7 +53,7 @@ const logOutAction = async () => {
     return { success: false, message: "Unauthorized" };
   try {
     cookieStore.delete("token");
-    return redirect("/login");
+    return { success: true, message: "Berhasil logout." };
   } catch {
     return { success: false, message: "Gagal logout." };
   }
