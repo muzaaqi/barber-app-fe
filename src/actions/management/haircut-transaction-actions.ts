@@ -9,7 +9,10 @@ import { redirect } from "next/navigation";
 const addNewHaircutTransaction = async (payload: HaircutPayload) => {
   try {
     const res = await api.post("/haircut-transactions", payload, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status === 401) {
       return redirect("/login");
@@ -34,7 +37,10 @@ const addNewHaircutTransaction = async (payload: HaircutPayload) => {
 const getHaircutTransactions = async () => {
   try {
     const res = await api.get("/haircut-transactions", {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut transactions");
@@ -56,7 +62,12 @@ const getHaircutTransactions = async () => {
 
 const getHaircutTransactionById = async (id: string) => {
   try {
-    const res = await api.get(`/haircut-transactions/${id}`);
+    const res = await api.get(`/haircut-transactions/${id}`, {
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
+    });
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut transaction");
     }
@@ -79,7 +90,10 @@ const getHaircutTransactionsByUserId = async (page: number, limit: number) => {
     const res = await api.get(
       `/haircut-transactions/user?page=${page}&limit=${limit}`,
       {
-        headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+        headers: {
+          Authorization: `Bearer ${await getAuthHeader()}`,
+          "Permission-Key": process.env.SECRET_API_KEY || "",
+        },
       },
     );
     if (res.status !== 200) {
@@ -109,13 +123,19 @@ const updateHaircutTransactionStatus = async (
     const token = await getAuthHeader();
     const payload = { [field]: status };
     const res = await api.put(`/haircut-transactions/${id}`, payload, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
 
     if (res.status !== 200) throw new Error("Gagal update status");
     revalidatePath("/dashboard/transactions/haircuts");
 
-    return { success: true, message: `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status reservasi"}` };
+    return {
+      success: true,
+      message: `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status reservasi"}`,
+    };
   } catch {
     return {
       success: false,
@@ -127,15 +147,24 @@ const updateHaircutTransactionStatus = async (
 const deleteHaircutTransaction = async (id: string) => {
   try {
     const res = await api.delete(`/haircut-transactions/${id}`, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to delete haircut transaction");
     }
-    return { success: true, message: "Berhasil menghapus transaksi potong rambut" };
+    return {
+      success: true,
+      message: "Berhasil menghapus transaksi potong rambut",
+    };
   } catch (error) {
     console.error("Failed to delete haircut transaction:", error);
-    return { success: false, message: "Gagal menghapus transaksi potong rambut" };
+    return {
+      success: false,
+      message: "Gagal menghapus transaksi potong rambut",
+    };
   }
 };
 

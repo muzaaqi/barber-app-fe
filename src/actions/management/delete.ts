@@ -10,6 +10,7 @@ const deleteItem = async (id: string, variant: string) => {
         headers: {
           Authorization: `Bearer ${await getAuthHeader()}`,
           "Content-Type": "application/json",
+          "Permission-Key": process.env.SECRET_API_KEY || "",
         },
       },
     );

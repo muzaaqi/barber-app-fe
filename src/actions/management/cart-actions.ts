@@ -8,7 +8,10 @@ import getAuthHeader from "@/features/get-jwt-token";
 const getCartData = async (): Promise<CartResponse | null> => {
   try {
     const res = await api.get("/carts/", {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       return { success: false, message: "Gagal mengambil data troli" };
@@ -23,7 +26,7 @@ const getCartData = async (): Promise<CartResponse | null> => {
     return {
       success: false,
       message: "Gagal mengambil data troli",
-    }
+    };
   }
 };
 
@@ -32,7 +35,12 @@ const addToCart = async (productId: string, quantity: number) => {
     const res = await api.post(
       "/carts",
       { product_id: productId, quantity },
-      { headers: { Authorization: `Bearer ${await getAuthHeader()}` } },
+      {
+        headers: {
+          Authorization: `Bearer ${await getAuthHeader()}`,
+          "Permission-Key": process.env.SECRET_API_KEY || "",
+        },
+      },
     );
     if (res.status !== 200) {
       throw new Error("Failed to add to cart");
@@ -49,7 +57,12 @@ const updateCartQuantity = async (cartId: string, quantity: number) => {
     const res = await api.put(
       `/carts/${cartId}`,
       { quantity },
-      { headers: { Authorization: `Bearer ${await getAuthHeader()}` } },
+      {
+        headers: {
+          Authorization: `Bearer ${await getAuthHeader()}`,
+          "Permission-Key": process.env.SECRET_API_KEY || "",
+        },
+      },
     );
     if (res.status !== 200) {
       throw new Error("Failed to update cart quantity");
@@ -64,7 +77,10 @@ const updateCartQuantity = async (cartId: string, quantity: number) => {
 const deleteCartItem = async (cartId: string) => {
   try {
     const res = await api.delete(`/carts/${cartId}`, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to delete cart item");
@@ -79,7 +95,10 @@ const deleteCartItem = async (cartId: string) => {
 const checkoutCart = async (payload: CartCheckoutPayload) => {
   try {
     const res = await api.post("/product-transactions", payload, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to checkout cart");

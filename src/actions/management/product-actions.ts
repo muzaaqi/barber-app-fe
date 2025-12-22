@@ -6,7 +6,11 @@ import { ProductType } from "@/types/products";
 
 const getAllProducts = async (page: number, limit: number) => {
   try {
-    const res = await api.get(`/products?page=${page}&limit=${limit}`);
+    const res = await api.get(`/products?page=${page}&limit=${limit}`, {
+      headers: {
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
+    });
     if (res.status !== 200) {
       throw new Error("Failed to fetch products");
     }
@@ -27,7 +31,11 @@ const getAllProducts = async (page: number, limit: number) => {
 
 const getProductById = async (id: string) => {
   try {
-    const res = await api.get(`/products/${id}`);
+    const res = await api.get(`/products/${id}`, {
+      headers: {
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
+    });
     if (res.status !== 200) {
       throw new Error("Failed to fetch product");
     }
@@ -48,7 +56,10 @@ const getProductById = async (id: string) => {
 const deleteProductById = async (id: string) => {
   try {
     const res = await api.delete(`/products/${id}`, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to delete product");

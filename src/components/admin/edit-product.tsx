@@ -85,6 +85,7 @@ const EditProduct = ({
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${await getAuthHeader()}`,
+          "Permission-Key": process.env.SECRET_API_KEY || "",
         },
       });
       if (res.status === 200) {
@@ -114,7 +115,7 @@ const EditProduct = ({
               Ubah detail produk dan gambarnya di sini.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid xl:grid-cols-2 gap-4">
+          <div className="grid gap-4 xl:grid-cols-2">
             <FieldGroup>
               <Field>
                 <FieldLabel>Gambar</FieldLabel>

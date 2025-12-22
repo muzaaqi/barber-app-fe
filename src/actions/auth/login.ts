@@ -9,6 +9,11 @@ export async function loginAction(email: string, password: string) {
     const res = await api.post("/user/login", {
       email,
       password,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       return { success: false, message: "Login error" };

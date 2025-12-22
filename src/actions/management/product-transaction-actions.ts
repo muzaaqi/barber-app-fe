@@ -9,7 +9,10 @@ import { redirect } from "next/navigation";
 const addNewProcuctTransaction = async (payload: ProductPayload) => {
   try {
     const res = await api.post("/product-transactions/checkout", payload, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status === 401) {
       return redirect("/login");
@@ -34,7 +37,10 @@ const addNewProcuctTransaction = async (payload: ProductPayload) => {
 const getProductTransactions = async () => {
   try {
     const res = await api.get("/product-transactions", {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to fetch product transactions");
@@ -77,35 +83,43 @@ const getProductTransactionById = async (id: string) => {
 const updateProductTransactionStatus = async (
   id: string,
   field: "payment_status" | "expedition_status",
-  status: string
+  status: string,
 ) => {
   try {
-    const token = await getAuthHeader();
     const payload = { [field]: status };
 
     const res = await api.put(`/product-transactions/${id}`, payload, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
 
     if (res.status !== 200) throw new Error("Gagal update status");
 
     revalidatePath("/dashboard/transactions/products");
 
-    return { success: true, message: `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status pengiriman"}` };
+    return {
+      success: true,
+      message: `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status pengiriman"}`,
+    };
   } catch {
     return {
       success: false,
       message: "Gagal mengubah status",
     };
   }
-}
+};
 
 const getProductTransactionsByUserId = async (page: number, limit: number) => {
   try {
     const res = await api.get(
       `/product-transactions/me?page=${page}&limit=${limit}`,
       {
-        headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+        headers: {
+          Authorization: `Bearer ${await getAuthHeader()}`,
+          "Permission-Key": process.env.SECRET_API_KEY || "",
+        },
       },
     );
     if (res.status !== 200) {
@@ -129,7 +143,10 @@ const getProductTransactionsByUserId = async (page: number, limit: number) => {
 const deleteHaircutTransaction = async (id: string) => {
   try {
     const res = await api.delete(`/haircut-transactions/${id}`, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to delete haircut transaction");

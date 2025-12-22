@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@/lib/axios-instance";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -35,6 +34,7 @@ import {
 import { toast } from "sonner";
 import { formatIDR } from "@/features/formatter";
 import { addNewProcuctTransaction } from "@/actions/management/product-transaction-actions";
+import { getProductById } from "@/actions/management/product-actions";
 
 type Product = {
   id: string;
@@ -61,7 +61,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
-        const res = await api.get(`/products/${productId}`);
+        const res = await getProductById(productId);
         setProduct(res.data.data);
       } catch (error) {
         console.error(error);

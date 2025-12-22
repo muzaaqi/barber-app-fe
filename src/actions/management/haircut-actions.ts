@@ -5,7 +5,11 @@ import { api } from "@/lib/axios-instance";
 
 const getAllHaircuts = async (page: number, limit: number) => {
   try {
-    const res = await api.get(`/haircuts?page=${page}&limit=${limit}`);
+    const res = await api.get(`/haircuts?page=${page}&limit=${limit}`, {
+      headers: {
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
+    });
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircuts");
     }
@@ -26,7 +30,11 @@ const getAllHaircuts = async (page: number, limit: number) => {
 
 const getHaircutById = async (id: string) => {
   try {
-    const res = await api.get(`/haircuts/${id}`);
+    const res = await api.get(`/haircuts/${id}`, {
+      headers: {
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
+    });
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut");
     }
@@ -47,7 +55,10 @@ const getHaircutById = async (id: string) => {
 const deleteHaircutById = async (id: string) => {
   try {
     const res = await api.delete(`/haircuts/${id}`, {
-      headers: { Authorization: `Bearer ${await getAuthHeader()}` },
+      headers: {
+        Authorization: `Bearer ${await getAuthHeader()}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
     });
     if (res.status !== 200) {
       throw new Error("Failed to delete haircut");

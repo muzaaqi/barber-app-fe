@@ -67,6 +67,7 @@ const AddHaircut = () => {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${await getAuthHeader()}`,
+          "Permission-Key": process.env.SECRET_API_KEY || "",
         },
       });
       if (res.status === 201) {

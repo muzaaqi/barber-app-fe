@@ -13,6 +13,7 @@ const getProfile = async () => {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+      "Permission-Key": process.env.SECRET_API_KEY || "",
     },
   });
 
@@ -34,6 +35,7 @@ const changePassword = async (payload: {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        "Permission-Key": process.env.SECRET_API_KEY || "",
       },
     });
     if (res.status !== 200) {
