@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatIDR } from "@/features/formatter";
+import { LayoutDashboardIcon } from "lucide-react";
 
 interface HaircutTransaction {
   id: string;
@@ -104,7 +105,8 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex-1 space-y-6 p-4 pt-6 md:p-8 max-w-screen mx-auto">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center">
+        <LayoutDashboardIcon className="mr-2 size-10" />
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
       </div>
       <StatsCards

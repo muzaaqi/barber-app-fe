@@ -119,7 +119,7 @@ const SidebarContent = () => {
 const Sidebar = () => {
   return (
     <>
-      <div className="fixed top-0 left-0 z-50 p-4 md:hidden">
+      <div className="fixed top-0 left-0 z-50 p-4 lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon">
@@ -135,7 +135,7 @@ const Sidebar = () => {
           </SheetContent>
         </Sheet>
       </div>
-      <aside className="bg-background fixed top-0 left-0 z-30 hidden h-screen w-64 flex-col border-r md:flex">
+      <aside className="bg-background fixed top-0 left-0 z-30 hidden h-screen w-64 flex-col border-r lg:flex">
         <SidebarContent />
       </aside>
     </>
