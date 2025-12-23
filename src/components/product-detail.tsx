@@ -46,7 +46,7 @@ type Product = {
 };
 
 const ProductDetail = () => {
-  const { productId } : { productId: string } = useParams();
+  const { productId }: { productId: string } = useParams();
   const router = useRouter();
 
   const [product, setProduct] = useState<Product | null>(null);
@@ -134,6 +134,11 @@ const ProductDetail = () => {
       const res = await addNewProcuctTransaction(payload);
       if (res.success) {
         toast.success("Pesanan berhasil dibuat!");
+      }
+      if (!res.success) {
+        toast.error(
+          res.message || "Gagal memproses pesanan. Silakan coba lagi.",
+        );
       }
     } catch (error) {
       console.error(error);

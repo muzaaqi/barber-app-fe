@@ -76,6 +76,11 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
         setPaymentMethod("");
         setIsKeramas("false");
       }
+      if (!res.success) {
+        toast.error(
+          res.message || "Gagal membuat reservasi. Silakan coba lagi.",
+        );
+      }
     } catch {
       toast.error("Gagal membuat reservasi. Silakan coba lagi.");
     } finally {

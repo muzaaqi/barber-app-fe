@@ -35,7 +35,7 @@ type Haircut = {
 };
 
 const HaircutDetail = () => {
-  const { haircutId } : { haircutId: string } = useParams();
+  const { haircutId }: { haircutId: string } = useParams();
   const router = useRouter();
 
   const [haircut, setHaircut] = useState<Haircut | null>(null);
@@ -99,7 +99,13 @@ const HaircutDetail = () => {
         setPaymentMethod("");
         setIsKeramas("false");
       }
+      if (!res.success) {
+        toast.error(
+          res.message || "Gagal membuat reservasi. Silakan coba lagi.",
+        );
+      }
     } catch {
+      setErrorMessage("Gagal membuat reservasi. Silakan coba lagi.");
       toast.error("Gagal membuat reservasi. Silakan coba lagi.");
     } finally {
       setIsLoading(false);

@@ -121,12 +121,12 @@ const ProductDialog = ({
         setAddress("");
       }
       if (!res.success) {
-        setErrorMessage(
+        toast.error(
           res.message || "Gagal memproses pesanan. Silakan coba lagi.",
         );
       }
     } catch {
-      setErrorMessage("Gagal memproses pesanan. Silakan coba lagi.");
+      toast.error("Gagal memproses pesanan. Silakan coba lagi.");
     } finally {
       setIsLoading(false);
     }

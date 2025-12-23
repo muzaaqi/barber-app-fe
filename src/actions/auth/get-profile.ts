@@ -3,7 +3,6 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { api } from "@/lib/axios-instance";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 const getProfile = async () => {
   const token = await getAuthHeader();
