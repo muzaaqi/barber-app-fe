@@ -10,7 +10,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
     <div className="bg-background flex min-h-screen w-full flex-col items-center justify-center overflow-hidden">
       <Empty className="relative z-10 max-w-lg">
@@ -37,27 +37,25 @@ export default function NotFound() {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="border-primary/20 hover:bg-primary/5 hover:text-primary w-full gap-2 sm:w-auto"
-          >
-            <Link href="/">
+          <Link href="/">
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-primary/20 hover:bg-primary/5 hover:text-primary w-full gap-2 sm:w-auto"
+            >
               <MoveLeft className="h-4 w-4" />
               Kembali
-            </Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            className="shadow-primary/20 w-full gap-2 shadow-lg sm:w-auto"
-          >
-            <Link href="/">
+            </Button>
+          </Link>
+          <Link href="/">
+            <Button
+              size="lg"
+              className="shadow-primary/20 w-full gap-2 shadow-lg sm:w-auto"
+            >
               <Home className="h-4 w-4" />
               Ke Beranda
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </EmptyContent>
       </Empty>
       <div
