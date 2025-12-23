@@ -38,13 +38,15 @@ export default function NotFound() {
         </EmptyHeader>
         <EmptyContent className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button
+            asChild
             variant="outline"
             size="lg"
             className="border-primary/20 hover:bg-primary/5 hover:text-primary w-full gap-2 sm:w-auto"
-            onClick={() => history.back()}
           >
-            <MoveLeft className="h-4 w-4" />
-            Kembali
+            <Link href="/">
+              <MoveLeft className="h-4 w-4" />
+              Kembali
+            </Link>
           </Button>
           <Button
             asChild
