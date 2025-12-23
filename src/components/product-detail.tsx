@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -153,8 +153,9 @@ const ProductDetail = () => {
     return <ProductDetailSkeleton />;
   }
 
-  if (!product)
-    return <div className="py-20 text-center">Produk tidak ditemukan.</div>;
+  if (!product) {
+    notFound();
+  }
 
   return (
     <div className="bg-background min-h-screen pt-6 pb-20">
