@@ -13,7 +13,7 @@ const addNewProcuctTransaction = async (payload: ProductPayload) => {
   }
   try {
     const res = await jwtBergasAPI.post(
-      "/product-transactions/checkout/",
+      "/product-transactions/checkout",
       payload,
     );
     if (res.status === 401) {
@@ -66,7 +66,7 @@ const getProductTransactionById = async (id: string) => {
       throw new Error("Failed to fetch product transaction");
     }
     return {
-      data: res.data.data.data,
+      data: res.data.data,
       success: true,
       message: "Berhasil mengambil data transaksi produk",
     };
