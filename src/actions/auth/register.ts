@@ -1,5 +1,5 @@
 "use server";
-import { api } from "@/lib/axios-instance";
+import { bergasAPI } from "@/lib/axios-instance";
 import axios from "axios";
 
 export async function registerAction(
@@ -8,20 +8,11 @@ export async function registerAction(
   password: string,
 ) {
   try {
-    const res = await api.post(
-      "user/register",
-      {
-        name,
-        email,
-        password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Permission-Key": process.env.SECRET_API_KEY || "",
-        },
-      },
-    );
+    const res = await bergasAPI.post("user/register", {
+      name,
+      email,
+      password,
+    });
     if (res.status !== 201) {
       return { success: false, message: "Registrasi gagal." };
     }

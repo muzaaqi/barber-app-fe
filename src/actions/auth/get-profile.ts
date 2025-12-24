@@ -1,20 +1,14 @@
 "use server";
 
 import getAuthHeader from "@/features/get-jwt-token";
-import { api } from "@/lib/axios-instance";
+import { jwtBergasAPI } from "@/lib/axios-instance";
 import { cookies } from "next/headers";
 
 const getProfile = async () => {
   const token = await getAuthHeader();
 
   if (!token) return null;
-  const res = await api.get("/user/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      "Permission-Key": process.env.SECRET_API_KEY || "",
-    },
-  });
+  const res = await jwtBergasAPI.get("/user/me");
 
   if (res.status !== 200) return null;
 
@@ -30,13 +24,7 @@ const changePassword = async (payload: {
   if (!token) return { success: false, message: "Unauthorized" };
 
   try {
-    const res = await api.put("/user/me/password", payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.put("/user/me/password", payload);
     if (res.status !== 200) {
       return { success: false, message: "Gagal mengubah password." };
     }

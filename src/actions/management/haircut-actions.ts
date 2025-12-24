@@ -1,11 +1,11 @@
 "use server";
 
-import getAuthHeader from "@/features/get-jwt-token";
-import { api } from "@/lib/axios-instance";
+import { bergasAPI, jwtBergasAPI } from "@/lib/axios-instance";
+import { revalidatePath } from "next/cache";
 
 const getAllHaircuts = async (page: number, limit: number) => {
   try {
-    const res = await api.get(`/haircuts?page=${page}&limit=${limit}`, {
+    const res = await bergasAPI.get(`/haircuts?page=${page}&limit=${limit}`, {
       headers: {
         "Permission-Key": process.env.SECRET_API_KEY || "",
       },
@@ -30,11 +30,7 @@ const getAllHaircuts = async (page: number, limit: number) => {
 
 const getHaircutById = async (id: string) => {
   try {
-    const res = await api.get(`/haircuts/${id}`, {
-      headers: {
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await bergasAPI.get(`/haircuts/${id}`);
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut");
     }
@@ -54,15 +50,11 @@ const getHaircutById = async (id: string) => {
 
 const deleteHaircutById = async (id: string) => {
   try {
-    const res = await api.delete(`/haircuts/${id}`, {
-      headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.delete(`/haircuts/${id}`);
     if (res.status !== 200) {
       throw new Error("Failed to delete haircut");
     }
+    revalidatePath("/dashboard/haircuts");
     return { success: true, message: "Berhasil menghapus data potong rambut" };
   } catch (error) {
     console.error("Failed to delete haircut:", error);

@@ -14,13 +14,12 @@ import {
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { api } from "@/lib/axios-instance";
+import { jwtBergasAPI } from "@/lib/axios-instance";
 import { Pencil, Trash2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { toast } from "sonner";
-import getAuthHeader from "@/features/get-jwt-token";
 
 type Props = {
   id: string;
@@ -81,11 +80,9 @@ const EditProduct = ({
     }
 
     try {
-      const res = await api.put(`/products/${id}`, formData, {
+      const res = await jwtBergasAPI.put(`/products/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${await getAuthHeader()}`,
-          "Permission-Key": process.env.SECRET_API_KEY || "",
         },
       });
       if (res.status === 200) {

@@ -1,16 +1,12 @@
 "use server";
 
-import getAuthHeader from "@/features/get-jwt-token";
-import { api } from "@/lib/axios-instance";
+import { bergasAPI, jwtBergasAPI } from "@/lib/axios-instance";
 import { ProductType } from "@/types/products";
+import { revalidatePath } from "next/cache";
 
 const getAllProducts = async (page: number, limit: number) => {
   try {
-    const res = await api.get(`/products?page=${page}&limit=${limit}`, {
-      headers: {
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await bergasAPI.get(`/products?page=${page}&limit=${limit}`);
     if (res.status !== 200) {
       throw new Error("Failed to fetch products");
     }
@@ -31,11 +27,7 @@ const getAllProducts = async (page: number, limit: number) => {
 
 const getProductById = async (id: string) => {
   try {
-    const res = await api.get(`/products/${id}`, {
-      headers: {
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await bergasAPI.get(`/products/${id}`);
     if (res.status !== 200) {
       throw new Error("Failed to fetch product");
     }
@@ -55,15 +47,11 @@ const getProductById = async (id: string) => {
 
 const deleteProductById = async (id: string) => {
   try {
-    const res = await api.delete(`/products/${id}`, {
-      headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.delete(`/products/${id}`);
     if (res.status !== 200) {
       throw new Error("Failed to delete product");
     }
+    revalidatePath("/dashboard/products");
     return { success: true, message: "Produk berhasil dihapus" };
   } catch (error) {
     console.error("Failed to delete product:", error);

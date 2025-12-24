@@ -2,23 +2,18 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
-import { api } from "../../lib/axios-instance";
+import { bergasAPI } from "../../lib/axios-instance";
 
 export async function loginAction(email: string, password: string) {
   try {
-    const res = await api.post("/user/login", {
+    const res = await bergasAPI.post("/user/login", {
       email,
       password,
-    }, {
-      headers: {
-        "Content-Type": "application/json",
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
     });
     if (res.status !== 200) {
       return { success: false, message: "Login error" };
     }
-    
+
     const token = res.data.data.token;
     const cookieStore = await cookies();
     cookieStore.set("token", token, {

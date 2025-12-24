@@ -14,13 +14,12 @@ import {
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { api } from "@/lib/axios-instance";
+import { jwtBergasAPI } from "@/lib/axios-instance";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { Plus, Trash2, Upload } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
-import getAuthHeader from "@/features/get-jwt-token";
 
 const AddHaircut = () => {
   const [name, setName] = useState("");
@@ -65,11 +64,9 @@ const AddHaircut = () => {
     }
 
     try {
-      const res = await api.post("/haircuts/", formData, {
+      const res = await jwtBergasAPI.post("/haircuts/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Permission-Key": process.env.SECRET_API_KEY || "",
-          Authorization: `Bearer ${await getAuthHeader()}`,
         },
       });
       if (res.status === 201) {

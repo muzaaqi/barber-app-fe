@@ -1,6 +1,6 @@
 "use server";
 
-import { api } from "@/lib/axios-instance";
+import { jwtBergasAPI } from "@/lib/axios-instance";
 import { revalidatePath } from "next/cache";
 import { CartCheckoutPayload, CartResponse } from "@/types/cart";
 import getAuthHeader from "@/features/get-jwt-token";
@@ -11,12 +11,7 @@ const getCartData = async (): Promise<CartResponse | null> => {
     return null;
   }
   try {
-    const res = await api.get("/carts", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.get("/carts");
     if (res.status !== 200) {
       return { success: false, message: "Gagal mengambil data troli" };
     }
@@ -43,16 +38,10 @@ const addToCart = async (productId: string, quantity: number) => {
     };
   }
   try {
-    const res = await api.post(
-      "/carts",
-      { product_id: productId, quantity },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Permission-Key": process.env.SECRET_API_KEY || "",
-        },
-      },
-    );
+    const res = await jwtBergasAPI.post("/carts", {
+      product_id: productId,
+      quantity,
+    });
     if (res.status !== 200) {
       throw new Error("Failed to add to cart");
     }
@@ -65,15 +54,9 @@ const addToCart = async (productId: string, quantity: number) => {
 
 const updateCartQuantity = async (cartId: string, quantity: number) => {
   try {
-    const res = await api.put(
+    const res = await jwtBergasAPI.put(
       `/carts/${cartId}`,
       { quantity },
-      {
-        headers: {
-          Authorization: `Bearer ${await getAuthHeader()}`,
-          "Permission-Key": process.env.SECRET_API_KEY || "",
-        },
-      },
     );
     if (res.status !== 200) {
       throw new Error("Failed to update cart quantity");
@@ -87,12 +70,7 @@ const updateCartQuantity = async (cartId: string, quantity: number) => {
 
 const deleteCartItem = async (cartId: string) => {
   try {
-    const res = await api.delete(`/carts/${cartId}`, {
-      headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.delete(`/carts/${cartId}`);
     if (res.status !== 200) {
       throw new Error("Failed to delete cart item");
     }
@@ -105,12 +83,7 @@ const deleteCartItem = async (cartId: string) => {
 
 const checkoutCart = async (payload: CartCheckoutPayload) => {
   try {
-    const res = await api.post("/product-transactions/checkout", payload, {
-      headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.post("/product-transactions/checkout", payload);
     if (res.status !== 201) {
       throw new Error("Failed to checkout cart");
     }

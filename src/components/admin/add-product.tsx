@@ -14,13 +14,12 @@ import {
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { api } from "@/lib/axios-instance";
+import { jwtBergasAPI } from "@/lib/axios-instance";
 import { Spinner } from "../ui/spinner";
 import Image from "next/image";
 import { Plus, Trash2, Upload } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
-import getAuthHeader from "@/features/get-jwt-token";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -68,11 +67,9 @@ const AddProduct = () => {
     }
 
     try {
-      const res = await api.post("/products/", formData, {
+      const res = await jwtBergasAPI.post("/products/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${await getAuthHeader()}`,
-          "Permission-Key": process.env.SECRET_API_KEY || "",
         },
       });
       if (res.status === 201) {

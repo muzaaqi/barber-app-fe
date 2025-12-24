@@ -1,7 +1,7 @@
 "use server";
 
 import getAuthHeader from "@/features/get-jwt-token";
-import { api } from "@/lib/axios-instance";
+import { jwtBergasAPI } from "@/lib/axios-instance";
 import { HaircutPayload } from "@/types/transactions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -12,12 +12,7 @@ const addNewHaircutTransaction = async (payload: HaircutPayload) => {
     return redirect("/login");
   }
   try {
-    const res = await api.post("/haircut-transactions/", payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.post("/haircut-transactions/", payload);
     if (res.status === 401) {
       return redirect("/login");
     }
@@ -40,12 +35,7 @@ const addNewHaircutTransaction = async (payload: HaircutPayload) => {
 
 const getHaircutTransactions = async () => {
   try {
-    const res = await api.get("/haircut-transactions/", {
-      headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.get("/haircut-transactions/");
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut transactions");
     }
@@ -66,12 +56,7 @@ const getHaircutTransactions = async () => {
 
 const getHaircutTransactionById = async (id: string) => {
   try {
-    const res = await api.get(`/haircut-transactions/${id}`, {
-      headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.get(`/haircut-transactions/${id}`);
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut transaction");
     }
@@ -91,14 +76,8 @@ const getHaircutTransactionById = async (id: string) => {
 
 const getHaircutTransactionsByUserId = async (page: number, limit: number) => {
   try {
-    const res = await api.get(
+    const res = await jwtBergasAPI.get(
       `/haircut-transactions/user?page=${page}&limit=${limit}`,
-      {
-        headers: {
-          Authorization: `Bearer ${await getAuthHeader()}`,
-          "Permission-Key": process.env.SECRET_API_KEY || "",
-        },
-      },
     );
     if (res.status !== 200) {
       throw new Error("Failed to fetch user's haircut transactions");
@@ -126,7 +105,7 @@ const updateHaircutTransactionStatus = async (
   try {
     const token = await getAuthHeader();
     const payload = { [field]: status };
-    const res = await api.put(`/haircut-transactions/${id}`, payload, {
+    const res = await jwtBergasAPI.put(`/haircut-transactions/${id}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Permission-Key": process.env.SECRET_API_KEY || "",
@@ -150,15 +129,11 @@ const updateHaircutTransactionStatus = async (
 
 const deleteHaircutTransaction = async (id: string) => {
   try {
-    const res = await api.delete(`/haircut-transactions/${id}`, {
-      headers: {
-        Authorization: `Bearer ${await getAuthHeader()}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.delete(`/haircut-transactions/${id}`);
     if (res.status !== 200) {
       throw new Error("Failed to delete haircut transaction");
     }
+    revalidatePath("/dashboard/transactions/haircuts");
     return {
       success: true,
       message: "Berhasil menghapus transaksi potong rambut",
