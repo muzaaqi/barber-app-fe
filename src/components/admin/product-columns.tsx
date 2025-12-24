@@ -117,7 +117,7 @@ export const columns: ColumnDef<Product>[] = [
                 errorText="Gagal menghapus produk."
                 variant="destructive"
                 trigger={
-                  <Button variant="ghost" className="text-destructive">
+                  <Button variant="ghost" className="text-destructive flex items-center justify-start">
                     <Trash2 />
                     Hapus
                   </Button>
