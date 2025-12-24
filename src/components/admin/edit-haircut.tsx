@@ -96,7 +96,6 @@ const EditHaircut = ({
           <Pencil /> Edit
         </Button>
       </DialogTrigger>
-
       <DialogContent className="sm:max-w-[450px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
@@ -105,7 +104,6 @@ const EditHaircut = ({
               Ubah detail model potongan rambut.
             </DialogDescription>
           </DialogHeader>
-
           <FieldGroup>
             <Field>
               <FieldLabel>Image</FieldLabel>

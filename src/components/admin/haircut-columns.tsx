@@ -94,7 +94,7 @@ export const columns: ColumnDef<Haircut>[] = [
                 errorText="Gagal menghapus model rambut."
                 variant="destructive"
                 trigger={
-                  <Button variant="ghost" className="text-destructive flex items-center justify-start">
+                  <Button variant="ghost" className="text-destructive flex items-center justify-start gap-3">
                     <Trash2 />Hapus
                   </Button>
                 }
