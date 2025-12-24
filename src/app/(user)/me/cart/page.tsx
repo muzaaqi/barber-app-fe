@@ -66,7 +66,7 @@ export default async function CartPage() {
           </div>
         </div>
         <Separator className="mb-8" />
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 max-w-svw">
           <div className="space-y-4 lg:col-span-2">
             {cartData.data.items.map((item) => (
               <CartItemCard key={item.cart_id} item={item} />
