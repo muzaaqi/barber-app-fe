@@ -36,9 +36,9 @@ const addNewProcuctTransaction = async (payload: ProductPayload) => {
   }
 };
 
-const getProductTransactions = async () => {
+const getProductTransactions = async (page: number, limit: number) => {
   try {
-    const res = await jwtBergasAPI.get("/product-transactions/");
+    const res = await jwtBergasAPI.get(`/product-transactions?page=${page}&limit=${limit}`);
     if (res.status !== 200) {
       throw new Error("Failed to fetch product transactions");
     }

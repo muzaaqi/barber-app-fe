@@ -108,7 +108,7 @@ const HaircutDetail = () => {
       setErrorMessage("Gagal membuat reservasi. Silakan coba lagi.");
       toast.error("Gagal membuat reservasi. Silakan coba lagi.");
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false)
     }
   };
 

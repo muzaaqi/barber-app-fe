@@ -37,13 +37,14 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     setRegisterLoading(true);
 
     if (!name || !email || !password || !confirmPassword) {
-      setErrorMessage("All fields are required.");
+      setErrorMessage("Semua field wajib diisi!");
       setRegisterLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match.");
+      setErrorMessage("Password tidak cocok!");
+      setRegisterLoading(false)
       return;
     }
 

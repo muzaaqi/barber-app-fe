@@ -1,7 +1,6 @@
 "use server";
 
 import { bergasAPI, jwtBergasAPI } from "@/lib/axios-instance";
-import { ProductType } from "@/types/products";
 import { revalidatePath } from "next/cache";
 
 const getAllProducts = async (page: number, limit: number) => {
@@ -11,7 +10,7 @@ const getAllProducts = async (page: number, limit: number) => {
       throw new Error("Failed to fetch products");
     }
     return {
-      data: res.data.data.data as ProductType[],
+      data: res.data.data.data,
       pagination: res.data.data.pagination,
       success: true,
       message: "Berhasil mengambil semua data produk",

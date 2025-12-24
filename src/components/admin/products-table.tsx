@@ -1,9 +1,7 @@
-// components/admin/products-table.tsx
-
-import { api } from "@/lib/axios-instance";
 import { DataTable } from "../ui/data-table";
 import { columns, Product } from "./product-columns";
 import GlobalPagination from "../global-pagination";
+import { getAllProducts } from "@/actions/management/product-actions";
 
 type Props = {
   page?: string;
@@ -17,10 +15,10 @@ const ProductsTable = async ({ page }: Props) => {
   let pagination = { page: 1, limit: 10, total: 0 };
 
   try {
-    const res = await api.get(`/products?page=${currentPage}&limit=${limit}`);
-    if (res?.data?.data) {
-      products = res.data.data.data;
-      pagination = res.data.data.pagination;
+    const res = await getAllProducts(currentPage, limit)
+    if (res.success) {
+      products = res.data;
+      pagination = res.pagination;
     }
   } catch (error) {
     console.error("Error fetching products:", error);

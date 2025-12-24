@@ -1,24 +1,18 @@
-import { api } from "@/lib/axios-instance";
-import getAuthHeader from "@/features/get-jwt-token";
 import { DataTable } from "../ui/data-table";
 import { columns, HaircutTransaction } from "./haircut-transaction-colums";
 import GlobalPagination from "../global-pagination";
+import { getHaircutTransactions } from "@/actions/management/haircut-transaction-actions";
 
 const HaircutTransactionsTable = async () => {
-  const token = await getAuthHeader();
   let transactions: HaircutTransaction[] = [];
   let pagination = { page: 1, limit: 10, total: 0 };
 
   try {
-    const res = await api.get("/haircut-transactions", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await getHaircutTransactions(pagination.page, pagination.limit);
 
-    if (res?.data?.data) {
-      transactions = res.data.data.data;
-      pagination = res.data.data.pagination;
+    if (res?.data) {
+      transactions = res.data;
+      pagination = res.pagination;
     }
   } catch (error) {
     console.error("Error fetching transactions:", error);
