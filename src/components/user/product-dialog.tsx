@@ -136,7 +136,8 @@ const ProductDialog = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button className="w-full">
-          <ShoppingBag className="mr-2 h-4 w-4" /> Beli
+          <ShoppingBag className="mr-2 h-4 w-4" /> Beli{" "}
+          <span className="hidden md:inline">Sekarang</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
@@ -302,9 +303,7 @@ const ProductDialog = ({
                       <div className="flex items-center gap-3">
                         <RadioGroupItem value="cod" id="prod-cod" />
                         <div className="flex flex-col">
-                          <span className="text-sm font-medium">
-                            COD
-                          </span>
+                          <span className="text-sm font-medium">COD</span>
                           <span className="text-muted-foreground text-xs">
                             Bayar di tempat saat barang diterima
                           </span>

@@ -32,9 +32,9 @@ const AddToCartButton = ({ productId }: { productId: string }) => {
       variant="secondary"
       onClick={handleAddToCart}
       disabled={isSubmitting}
-      className="pointer-events-auto"
+      className="pointer-events-auto w-fit"
     >
-      {isSubmitting ? <Spinner /> : <ShoppingCart className="mr-2 h-4 w-4" />}
+      {isSubmitting ? <Spinner /> : <ShoppingCart className="h-4 w-4" />}
     </Button>
   );
 };
