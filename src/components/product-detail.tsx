@@ -56,13 +56,14 @@ const ProductDetail = () => {
   const [address, setAddress] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [expeditionService, setExpeditionService] = useState<string>("JNE");
+  const [expeditionCost, setExpeditionCost] = useState<number>(15000);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
         const res = await getProductById(productId);
-        setProduct(res.data.data);
+        setProduct(res.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -127,7 +128,7 @@ const ProductDetail = () => {
       payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
       expedition_service: expeditionService,
       shipping_address: address,
-      total_price: estimatedTotal,
+      total_price: estimatedTotal + expeditionCost,
     };
 
     try {
@@ -279,7 +280,10 @@ const ProductDetail = () => {
                         </FieldLabel>
                         <RadioGroup
                           value={expeditionService}
-                          onValueChange={setExpeditionService}
+                          onValueChange={(value) => {
+                            setExpeditionService(value);
+                            setExpeditionCost(value === "J&T" ? 15000 : 20000);
+                          }}
                           className="grid grid-cols-2 gap-3"
                         >
                           <Label
@@ -292,21 +296,31 @@ const ProductDetail = () => {
                           >
                             <div className="flex items-center gap-2">
                               <RadioGroupItem value="JNE" id="exp-jne" />
-                              <span className="text-sm font-medium">JNE</span>
+                              <div className="flex flex-col">
+                                <span className="text-sm font-medium">JNE</span>
+                                <span className="text-muted-foreground text-xs">
+                                  {formatIDR(15000)}
+                                </span>
+                              </div>
                             </div>
                             <Truck className="text-muted-foreground h-4 w-4" />
                           </Label>
                           <Label
-                            htmlFor="exp-jnt"
+                            htmlFor="exp-j&t"
                             className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
-                              expeditionService === "JNT"
+                              expeditionService === "J&T"
                                 ? "border-primary bg-primary/5 ring-primary ring-1"
                                 : "bg-transparent"
                             }`}
                           >
                             <div className="flex items-center gap-2">
-                              <RadioGroupItem value="JNT" id="exp-jnt" />
-                              <span className="text-sm font-medium">J&T</span>
+                              <RadioGroupItem value="J&T" id="exp-j&t" />
+                              <div className="flex flex-col">
+                                <span className="text-sm font-medium">J&T</span>
+                                <span className="text-muted-foreground text-xs">
+                                  {formatIDR(20000)}
+                                </span>
+                              </div>
                             </div>
                             <Truck className="text-muted-foreground h-4 w-4" />
                           </Label>
@@ -322,21 +336,21 @@ const ProductDetail = () => {
                           className="grid grid-cols-1 gap-3"
                         >
                           <Label
-                            htmlFor="pay-transfer"
+                            htmlFor="pay-cod"
                             className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
-                              paymentMethod === "transfer"
+                              paymentMethod === "cod"
                                 ? "border-primary bg-primary/5 ring-primary ring-1"
                                 : "bg-transparent"
                             }`}
                           >
                             <div className="flex items-center gap-3">
                               <RadioGroupItem
-                                value="transfer"
-                                id="pay-transfer"
+                                value="cod"
+                                id="pay-cod"
                               />
                               <div className="flex flex-col">
                                 <span className="text-sm font-medium">
-                                  Transfer Bank
+                                  COD
                                 </span>
                                 <span className="text-muted-foreground text-xs">
                                   Cek otomatis
@@ -381,7 +395,7 @@ const ProductDetail = () => {
                         </span>
                       </div>
                       <span className="text-primary text-2xl font-bold">
-                        {formatIDR(estimatedTotal)}
+                        {formatIDR(estimatedTotal + expeditionCost)}
                       </span>
                     </div>
                     <Button

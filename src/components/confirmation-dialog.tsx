@@ -12,9 +12,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Spinner } from "./ui/spinner";
+import { Trash } from "lucide-react";
 
 type ButtonVariant =
   | "default"
@@ -89,8 +90,8 @@ const ConfirmationDialog = ({
             disabled={isLoading}
             className={cn(isLoading && "opacity-50")}
           >
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {confirmText}
+            {isLoading && <Spinner />}
+            <Trash />{confirmText}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

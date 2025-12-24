@@ -18,7 +18,13 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { CalendarDays, CalendarX, Clock, Scissors } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  CalendarX,
+  Clock,
+  Scissors,
+} from "lucide-react";
 import { formatIDR } from "@/features/formatter";
 import { toast } from "sonner";
 import { getHaircutTransactionsByUserId } from "@/actions/management/haircut-transaction-actions";
@@ -82,60 +88,92 @@ export default function HaircutHistory() {
         {data.map((item) => (
           <Card
             key={item.id}
-            className="hover:border-primary/50 overflow-hidden py-0 transition-colors"
+            className="group border-muted hover:border-primary/50 overflow-hidden py-0 transition-all hover:shadow-md"
           >
-            <CardContent className="px-0 sm:flex">
-              <div className="bg-muted relative h-60 w-full shrink-0 overflow-hidden rounded-xl sm:h-auto sm:w-48">
+            <CardContent className="p-0 sm:flex">
+              <div className="bg-muted relative h-48 w-full shrink-0 overflow-hidden sm:h-auto sm:w-48">
                 <Image
                   src={item.haircut?.image_url || "/placeholder.jpg"}
                   alt={item.haircut?.name || "Service"}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+                <div className="absolute top-2 right-2 sm:hidden">
+                  <StatusBadge status={item.payment_status} type="payment" />
+                </div>
               </div>
-              <div className="flex w-full flex-col justify-between gap-3 p-4">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="text-lg font-bold">{item.haircut?.name}</h3>
-                    <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
-                      <CalendarDays className="h-4 w-4" />
-                      <span>
-                        {new Date(item.reservation_time).toLocaleDateString(
-                          "id-ID",
-                          { dateStyle: "long" },
-                        )}
-                      </span>
-                    </div>
-                    <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
-                      <Clock className="h-4 w-4" />
-                      <span>
-                        {new Date(item.reservation_time).toLocaleTimeString(
-                          "id-ID",
-                          { hour: "2-digit", minute: "2-digit" },
-                        )}
-                      </span>
-                    </div>
-                    {item.hairwash && (
-                      <div className="mt-2 flex w-fit items-center gap-1 rounded bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600">
-                        <Scissors className="h-3 w-3" />
-                        <span>+ Cuci Rambut</span>
+              <div className="flex w-full flex-col justify-between p-4">
+                <div className="space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className="line-clamp-1 text-lg font-bold">
+                        {item.haircut?.name}
+                      </h3>
+                      <div className="text-muted-foreground mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                        <div className="flex items-center gap-1.5">
+                          <CalendarDays className="h-3.5 w-3.5" />
+                          <span>
+                            {new Date(item.reservation_time).toLocaleDateString(
+                              "id-ID",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              },
+                            )}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Clock className="h-3.5 w-3.5" />
+                          <span>
+                            {new Date(item.reservation_time).toLocaleTimeString(
+                              "id-ID",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              },
+                            )}
+                          </span>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <StatusBadge status={item.payment_status} type="payment" />
-                    <Badge variant="secondary" className="text-xs capitalize">
-                      {item.reservation_status}
-                    </Badge>
+                      {item.hairwash && (
+                        <div className="mt-2 flex w-fit items-center gap-1 rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-blue-500/10">
+                          <Scissors className="h-3 w-3" />
+                          <span>+ Cuci Rambut</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-col items-end gap-2 sm:flex">
+                      <div className="hidden sm:block">
+                        <StatusBadge
+                          status={item.payment_status}
+                          type="payment"
+                        />
+                      </div>
+                      <Badge
+                        variant="secondary"
+                        className="text-[10px] capitalize"
+                      >
+                        {item.reservation_status}
+                      </Badge>
+                    </div>
                   </div>
                 </div>
-                <div className="mt-auto flex items-end justify-between border-t border-dashed pt-2">
-                  <span className="text-muted-foreground font-mono text-xs">
-                    #{item.id.substring(0, 8)}
-                  </span>
-                  <span className="text-primary text-lg font-bold">
-                    {formatIDR(item.total_price)}
-                  </span>
+                <div className="mt-4 flex flex-col gap-3 border-t border-dashed pt-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex items-center justify-between sm:flex-col sm:items-start sm:gap-0">
+                    <span className="text-muted-foreground font-mono text-[10px]">
+                      #{item.id.substring(0, 8)}
+                    </span>
+                    <span className="text-primary text-lg font-bold">
+                      {formatIDR(item.total_price)}
+                    </span>
+                  </div>
+                  <Link href={`/me/history/haircut/${item.id}`}>
+                    <Button size="sm" className="w-full gap-2 sm:w-auto">
+                      Detail
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </CardContent>
@@ -177,18 +215,27 @@ const StatusBadge = ({
 };
 
 const HistorySkeleton = () => (
-  <div className="space-y-4">
-    {[1, 2, 3].map((i) => (
+  <div className="gap-4 space-y-4 md:grid md:grid-cols-2">
+    {[1, 2, 3, 4].map((i) => (
       <div
         key={i}
-        className="flex h-auto flex-col overflow-hidden rounded-xl border sm:h-40 sm:flex-row"
+        className="bg-card overflow-hidden rounded-xl border shadow-sm"
       >
-        <Skeleton className="h-60 w-full sm:w-48" />
-        <div className="flex-1 space-y-2 p-4">
-          <Skeleton className="h-6 w-1/2" />
-          <Skeleton className="h-4 w-1/3" />
-          <Skeleton className="h-4 w-1/4" />
-          <Skeleton className="mt-4 ml-auto h-6 w-1/4" />
+        <div className="flex flex-col sm:flex-row">
+          <Skeleton className="h-48 w-full shrink-0 sm:h-auto sm:w-48" />
+          <div className="flex flex-1 flex-col justify-between p-4">
+            <div className="space-y-2">
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+            <div className="mt-4 flex flex-col gap-3 border-t border-dashed pt-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="space-y-1">
+                <Skeleton className="h-3 w-16" />
+                <Skeleton className="h-7 w-32" />
+              </div>
+              <Skeleton className="h-9 w-full rounded-md sm:w-24" />
+            </div>
+          </div>
         </div>
       </div>
     ))}

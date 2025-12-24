@@ -46,6 +46,7 @@ export default function CartCheckoutDialog({
   const [errorMessage, setErrorMessage] = useState("");
   const [address, setAddress] = useState("");
   const [expedition, setExpedition] = useState("JNE");
+  const [expeditionCost, setExpeditionCost] = useState(15000);
   const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleCheckout = async (e: React.FormEvent) => {
@@ -130,21 +131,38 @@ export default function CartCheckoutDialog({
                 </FieldLabel>
                 <RadioGroup
                   value={expedition}
-                  onValueChange={setExpedition}
+                  onValueChange={(value) => {
+                    setExpedition(value);
+                    setExpeditionCost(value === "J&T" ? 20000 : 15000);
+                  }}
                   className="grid grid-cols-2 gap-3"
                 >
-                  {["JNE", "JNT"].map((service) => (
+                  {[
+                    {
+                      label: "JNE",
+                      price: 15000,
+                    },
+                    {
+                      label: "J&T",
+                      price: 20000,
+                    },
+                  ].map(({ label, price }) => (
                     <Label
-                      key={service}
+                      key={label}
                       className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 ${
-                        expedition === service
+                        expedition === label
                           ? "border-primary bg-primary/5 ring-primary ring-1"
                           : ""
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <RadioGroupItem value={service} id={`exp-${service}`} />
-                        <span className="font-medium">{service}</span>
+                        <RadioGroupItem value={label} id={`exp-${label}`} />
+                        <div className="flex flex-col">
+                          <span className="font-medium">{label}</span>
+                          <span className="text-muted-foreground text-xs">
+                            {formatIDR(price)}
+                          </span>
+                        </div>
                       </div>
                       <Truck className="text-muted-foreground h-4 w-4" />
                     </Label>
@@ -204,7 +222,7 @@ export default function CartCheckoutDialog({
                 Total Tagihan
               </span>
               <span className="text-primary text-xl font-bold">
-                {formatIDR(grandTotal)}
+              {formatIDR(grandTotal + expeditionCost)}
               </span>
             </div>
           </div>

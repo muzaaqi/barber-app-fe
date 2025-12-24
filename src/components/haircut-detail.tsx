@@ -183,7 +183,6 @@ const HaircutDetail = () => {
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Kembali
         </Button>
-
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
           <div className="space-y-6 lg:col-span-2">
             <div className="bg-muted relative w-full overflow-hidden rounded-xl border shadow-sm">
@@ -196,7 +195,6 @@ const HaircutDetail = () => {
                 priority
               />
             </div>
-
             <div className="space-y-2">
               <h1 className="text-foreground text-3xl font-bold tracking-tight md:text-4xl">
                 {haircut.name}
@@ -205,9 +203,7 @@ const HaircutDetail = () => {
                 {haircut.description}
               </p>
             </div>
-
             <Separator className="my-6" />
-
             <div className="prose text-muted-foreground text-sm">
               <h3 className="text-foreground mb-2 font-semibold">
                 Informasi Layanan
@@ -219,7 +215,6 @@ const HaircutDetail = () => {
               </ul>
             </div>
           </div>
-
           <div className="lg:col-span-1">
             <div className="sticky top-6 h-fit">
               <form onSubmit={handleReservation}>
@@ -252,7 +247,6 @@ const HaircutDetail = () => {
                           />
                         </div>
                       </Field>
-
                       <Field>
                         <FieldLabel className="mb-3 block text-sm font-medium">
                           Metode Pembayaran
@@ -306,7 +300,6 @@ const HaircutDetail = () => {
                           </Label>
                         </RadioGroup>
                       </Field>
-
                       <Field>
                         <FieldLabel className="mb-3 block text-sm font-medium">
                           Layanan Tambahan
@@ -332,7 +325,6 @@ const HaircutDetail = () => {
                               Rp15.000
                             </span>
                           </Label>
-
                           <Label
                             htmlFor="r2"
                             className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-colors ${

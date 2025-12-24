@@ -64,7 +64,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
               variant="destructive"
               trigger={
                 <Button variant="ghost" className="text-destructive">
-                  <Trash2  />
+                  <Trash2  />  
                 </Button>
               }
             />

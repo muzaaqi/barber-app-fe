@@ -18,9 +18,9 @@ const EXPEDITION_STATUS_OPTS = [
   "processed",
   "shipped",
   "delivered",
-  "cancelled",
+  "shiped",
 ];
-const PAYMENT_STATUS_OPTS = ["pending", "paid", "unpaid", "refunded"];
+const PAYMENT_STATUS_OPTS = ["pending", "paid"];
 
 export type ProductsTransaction = {
   id: string;
@@ -170,7 +170,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
                 delivered: "default",
                 shipped: "secondary",
                 pending: "outline",
-                cancelled: "destructive",
+                processed: "destructive",
               }}
             />
           </div>
@@ -207,7 +207,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
     accessorKey: "total_price",
     header: "Total",
     cell: ({ row }) => (
-      <div className="flex flex-col items-end lg:items-start gap-1">
+      <div className="flex flex-col items-end gap-1 lg:items-start">
         <span className="text-sm font-bold md:text-base">
           {formatIDR(row.original.total_price)}
         </span>

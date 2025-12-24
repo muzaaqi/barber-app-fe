@@ -48,6 +48,7 @@ const ProductDialog = ({
   const [quantity, setQuantity] = useState<number | string>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [expeditionService, setExpeditionService] = useState<string>("JNE");
+  const [expeditionCost, setExpeditionCost] = useState<number>(15000);
   const [address, setAddress] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -108,7 +109,7 @@ const ProductDialog = ({
       payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
       expedition_service: expeditionService,
       shipping_address: address,
-      total_price: price * finalQty,
+      total_price: (price * finalQty) + expeditionCost,
     };
 
     try {
@@ -173,7 +174,6 @@ const ProductDialog = ({
                 </p>
               </div>
             </div>
-
             <div className="flex flex-col gap-4">
               {errorMessage && (
                 <Alert
@@ -203,7 +203,6 @@ const ProductDialog = ({
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-
                     <Input
                       type="number"
                       value={quantity}
@@ -213,7 +212,6 @@ const ProductDialog = ({
                       min={1}
                       max={stock}
                     />
-
                     <Button
                       type="button"
                       variant="outline"
@@ -229,7 +227,6 @@ const ProductDialog = ({
                     </span>
                   </div>
                 </Field>
-
                 <Field>
                   <FieldLabel className="mb-2 block text-sm font-medium">
                     Alamat Pengiriman
@@ -250,7 +247,10 @@ const ProductDialog = ({
                   </FieldLabel>
                   <RadioGroup
                     value={expeditionService}
-                    onValueChange={setExpeditionService}
+                    onValueChange={(value) => {
+                      setExpeditionService(value);
+                      setExpeditionCost(value === "J&T" ? 15000 : 20000);
+                    }}
                     className="grid grid-cols-2 gap-3"
                   >
                     <Label
@@ -263,21 +263,31 @@ const ProductDialog = ({
                     >
                       <div className="flex items-center gap-2">
                         <RadioGroupItem value="JNE" id="exp-jne" />
-                        <span className="text-sm font-medium">JNE</span>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-medium">JNE</span>
+                          <span className="text-muted-foreground text-xs">
+                            {formatIDR(15000)}
+                          </span>
+                        </div>
                       </div>
                       <Truck className="text-muted-foreground h-4 w-4" />
                     </Label>
                     <Label
-                      htmlFor="exp-jnt"
+                      htmlFor="exp-j&t"
                       className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
-                        expeditionService === "JNT"
+                        expeditionService === "J&T"
                           ? "border-primary bg-primary/5 ring-primary ring-1"
                           : "bg-transparent"
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <RadioGroupItem value="JNT" id="exp-jnt" />
-                        <span className="text-sm font-medium">J&T</span>
+                        <RadioGroupItem value="J&T" id="exp-j&t" />
+                        <div className="flex flex-col">
+                          <span className="text-sm font-medium">J&T</span>
+                          <span className="text-muted-foreground text-xs">
+                            {formatIDR(20000)}
+                          </span>
+                        </div>
                       </div>
                       <Truck className="text-muted-foreground h-4 w-4" />
                     </Label>
@@ -343,7 +353,7 @@ const ProductDialog = ({
                     </span>
                   </div>
                   <span className="text-primary text-xl font-bold">
-                    {formatIDR(estimatedTotal)}
+                    {formatIDR(estimatedTotal + expeditionCost)}
                   </span>
                 </div>
               </FieldGroup>
