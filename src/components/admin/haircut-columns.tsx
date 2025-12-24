@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -95,7 +95,7 @@ export const columns: ColumnDef<Haircut>[] = [
                 variant="destructive"
                 trigger={
                   <Button variant="ghost" className="text-destructive">
-                    Hapus
+                    <Trash2 />Hapus
                   </Button>
                 }
               />
