@@ -35,7 +35,6 @@ const AddToCartButton = ({ productId }: { productId: string }) => {
       className="pointer-events-auto"
     >
       {isSubmitting ? <Spinner /> : <ShoppingCart className="mr-2 h-4 w-4" />}
-      Troli
     </Button>
   );
 };

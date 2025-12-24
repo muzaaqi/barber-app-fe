@@ -34,8 +34,8 @@ export default function CartItemCard({ item }: { item: CartItem }) {
 
   return (
     <Card className="mb-4 overflow-hidden border shadow-sm">
-      <CardContent className="flex">
-        <div className="bg-muted relative h-32 w-32 shrink-0">
+      <CardContent className="flex gap-3">
+        <div className="bg-muted relative h-25 w-25 md:h-32 md:w-32 shrink-0">
           <Image
             src={item.product_image || "/placeholder.jpg"}
             alt={item.product_name}
@@ -43,13 +43,13 @@ export default function CartItemCard({ item }: { item: CartItem }) {
             className="object-cover"
           />
         </div>
-        <div className="flex flex-1 flex-col justify-between p-4">
+        <div className="flex flex-1 flex-col justify-between">
           <div className="mb-2 flex items-start justify-between">
             <div>
-              <h3 className="line-clamp-1 text-lg font-semibold">
+              <h3 className="line-clamp-1 md:text-lg font-semibold">
                 {item.product_name}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs md:text-sm">
                 Harga: {formatIDR(item.price)}
               </p>
             </div>
