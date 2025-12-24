@@ -33,9 +33,11 @@ const addNewHaircutTransaction = async (payload: HaircutPayload) => {
   }
 };
 
-const getHaircutTransactions = async (page: number, limit: number) => {
+const getHaircutTransactions = async (page?: number, limit?: number) => {
   try {
-    const res = await jwtBergasAPI.get(`/haircut-transactions?page=${page}&limit=${limit}`);
+    const res = await jwtBergasAPI.get(
+      `/haircut-transactions${page !== undefined && limit !== undefined ? `?page=${page}&limit=${limit}` : ""}`,
+    );
     if (res.status !== 200) {
       throw new Error("Failed to fetch haircut transactions");
     }

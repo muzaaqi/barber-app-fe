@@ -38,7 +38,7 @@ export function LoginForm({
     e.preventDefault();
     
     if (!email || !password) {
-      setErrorMessage("All fields are required.");
+      setErrorMessage("Semua field wajib diisi.");
       return;
     }
 
