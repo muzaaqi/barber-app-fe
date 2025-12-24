@@ -34,29 +34,33 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setRegisterLoading(true);
-
+    
     if (!name || !email || !password || !confirmPassword) {
       setErrorMessage("Semua field wajib diisi!");
-      setRegisterLoading(false);
       return;
     }
-
+    
     if (password !== confirmPassword) {
       setErrorMessage("Password tidak cocok!");
-      setRegisterLoading(false)
       return;
     }
 
-    const res = await registerAction(name, email, password);
+    setRegisterLoading(true);
 
-    if (res.success) {
-      toast.success("Akun berhasil dibuat. Silakan masuk.");
-      router.push("/login");
-    } else {
-      setErrorMessage(res.message);
+    try {
+      const res = await registerAction(name, email, password);
+
+      if (res.success) {
+        toast.success("Akun berhasil dibuat. Silakan masuk.");
+        router.push("/login");
+      } else {
+        setErrorMessage(res.message);
+      }
+    } catch {
+      setErrorMessage("Tidak dapat melakukan registrasi");
+    } finally {
+      setRegisterLoading(false);
     }
-    setRegisterLoading(false);
   };
   return (
     <Card {...props}>

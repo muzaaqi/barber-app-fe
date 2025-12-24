@@ -36,23 +36,28 @@ export function LoginForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoginLoading(true);
-
+    
     if (!email || !password) {
       setErrorMessage("All fields are required.");
-      setLoginLoading(false);
       return;
     }
 
-    const result = await loginAction(email, password);
+    setLoginLoading(true);
+    
+    try {
+      const result = await loginAction(email, password);
 
-    if (result.success) {
-      toast.success("Berhasil masuk.");
-      router.push("/");
-    } else {
-      setErrorMessage(result.message);
+      if (result.success) {
+        toast.success("Berhasil masuk.");
+        router.push("/");
+      } else {
+        setErrorMessage(result.message);
+      }
+    } catch {
+      setErrorMessage("Tidak dapat login!");
+    } finally {
+      setLoginLoading(false);
     }
-    setLoginLoading(false);
   };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
