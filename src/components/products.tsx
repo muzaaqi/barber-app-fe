@@ -114,13 +114,14 @@ const ProductsCards = () => {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <ButtonGroup className="grid w-full grid-cols-2 gap-2">
+                    <ButtonGroup className="grid w-full grid-cols-3 gap-2">
                       <AddToCartButton productId={id} />
                       <div
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
                         }}
+                        className="col-span-2"
                       >
                         <ProductDialog
                           id={id}
