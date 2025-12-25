@@ -125,9 +125,10 @@ const ProductDetail = () => {
       product_id: productId,
       quantity: getValidQuantity(),
       payment_method: paymentMethod,
-      payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
+      payment_status: "unpaid",
       expedition_service: expeditionService,
       shipping_address: address,
+      expedition_cost: expeditionCost,
       total_price: estimatedTotal + expeditionCost,
     };
 

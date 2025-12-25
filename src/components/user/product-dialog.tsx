@@ -109,6 +109,7 @@ const ProductDialog = ({
       payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
       expedition_service: expeditionService,
       shipping_address: address,
+      expedition_cost: expeditionCost,
       total_price: (price * finalQty) + expeditionCost,
     };
 

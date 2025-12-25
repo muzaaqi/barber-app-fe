@@ -42,6 +42,8 @@ type ProductTransaction = {
   payment_status: string;
   expedition_status: string;
   expedition_service: string;
+  expedition_cost: number;
+  shipping_address: string;
   total_price: number;
   items: ProductTransactionItem[];
 };

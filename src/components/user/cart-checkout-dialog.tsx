@@ -63,6 +63,7 @@ export default function CartCheckoutDialog({
     const payload = {
       shipping_address: address,
       expedition_service: expedition,
+      expedition_cost: expeditionCost,
       payment_method: paymentMethod,
       payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
     };

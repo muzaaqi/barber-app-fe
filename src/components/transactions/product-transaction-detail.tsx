@@ -38,6 +38,7 @@ interface ProductTransactionDetailProps {
       | "delivered"
       | "cancelled";
     shipping_address?: string;
+    expedition_cost?: number;
     items: Array<{
       id: string;
       product_id: string;
@@ -251,16 +252,14 @@ export const ProductTransactionDetail = ({
                 <span className="text-muted-foreground">
                   Total Harga ({data.items.length} barang)
                 </span>
-                <span>{formatIDR(data.total_price)}</span>
+                <span>{formatIDR(data.total_price - (data.expedition_cost || 0))}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">
                   Total Ongkos Kirim
                 </span>
                 <span>
-                  {data.expedition_service === "J&T"
-                    ? formatIDR(15000)
-                    : formatIDR(20000)}
+                  {formatIDR(data.expedition_cost || 0)}
                 </span>
               </div>
               <Separator />
