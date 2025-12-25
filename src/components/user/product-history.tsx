@@ -25,7 +25,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { ArrowRight, ShoppingBag, Truck } from "lucide-react";
 import { formatIDR } from "@/features/formatter";
-import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { getProductTransactionsByUserId } from "@/actions/management/product-transaction-actions";
 
@@ -145,8 +144,8 @@ export default function ProductHistory() {
                 )}
               </div>
             </CardContent>
-            <CardFooter className="bg-muted/10 flex flex-col gap-3 border-t p-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex w-full items-center justify-between sm:flex-col sm:items-start sm:justify-center">
+            <CardFooter className="bg-muted/10 flex gap-3 border-t p-4 flex-row sm:justify-between">
+              <div className="flex w-full flex-col items-start justify-center">
                 <span className="text-muted-foreground text-xs">
                   Total Belanja
                 </span>

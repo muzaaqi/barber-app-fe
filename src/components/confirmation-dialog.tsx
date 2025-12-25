@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Spinner } from "./ui/spinner";
-import { Trash } from "lucide-react";
 
 type ButtonVariant =
   | "default"
@@ -91,7 +90,7 @@ const ConfirmationDialog = ({
             className={cn(isLoading && "opacity-50")}
           >
             {isLoading && <Spinner />}
-            <Trash />{confirmText}
+            {confirmText}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

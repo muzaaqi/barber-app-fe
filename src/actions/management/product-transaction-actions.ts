@@ -23,7 +23,7 @@ const addNewProcuctTransaction = async (payload: ProductPayload) => {
       throw new Error("Failed to add product transaction");
     }
     return {
-      data: res.data.data.data,
+      data: res.data.data,
       success: true,
       message: "Berhasil menambahkan transaksi produk",
     };
