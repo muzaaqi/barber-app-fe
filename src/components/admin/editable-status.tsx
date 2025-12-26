@@ -75,7 +75,7 @@ export const EditableStatus = ({
       if (res.success) {
         toast.success(res.message);
         setIsOpen(false);
-        setShowQr(false); // Tutup dialog jika sukses update manual
+        setShowQr(false);
       } else {
         toast.error(res.message);
       }

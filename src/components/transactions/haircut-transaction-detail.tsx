@@ -23,7 +23,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"; // Import Dialog
+} from "@/components/ui/dialog";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import Image from "next/image";
@@ -61,8 +61,11 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // State Scanner
   const [isScanOpen, setIsScanOpen] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
+  const [scanKey, setScanKey] = useState(0); // Key untuk me-reset scanner
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -108,7 +111,10 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
 
   const handleScanSuccess = async (result: string) => {
     if (result !== data.id) {
-      toast.error("QR Code tidak valid untuk pesanan ini.");
+      toast.error("QR Code tidak valid! Silakan scan QR yang benar.");
+      setTimeout(() => {
+        setScanKey((prev) => prev + 1);
+      }, 2000);
       return;
     }
 
@@ -126,13 +132,14 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
 
       if (res.success) {
         toast.success("Pesanan berhasil diselesaikan!");
-        setIsScanOpen(false);
+        setIsScanOpen(false); // Tutup dialog hanya jika SUKSES
         window.location.reload();
       } else {
         throw new Error("Gagal menyelesaikan pesanan");
       }
     } catch {
-      toast.error("Gagal memproses QR Code");
+      toast.error("Gagal memproses QR Code. Coba lagi.");
+      setTimeout(() => setScanKey((prev) => prev + 1), 2000);
     } finally {
       setIsScanning(false);
     }
@@ -184,7 +191,10 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
           {getStatusBadge(data.payment_status, "payment")}
           {canScanToComplete && (
             <Button
-              onClick={() => setIsScanOpen(true)}
+              onClick={() => {
+                setIsScanOpen(true);
+                setScanKey(0);
+              }}
               className="ml-2 gap-2 bg-green-600 hover:bg-green-700"
             >
               <ScanLine className="h-4 w-4" />
@@ -212,8 +222,6 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
             </CardContent>
           </Card>
         </div>
-
-        {/* KOLOM KANAN: DETAIL & PEMBAYARAN */}
         <div className="flex flex-col gap-6 lg:col-span-7 xl:col-span-8">
           <Card>
             <CardContent className="grid gap-6 sm:grid-cols-2">
@@ -326,7 +334,6 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                           </label>
                         )}
                       </div>
-
                       <div className="space-y-2">
                         <Button
                           type="submit"
@@ -405,6 +412,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
           <div className="flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-black p-4">
             {isScanOpen && (
               <Scanner
+                key={scanKey}
                 onScan={(result) => {
                   if (result && result.length > 0) {
                     handleScanSuccess(result[0].rawValue);
