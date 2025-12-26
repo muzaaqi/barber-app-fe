@@ -38,8 +38,8 @@ export const PaymentQRIS = ({
     <Card>
       <CardContent>
         <CardHeader className="px-0">
-          <div className="rounded-lg bg-white p-4 shadow-sm" ref={qrRef}>
-            <QRCodeCanvas value={qrString} size={170} level={"H"} />
+          <div className="rounded-lg bg-white p-4 shadow-sm flex items-center justify-center" ref={qrRef}>
+            <QRCodeCanvas value={qrString} size={140} level={"H"} />
           </div>
           <p className="text-muted-foreground text-center text-sm">
             Scan QRIS di atas untuk membayar
