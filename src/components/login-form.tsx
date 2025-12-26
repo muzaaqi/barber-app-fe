@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import { Spinner } from "./ui/spinner";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Lock, Mail } from "lucide-react";
 
 export function LoginForm({
   className,
@@ -36,14 +36,14 @@ export function LoginForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       setErrorMessage("Semua field wajib diisi.");
       return;
     }
 
     setLoginLoading(true);
-    
+
     try {
       const result = await loginAction(email, password);
 
@@ -85,14 +85,18 @@ export function LoginForm({
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                  <Input
+                    id="email"
+                    type="email"
+                    className="pl-9"
+                    placeholder="name@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -104,17 +108,21 @@ export function LoginForm({
                     Forgot your password?
                   </a> */}
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                  <Input
+                    id="password"
+                    type="password"
+                    className="pl-9"
+                    placeholder="Masukkan password saat ini"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
               </Field>
               <Field>
                 <Button type="submit" disabled={loginLoading}>
-                  {loginLoading ? <Spinner /> : "Login"}
+                  {loginLoading ? <><Spinner /> Masuk...</> : "Masuk"}
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}

@@ -65,7 +65,7 @@ const ChangePasswordForm = () => {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <Card className="shadow-lg">
-        <CardHeader>
+        <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl">Ubah Password</CardTitle>
           <CardDescription>
             Pastikan password Anda kuat dan aman.
@@ -90,7 +90,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="current-password"
                   type="password"
-                  className="py-6 pl-9"
+                  className="pl-9"
                   placeholder="Masukkan password saat ini"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
@@ -104,7 +104,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="new-password"
                   type="password"
-                  className="py-6 pl-9"
+                  className="pl-9"
                   placeholder="Masukkan password baru"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -118,7 +118,7 @@ const ChangePasswordForm = () => {
                 <Input
                   id="confirm-password"
                   type="password"
-                  className="py-6 pl-9"
+                  className="pl-9"
                   placeholder="Konfirmasi password baru"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}

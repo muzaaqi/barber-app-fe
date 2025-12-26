@@ -21,7 +21,7 @@ import Link from "next/link";
 import { registerAction } from "@/actions/auth/register";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Lock, Mail, User } from "lucide-react";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
@@ -34,12 +34,12 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!name || !email || !password || !confirmPassword) {
       setErrorMessage("Semua field wajib diisi!");
       return;
     }
-    
+
     if (password !== confirmPassword) {
       setErrorMessage("Password tidak cocok!");
       return;
@@ -87,53 +87,69 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="name">Nama</FieldLabel>
-              <Input
-                id="name"
-                type="text"
-                placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <User className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                  id="name"
+                  type="text"
+                  className="pl-9"
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
             </Field>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="name@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                  id="email"
+                  type="email"
+                  className="pl-9"
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
             </Field>
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                  id="password"
+                  type="password"
+                  className="pl-9"
+                  placeholder="Masukkan password saat ini"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
             </Field>
             <Field>
               <FieldLabel htmlFor="confirm-password">
                 Konfirmasi Password
               </FieldLabel>
-              <Input
-                id="confirm-password"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  className="pl-9"
+                  placeholder="Masukkan password saat ini"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
               <FieldDescription>Konfirmasi password anda</FieldDescription>
             </Field>
             <FieldGroup>
               <Field>
                 <Button type="submit" disabled={registerLoading}>
-                  {registerLoading ? <Spinner /> : "Buat Akun"}
+                  {registerLoading ? <><Spinner /> Membuat Akun...</> : "Buat Akun"}
                 </Button>
                 <FieldDescription className="px-6 text-center">
                   Sudah punya akun? <Link href="/login">Masuk</Link>
