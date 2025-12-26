@@ -15,9 +15,7 @@ export default async function ProductDetailPage({
   if (!transaction) return notFound();
   let qrisString = transaction.qris_payload;
   if (
-    transaction.payment_method === "qris" &&
-    transaction.payment_status === "pending" &&
-    !qrisString
+    transaction.payment_status === "unpaid" && !qrisString
   ) {
     const qrisResult = await GenerateQRIS({
       amount: transaction.total_price.toString(),

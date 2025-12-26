@@ -16,7 +16,7 @@ export default async function HaircutDetailPage({
   let qrisString = transaction.qris_payload;
   if (
     transaction.payment_method === "qris" &&
-    transaction.payment_status === "pending" &&
+    transaction.payment_status === "unpaid" &&
     !qrisString
   ) {
     const qrisResult = await GenerateQRIS({
