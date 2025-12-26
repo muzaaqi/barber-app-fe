@@ -12,14 +12,9 @@ import { Badge } from "@/components/ui/badge";
 import { formatIDR } from "@/features/formatter";
 import { updateProductTransactionStatus } from "@/actions/management/product-transaction-actions";
 import { EditableStatus } from "@/components/admin/editable-status";
+import { Banknote, QrCode } from "lucide-react";
 
-const EXPEDITION_STATUS_OPTS = [
-  "pending",
-  "processed",
-  "shipped",
-  "delivered",
-  "shiped",
-];
+const EXPEDITION_STATUS_OPTS = ["pending", "processed", "shipped", "delivered"];
 const PAYMENT_STATUS_OPTS = ["unpaid", "paid"];
 
 export type ProductsTransaction = {
@@ -28,6 +23,7 @@ export type ProductsTransaction = {
   expedition_status: string;
   payment_method: string;
   payment_status: string;
+  receipt_url: string;
   total_price: number;
   shipping_address: string;
   created_at?: string;
@@ -197,9 +193,38 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
             updateProductTransactionStatus(id, "payment_status", status)
           }
         />
-        <span className="text-muted-foreground pl-1 text-xs capitalize">
-          {row.original.payment_method}
-        </span>
+        <div className="flex items-center gap-1">
+          {row.original.payment_method === "qris" ? (
+            row.original.receipt_url ? (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div
+                    className={`flex cursor-pointer items-center gap-1 ${row.original.receipt_url && "animate-pulse"}`}
+                  >
+                    <QrCode size={13} /> QRIS
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-[300px] rounded-md border bg-white p-2 shadow-lg">
+                  <Image
+                    src={row.original.receipt_url}
+                    alt="Receipt"
+                    width={280}
+                    height={400}
+                    className="object-contain"
+                  />
+                </PopoverContent>
+              </Popover>
+            ) : (
+              <>
+                <QrCode size={13} /> QRIS
+              </>
+            )
+          ) : (
+            <>
+              <Banknote size={13} /> Cash
+            </>
+          )}
+        </div>
       </div>
     ),
   },
@@ -215,7 +240,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
           variant={
             row.original.payment_status === "paid" ? "default" : "secondary"
           }
-          className="h-5 px-1 text-[10px] lg:hidden"
+          className="h-5 px-1 text-[10px] capitalize lg:hidden"
         >
           {row.original.payment_status}
         </Badge>
