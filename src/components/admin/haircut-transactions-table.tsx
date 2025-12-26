@@ -3,9 +3,9 @@ import { columns, HaircutTransaction } from "./haircut-transaction-colums";
 import GlobalPagination from "../global-pagination";
 import { getHaircutTransactions } from "@/actions/management/haircut-transaction-actions";
 
-const HaircutTransactionsTable = async () => {
+const HaircutTransactionsTable = async ({ page }: { page?: string }) => {
   let transactions: HaircutTransaction[] = [];
-  let pagination = { page: 1, limit: 10, total: 0 };
+  let pagination = { page: Number(page) || 1, limit: 10, total: 0 };
 
   try {
     const res = await getHaircutTransactions(pagination.page, pagination.limit);

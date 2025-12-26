@@ -1,16 +1,22 @@
 import HaircutTransactionsTable from '@/components/admin/haircut-transactions-table'
+import { Suspense } from 'react';
 
-const HaircutTransactionsPage = () => {
+const HaircutTransactionsPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const params = await searchParams;
+  const page = params.page || "1";
+
   return (
-    <div>
-      <div className="p-10">
-        <div className="flex justify-between">
-          <h1 className="mb-4 text-3xl font-bold">Haircut Transactions</h1>
-        </div>
-        <HaircutTransactionsTable />
-      </div>
+    <div className="p-6">
+      <h1 className="mb-4 text-2xl font-bold">Transaksi Produk</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <HaircutTransactionsTable page={page} />
+      </Suspense>
     </div>
-  )
-}
+  );
+};
 
 export default HaircutTransactionsPage
