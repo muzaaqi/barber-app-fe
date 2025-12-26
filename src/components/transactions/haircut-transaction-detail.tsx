@@ -61,11 +61,9 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // State Scanner
   const [isScanOpen, setIsScanOpen] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
-  const [scanKey, setScanKey] = useState(0); // Key untuk me-reset scanner
+  const [scanKey, setScanKey] = useState(0);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -114,12 +112,11 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
       toast.error("QR Code tidak valid! Silakan scan QR yang benar.");
       setTimeout(() => {
         setScanKey((prev) => prev + 1);
-      }, 2000);
+      }, 5000);
       return;
     }
 
     setIsScanning(true);
-    toast.info("QR Code terdeteksi, memproses...");
 
     try {
       const res = await updateHaircutTransactionStatus(
