@@ -124,15 +124,15 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
     try {
       const res = await updateHaircutTransactionStatus(
         data.id,
-        data.payment_method === "qris" ? "both" : "reservation_status",
-        data.payment_method === "qris"
+        data.payment_method === "cash" ? "both" : "reservation_status",
+        data.payment_method === "cash"
           ? { reservation_status: "completed", payment_status: "paid" }
           : "completed",
       );
 
       if (res.success) {
         toast.success("Pesanan berhasil diselesaikan!");
-        setIsScanOpen(false); // Tutup dialog hanya jika SUKSES
+        setIsScanOpen(false);
         window.location.reload();
       } else {
         throw new Error("Gagal menyelesaikan pesanan");
