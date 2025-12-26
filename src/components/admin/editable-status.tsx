@@ -8,9 +8,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Loader2, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Spinner } from "../ui/spinner";
 
 type Props = {
   id: string;
@@ -39,7 +40,7 @@ export const EditableStatus = ({
   const getBadgeVariant = (status: string) => {
     if (colorMap && colorMap[status]) return colorMap[status];
 
-    if (["paid", "success", "completed", "sent", "delivered"].includes(status))
+    if (["paid", "success", "completed", "shipped", "delivered"].includes(status))
       return "default";
     if (["cancelled", "failed", "unpaid"].includes(status))
       return "destructive";
@@ -76,7 +77,7 @@ export const EditableStatus = ({
           >
             {currentStatus}
             {isPending ? (
-              <Loader2 className="h-3 w-3 animate-spin" />
+              <Spinner />
             ) : (
               <ChevronDown className="h-3 w-3 opacity-50 group-hover:opacity-100" />
             )}
