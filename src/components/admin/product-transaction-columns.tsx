@@ -65,12 +65,10 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
               className="object-cover"
             />
           </div>
-
           <div className="flex flex-col">
             <span className="line-clamp-1 max-w-[150px] text-sm font-medium md:max-w-[200px] md:text-base">
               {firstItem.product_name}
             </span>
-
             <div className="text-muted-foreground flex items-center gap-2 text-xs">
               <span>x{firstItem.quantity}</span>
               {items.length > 1 && (
@@ -83,7 +81,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
                       +{items.length - 1} lainnya
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-80 p-0" align="start">
+                  <PopoverContent className="w-80" align="start">
                     <div className="space-y-3 p-3">
                       <h4 className="mb-2 border-b pb-2 text-sm font-medium">
                         Detail Item
@@ -136,7 +134,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium">{user.name}</span>
-            <span className="text-muted-foreground text-xs inline-block">
+            <span className="text-muted-foreground inline-block text-xs">
               {user.email}
             </span>
           </div>
