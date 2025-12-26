@@ -20,7 +20,7 @@ const addNewHaircutTransaction = async (payload: HaircutPayload) => {
       throw new Error("Failed to add haircut transaction");
     }
     return {
-      data: res.data.data.data,
+      data: res.data.data,
       success: true,
       message: "Berhasil menambahkan transaksi potong rambut",
     };

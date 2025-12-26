@@ -54,10 +54,7 @@ const addToCart = async (productId: string, quantity: number) => {
 
 const updateCartQuantity = async (cartId: string, quantity: number) => {
   try {
-    const res = await jwtBergasAPI.put(
-      `/carts/${cartId}`,
-      { quantity },
-    );
+    const res = await jwtBergasAPI.put(`/carts/${cartId}`, { quantity });
     if (res.status !== 200) {
       throw new Error("Failed to update cart quantity");
     }
@@ -83,12 +80,19 @@ const deleteCartItem = async (cartId: string) => {
 
 const checkoutCart = async (payload: CartCheckoutPayload) => {
   try {
-    const res = await jwtBergasAPI.post("/product-transactions/checkout", payload);
+    const res = await jwtBergasAPI.post(
+      "/product-transactions/checkout",
+      payload,
+    );
     if (res.status !== 201) {
       throw new Error("Failed to checkout cart");
     }
     revalidatePath("/cart");
-    return { success: true, message: "Berhasil checkout troli" };
+    return {
+      success: true,
+      data: res.data.data,
+      message: "Berhasil checkout troli",
+    };
   } catch {
     return { success: false, message: "Gagal checkout troli" };
   }
