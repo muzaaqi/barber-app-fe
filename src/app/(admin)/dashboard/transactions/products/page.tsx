@@ -1,16 +1,22 @@
-import ProductsTransactionsTable from '@/components/admin/product-transactions-table'
+import ProductsTransactionsTable from "@/components/admin/product-transactions-table";
+import { Suspense } from "react";
 
-const ProductTransactionsPage = () => {
+const ProductTransactionsPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const params = await searchParams;
+  const page = params.page || "1";
+
   return (
-    <div>
-      <div className="p-10">
-        <div className="flex justify-between">
-          <h1 className="mb-4 text-3xl font-bold">Product Transactions</h1>
-        </div>
-        <ProductsTransactionsTable />
-      </div>
+    <div className="p-6">
+      <h1 className="mb-4 text-2xl font-bold">Transaksi Produk</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProductsTransactionsTable page={page} />
+      </Suspense>
     </div>
-  )
-}
+  );
+};
 
-export default ProductTransactionsPage
+export default ProductTransactionsPage;
