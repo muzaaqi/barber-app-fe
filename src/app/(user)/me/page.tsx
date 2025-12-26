@@ -13,7 +13,7 @@ import ChangePasswordForm from "@/components/user/change-password-form";
 
 const MyProfilePage = async () => {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center p-4 bg-muted/20">
+    <div className="flex min-h-screen w-full items-center justify-center p-4">
       <Tabs defaultValue="profile" className="w-full max-w-md">
         <TabsList className="grid w-full grid-cols-2 mb-4">
           <TabsTrigger value="profile"><UserIcon /> Profil</TabsTrigger>
