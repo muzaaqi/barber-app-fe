@@ -4,7 +4,7 @@ import { formatIDR } from "@/features/formatter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Card, CardContent } from "@/components/ui/card"; // Import Card
+import { Card, CardContent } from "@/components/ui/card";
 import {
   CalendarDays,
   CreditCard,
@@ -12,13 +12,17 @@ import {
   Scissors,
   Sparkles,
   Loader2,
+  FileImage,
+  UploadCloud,
+  X,
 } from "lucide-react";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { PaymentQRIS } from "./payment-qris";
+import { jwtBergasAPI } from "@/lib/axios-instance";
 
 interface TransactionDetailProps {
   data: {
@@ -28,7 +32,7 @@ interface TransactionDetailProps {
     haircut_id: string;
     hairwash: boolean;
     payment_method: "cash" | "qris";
-    payment_status: "pending" | "paid";
+    payment_status: "unpaid" | "paid";
     reservation_status: "pending" | "confirmed" | "completed";
     reservation_time: string;
     total_price: number;
@@ -41,18 +45,48 @@ interface TransactionDetailProps {
   onConfirmPayment?: (id: string) => Promise<void>;
 }
 
-export const HaircutTransactionDetail = ({
-  data,
-}: TransactionDetailProps) => {
+export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [proofFile, setProofFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handlePaymentClick = async () => {
-      toast.info("Fitur konfirmasi pembayaran belum dihubungkan.");
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setProofFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setProofFile(null);
+    setPreviewUrl(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handlePaymentClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!proofFile) return toast.error("Mohon upload bukti pembayaran.");
     try {
       setIsUpdating(true);
-      toast.success("Pembayaran berhasil dikonfirmasi!");
+      const res = await jwtBergasAPI.post(
+        `/haircut-transactions/receipt/${data.id}`,
+        {
+          receipt: proofFile,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+      if (res.status !== 200) {
+        throw new Error("Gagal mengunggah bukti pembayaran.");
+      }
+      toast.success("Bukti pembayaran berhasil diunggah!");
     } catch {
-      toast.error("Gagal mengupdate status pembayaran.");
+      toast.error("Gagal mengunggah bukti pembayaran. Silakan coba lagi.");
     } finally {
       setIsUpdating(false);
     }
@@ -60,7 +94,7 @@ export const HaircutTransactionDetail = ({
   const getStatusBadge = (status: string, type: "payment" | "reservation") => {
     if (status === "paid" || status === "completed" || status === "confirmed") {
       return (
-        <Badge className="bg-primary px-3 py-1 text-sm hover:bg-primary/80">
+        <Badge className="bg-primary hover:bg-primary/80 px-3 py-1 text-sm">
           {type === "payment" ? "Lunas" : "Terkonfirmasi"}
         </Badge>
       );
@@ -78,8 +112,7 @@ export const HaircutTransactionDetail = ({
     return <Badge variant="destructive">{status}</Badge>;
   };
 
-  const isPendingQRIS =
-    data.payment_method === "qris" && data.payment_status === "pending";
+  const isPendingQRIS = data.payment_method === "qris" && data.payment_status === "unpaid";
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto w-full max-w-5xl duration-700">
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -98,7 +131,7 @@ export const HaircutTransactionDetail = ({
       </div>
       <div className="grid gap-8 lg:grid-cols-12">
         <div className="lg:col-span-5 xl:col-span-4">
-          <Card className="h-fit overflow-hidden border-none shadow-lg py-0">
+          <Card className="h-fit overflow-hidden border-none py-0 shadow-lg">
             <CardContent className="relative aspect-3/4 w-full p-0">
               <Image
                 src={data.haircut.image_url}
@@ -116,7 +149,7 @@ export const HaircutTransactionDetail = ({
           </Card>
         </div>
         <div className="flex flex-col gap-6 lg:col-span-7 xl:col-span-8">
-          <Card >
+          <Card>
             <CardContent className="grid gap-6 sm:grid-cols-2">
               <div className="space-y-1">
                 <h4 className="text-muted-foreground flex items-center gap-2 text-sm font-medium">
@@ -159,51 +192,93 @@ export const HaircutTransactionDetail = ({
             </CardContent>
           </Card>
           {isPendingQRIS && data.qris_payload ? (
-            <Card className="border-primary/20 bg-muted/10 border-2">
-              <CardContent>
-                <div className="flex flex-col items-center gap-8 md:flex-row md:items-start">
-                  <div className="w-full max-w-[250px] shrink-0">
+            <Card className="border-primary/20 bg-muted/10 overflow-hidden border-2 py-0">
+              <div className="bg-primary/10 text-primary border-primary/10 border-b p-3 text-center text-xs font-semibold tracking-wider uppercase">
+                Selesaikan Pembayaran
+              </div>
+              <CardContent className="p-6">
+                <div className="grid gap-8 md:grid-cols-2">
+                  <div className="flex flex-col items-center gap-4 text-center">
                     <PaymentQRIS
                       qrString={data.qris_payload}
                       fileName={`QRIS-${data.id.substring(0, 8)}`}
                     />
-                  </div>
-                  <div className="flex flex-1 flex-col justify-between space-y-6 md:text-right">
-                    <div>
-                      <h3 className="text-foreground text-lg font-bold">
-                        Menunggu Pembayaran
-                      </h3>
-                      <p className="text-muted-foreground mt-1 text-sm">
-                        Silakan scan QRIS tersebut. Nominal akan otomatis
-                        muncul.
-                      </p>
-                    </div>
-                    <div className="bg-background rounded-lg border border-dashed p-4 shadow-sm">
-                      <p className="text-muted-foreground mb-1 text-xs">
+                    <div className="w-full space-y-1">
+                      <p className="text-muted-foreground text-xs">
                         Total Tagihan
                       </p>
-                      <p className="text-primary text-3xl font-bold">
+                      <p className="text-primary text-2xl font-bold">
                         {formatIDR(data.total_price)}
                       </p>
                     </div>
-                    <div className="flex flex-col gap-2 pt-2">
-                      <Button
-                        size="lg"
-                        onClick={handlePaymentClick}
-                        disabled={isUpdating}
-                        className="shadow-primary/20 w-full gap-2 shadow-lg md:w-auto md:self-end"
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold">
+                      <FileImage className="text-primary h-4 w-4" />
+                      Upload Bukti Transfer
+                    </h4>
+                    <form onSubmit={handlePaymentClick} className="space-y-4">
+                      <div
+                        className={`relative flex h-60 w-full flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors ${
+                          previewUrl
+                            ? "border-primary/50 bg-primary/5"
+                            : "border-muted-foreground/25 hover:bg-muted/50"
+                        }`}
                       >
-                        {isUpdating ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
+                        {previewUrl ? (
+                          <div className="relative h-full w-full p-2">
+                            <Image
+                              src={previewUrl}
+                              alt="Preview"
+                              fill
+                              className="rounded-md object-contain"
+                            />
+                            <button
+                              type="button"
+                              onClick={handleRemoveFile}
+                              className="bg-destructive hover:bg-destructive/90 absolute top-1 right-1 rounded-full p-1 text-white transition"
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </div>
                         ) : (
-                          <CheckCircle className="h-4 w-4" />
+                          <label className="flex h-full w-full cursor-pointer flex-col items-center justify-center">
+                            <UploadCloud className="text-muted-foreground mb-2 h-8 w-8" />
+                            <p className="text-muted-foreground text-xs">
+                              Klik untuk upload gambar
+                            </p>
+                            <span className="text-muted-foreground/70 mt-1 text-[10px]">
+                              JPG, PNG max 2MB
+                            </span>
+                            <input
+                              ref={fileInputRef}
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleFileChange}
+                            />
+                          </label>
                         )}
-                        Konfirmasi Pembayaran
-                      </Button>
-                      <p className="text-muted-foreground text-xs">
-                        Klik tombol di atas jika sudah berhasil transfer.
-                      </p>
-                    </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Button
+                          type="submit"
+                          disabled={isUpdating || !proofFile}
+                          className="w-full gap-2 shadow-md"
+                        >
+                          {isUpdating ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <CheckCircle className="h-4 w-4" />
+                          )}
+                          Konfirmasi Pembayaran
+                        </Button>
+                        <p className="text-muted-foreground text-center text-[10px]">
+                          Pastikan nominal transfer sesuai dengan total tagihan.
+                        </p>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </CardContent>
