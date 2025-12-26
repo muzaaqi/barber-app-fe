@@ -105,14 +105,8 @@ const updateHaircutTransactionStatus = async (
   status: string,
 ) => {
   try {
-    const token = await getAuthHeader();
     const payload = { [field]: status };
-    const res = await jwtBergasAPI.put(`/haircut-transactions/${id}`, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
-      },
-    });
+    const res = await jwtBergasAPI.put(`/haircut-transactions/${id}`, payload);
 
     if (res.status !== 200) throw new Error("Gagal update status");
     revalidatePath("/dashboard/transactions/haircuts");
