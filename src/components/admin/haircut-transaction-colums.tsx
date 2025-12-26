@@ -5,6 +5,9 @@ import Image from "next/image";
 import { formatIDR } from "@/features/formatter";
 import { updateHaircutTransactionStatus } from "@/actions/management/haircut-transaction-actions";
 import { EditableStatus } from "@/components/admin/editable-status";
+import { Banknote, QrCode } from "lucide-react";
+import { Popover } from "@radix-ui/react-popover";
+import { PopoverContent, PopoverTrigger } from "../ui/popover";
 
 const RESERVATION_STATUS_OPTS = [
   "pending",
@@ -20,6 +23,7 @@ export type HaircutTransaction = {
   reservation_status: string;
   payment_method: string;
   payment_status: string;
+  receipt_url: string;
   total_price: number;
   haircut: {
     name: string;
@@ -141,10 +145,38 @@ export const columns: ColumnDef<HaircutTransaction>[] = [
             updateHaircutTransactionStatus(id, "payment_status", status)
           }
         />
-
-        <span className="text-muted-foreground text-[10px] md:hidden">
-          {row.original.payment_method}
-        </span>
+        <div className="text-muted-foreground flex items-center gap-1 text-[10px] md:hidden">
+          {row.original.payment_method === "qris" ? (
+            row.original.receipt_url ? (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div
+                    className={`flex cursor-pointer items-center gap-1 ${row.original.receipt_url && "animate-pulse"}`}
+                  >
+                    <QrCode size={13} /> QRIS
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-[300px] rounded-md border bg-white p-2 shadow-lg">
+                  <Image
+                    src={row.original.receipt_url}
+                    alt="Receipt"
+                    width={280}
+                    height={400}
+                    className="object-contain"
+                  />
+                </PopoverContent>
+              </Popover>
+            ) : (
+              <>
+                <QrCode size={13} /> QRIS
+              </>
+            )
+          ) : (
+            <>
+              <Banknote size={13} /> Cash
+            </>
+          )}
+        </div>
       </div>
     ),
   },
@@ -152,9 +184,38 @@ export const columns: ColumnDef<HaircutTransaction>[] = [
     accessorKey: "payment_method",
     header: () => <span className="hidden lg:table-cell">Metode</span>,
     cell: ({ row }) => (
-      <span className="hidden text-sm capitalize lg:inline-block">
-        {row.original.payment_method}
-      </span>
+      <div className="hidden items-center gap-1 text-sm capitalize lg:flex">
+        {row.original.payment_method === "qris" ? (
+          row.original.receipt_url ? (
+            <Popover>
+              <PopoverTrigger asChild>
+                <div
+                  className={`flex cursor-pointer items-center gap-1 ${row.original.receipt_url && "animate-pulse"}`}
+                >
+                  <QrCode size={13} /> QRIS
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-[300px] rounded-md border bg-white p-2 shadow-lg">
+                <Image
+                  src={row.original.receipt_url}
+                  alt="Receipt"
+                  width={280}
+                  height={400}
+                  className="object-contain"
+                />
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <>
+              <QrCode size={13} /> QRIS
+            </>
+          )
+        ) : (
+          <>
+            <Banknote size={13} /> Cash
+          </>
+        )}
+      </div>
     ),
   },
   {
