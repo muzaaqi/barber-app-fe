@@ -9,12 +9,6 @@ import { Banknote, QrCode } from "lucide-react";
 import { Popover } from "@radix-ui/react-popover";
 import { PopoverContent, PopoverTrigger } from "../ui/popover";
 
-const RESERVATION_STATUS_OPTS = [
-  "pending",
-  "confirmed",
-  "completed",
-  "cancelled",
-];
 const PAYMENT_STATUS_OPTS = ["paid", "unpaid"];
 
 export type HaircutTransaction = {
@@ -83,7 +77,7 @@ export const columns: ColumnDef<HaircutTransaction>[] = [
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium">{user.name}</span>
-            <span className="text-muted-foreground text-xs inline-block">
+            <span className="text-muted-foreground inline-block text-xs">
               {user.email}
             </span>
           </div>
@@ -124,7 +118,9 @@ export const columns: ColumnDef<HaircutTransaction>[] = [
         <EditableStatus
           id={row.original.id}
           currentStatus={row.original.reservation_status}
-          options={RESERVATION_STATUS_OPTS}
+          options={["pending", "confirmed", "completed", "cancelled"]}
+          qrTriggerStatus="completed"
+          verificationPath="verify-haircut"
           onUpdate={(id, status) =>
             updateHaircutTransactionStatus(id, "reservation_status", status)
           }

@@ -11,12 +11,19 @@ import {
   CheckCircle,
   Scissors,
   Sparkles,
-  Loader2,
   FileImage,
   UploadCloud,
   X,
   Clock,
+  ScanLine,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"; // Import Dialog
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import Image from "next/image";
@@ -24,6 +31,9 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { PaymentQRIS } from "./payment-qris";
 import { jwtBergasAPI } from "@/lib/axios-instance";
+import { Scanner } from "@yudiel/react-qr-scanner";
+import { updateHaircutTransactionStatus } from "@/actions/management/haircut-transaction-actions";
+import { Spinner } from "../ui/spinner";
 
 interface TransactionDetailProps {
   data: {
@@ -51,6 +61,8 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isScanOpen, setIsScanOpen] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -86,12 +98,44 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
         throw new Error("Gagal mengunggah bukti pembayaran.");
       }
       toast.success("Bukti pembayaran berhasil diunggah!");
+      window.location.reload();
     } catch {
       toast.error("Gagal mengunggah bukti pembayaran. Silakan coba lagi.");
     } finally {
       setIsUpdating(false);
     }
   };
+
+  const handleScanSuccess = async (result: string) => {
+    if (result !== data.id) {
+      toast.error("QR Code tidak valid untuk pesanan ini.");
+      return;
+    }
+
+    setIsScanning(true);
+    toast.info("QR Code terdeteksi, memproses...");
+
+    try {
+      const res = await updateHaircutTransactionStatus(
+        data.id,
+        "reservation_status",
+        "completed",
+      );
+
+      if (res.success) {
+        toast.success("Pesanan berhasil diselesaikan!");
+        setIsScanOpen(false);
+        window.location.reload();
+      } else {
+        throw new Error("Gagal menyelesaikan pesanan");
+      }
+    } catch {
+      toast.error("Gagal memproses QR Code");
+    } finally {
+      setIsScanning(false);
+    }
+  };
+
   const getStatusBadge = (status: string, type: "payment" | "reservation") => {
     if (status === "paid" || status === "completed" || status === "confirmed") {
       return (
@@ -100,15 +144,18 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
         </Badge>
       );
     }
-    if (status === "pending") {
+    if (status === "pending" || status === "received") {
       return (
         <Badge
           variant="secondary"
           className="bg-yellow-100 px-3 py-1 text-sm text-yellow-800 hover:bg-yellow-200"
         >
-          {type === "payment" ? "Menunggu Bayar" : "Menunggu Konfirmasi"}
+          {type === "payment" ? "Menunggu Verifikasi" : "Menunggu Konfirmasi"}
         </Badge>
       );
+    }
+    if (status === "unpaid") {
+      return <Badge variant="destructive">Belum Bayar</Badge>;
     }
     return <Badge variant="destructive">{status}</Badge>;
   };
@@ -117,6 +164,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
     data.payment_method === "qris" &&
     data.payment_status === "unpaid" &&
     data.qris_payload;
+  const canScanToComplete = data.reservation_status === "confirmed";
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto w-full max-w-5xl duration-700">
@@ -129,9 +177,18 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
             ID Pesanan: <span className="font-mono">{data.id}</span>
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           {getStatusBadge(data.reservation_status, "reservation")}
           {getStatusBadge(data.payment_status, "payment")}
+          {canScanToComplete && (
+            <Button
+              onClick={() => setIsScanOpen(true)}
+              className="ml-2 gap-2 bg-green-600 hover:bg-green-700"
+            >
+              <ScanLine className="h-4 w-4" />
+              Scan Selesai
+            </Button>
+          )}
         </div>
       </div>
       <div className="grid gap-8 lg:grid-cols-12">
@@ -153,6 +210,8 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
             </CardContent>
           </Card>
         </div>
+
+        {/* KOLOM KANAN: DETAIL & PEMBAYARAN */}
         <div className="flex flex-col gap-6 lg:col-span-7 xl:col-span-8">
           <Card>
             <CardContent className="grid gap-6 sm:grid-cols-2">
@@ -196,7 +255,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
               </div>
             </CardContent>
           </Card>
-          {isPendingQRIS && data.qris_payload ? (
+          {isPendingQRIS ? (
             <Card className="border-primary/20 bg-muted/10 overflow-hidden border-2 py-0">
               <div className="bg-primary/10 text-primary border-primary/10 border-b p-3 text-center text-xs font-semibold tracking-wider uppercase">
                 Selesaikan Pembayaran
@@ -205,7 +264,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                 <div className="grid gap-8 md:grid-cols-2">
                   <div className="flex flex-col items-center gap-4 text-center">
                     <PaymentQRIS
-                      qrString={data.qris_payload}
+                      qrString={data.qris_payload || ""}
                       fileName={`QRIS-${data.id.substring(0, 8)}`}
                     />
                     <div className="w-full space-y-1">
@@ -273,7 +332,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                           className="w-full gap-2 shadow-md"
                         >
                           {isUpdating ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <Spinner />
                           ) : (
                             <CheckCircle className="h-4 w-4" />
                           )}
@@ -333,6 +392,34 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
           )}
         </div>
       </div>
+      <Dialog open={isScanOpen} onOpenChange={setIsScanOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Scan QR Code</DialogTitle>
+            <DialogDescription>
+              Scan QR Code toko untuk menyelesaikan pesanan Anda.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-black p-4">
+            {isScanOpen && (
+              <Scanner
+                onScan={(result) => {
+                  if (result && result.length > 0) {
+                    handleScanSuccess(result[0].rawValue);
+                  }
+                }}
+                styles={{ container: { width: "100%", height: "100%" } }}
+              />
+            )}
+          </div>
+          {isScanning && (
+            <div className="text-primary flex animate-pulse items-center justify-center gap-2 text-sm">
+              <Spinner />
+              Memproses QR Code...
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

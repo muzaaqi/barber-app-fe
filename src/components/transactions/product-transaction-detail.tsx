@@ -9,7 +9,6 @@ import {
   CheckCircle,
   Package,
   Truck,
-  Loader2,
   Copy,
   MapPin,
   FileImage,
@@ -26,6 +25,7 @@ import { toast } from "sonner";
 import { PaymentQRIS } from "./payment-qris";
 import { cn } from "@/lib/utils";
 import { jwtBergasAPI } from "@/lib/axios-instance";
+import { Spinner } from "../ui/spinner";
 
 interface ProductTransactionDetailProps {
   data: {
@@ -294,7 +294,7 @@ export const ProductTransactionDetail = ({
                         className="w-full gap-2 shadow-sm"
                       >
                         {isUpdating ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <Spinner />
                         ) : (
                           <CheckCircle className="h-4 w-4" />
                         )}
