@@ -136,7 +136,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium">{user.name}</span>
-            <span className="text-muted-foreground hidden text-xs lg:inline-block">
+            <span className="text-muted-foreground text-xs inline-block">
               {user.email}
             </span>
           </div>
