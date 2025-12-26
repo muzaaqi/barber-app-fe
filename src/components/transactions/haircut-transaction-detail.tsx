@@ -118,8 +118,10 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
     try {
       const res = await updateHaircutTransactionStatus(
         data.id,
-        "reservation_status",
-        "completed",
+        data.payment_method === "qris" ? "both" : "reservation_status",
+        data.payment_method === "qris"
+          ? { reservation_status: "completed", payment_status: "paid" }
+          : "completed",
       );
 
       if (res.success) {

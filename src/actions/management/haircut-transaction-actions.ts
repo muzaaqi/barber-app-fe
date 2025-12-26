@@ -101,21 +101,45 @@ const getHaircutTransactionsByUserId = async (page: number, limit: number) => {
 
 const updateHaircutTransactionStatus = async (
   id: string,
-  field: "payment_status" | "reservation_status",
-  status: string,
+  field: "payment_status" | "reservation_status" | "both",
+  status: string | { payment_status: string; reservation_status: string }, 
 ) => {
   try {
-    const payload = { [field]: status };
-    const res = await jwtBergasAPI.put(`/haircut-transactions/${id}`, payload);
+    const token = await getAuthHeader();
+    let payload = {};
+    if (field === "both") {
+      if (typeof status === "object") {
+        payload = status;
+      } else {
+        payload = {
+          reservation_status: status,
+          payment_status: "paid"
+        };
+      }
+    } else {
+      payload = { [field]: status };
+    }
 
+    const res = await jwtBergasAPI.put(`/haircut-transactions/${id}`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Permission-Key": process.env.SECRET_API_KEY || "",
+      },
+    });
     if (res.status !== 200) throw new Error("Gagal update status");
     revalidatePath("/dashboard/transactions/haircuts");
-
+    let message = "";
+    if (field === "both") {
+        message = "Berhasil menyelesaikan transaksi (Status & Pembayaran)";
+    } else {
+        message = `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status reservasi"}`;
+    }
     return {
       success: true,
-      message: `Berhasil mengubah ${field === "payment_status" ? "status pembayaran" : "status reservasi"}`,
+      message: message,
     };
-  } catch {
+  } catch (error) {
+    console.error(error);
     return {
       success: false,
       message: "Gagal mengubah status",
