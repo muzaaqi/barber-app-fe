@@ -20,7 +20,7 @@ const EXPEDITION_STATUS_OPTS = [
   "delivered",
   "shiped",
 ];
-const PAYMENT_STATUS_OPTS = ["pending", "paid"];
+const PAYMENT_STATUS_OPTS = ["unpaid", "paid"];
 
 export type ProductsTransaction = {
   id: string;

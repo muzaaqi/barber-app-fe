@@ -54,24 +54,10 @@ const ProductDetail = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [quantity, setQuantity] = useState<number | string>(1);
   const [address, setAddress] = useState<string>("");
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("qris");
   const [expeditionService, setExpeditionService] = useState<string>("JNE");
   const [expeditionCost, setExpeditionCost] = useState<number>(15000);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  useEffect(() => {
-    const fetchProductDetail = async () => {
-      try {
-        const res = await getProductById(productId);
-        setProduct(res.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (productId) fetchProductDetail();
-  }, [productId]);
 
   const stock = product?.stock || 0;
 
@@ -136,6 +122,7 @@ const ProductDetail = () => {
       const res = await addNewProcuctTransaction(payload);
       if (res.success) {
         toast.success("Pesanan berhasil dibuat!");
+        router.push(`/me/history/product/${res.data.id}`);
       }
       if (!res.success) {
         toast.error(
@@ -150,6 +137,20 @@ const ProductDetail = () => {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const fetchProductDetail = async () => {
+      try {
+        const res = await getProductById(productId);
+        setProduct(res.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    if (productId) fetchProductDetail();
+  }, [productId]);
 
   if (isLoading) {
     return <ProductDetailSkeleton />;
@@ -283,7 +284,7 @@ const ProductDetail = () => {
                           value={expeditionService}
                           onValueChange={(value) => {
                             setExpeditionService(value);
-                            setExpeditionCost(value === "J&T" ? 15000 : 20000);
+                            setExpeditionCost(value === "JNE" ? 15000 : 20000);
                           }}
                           className="grid grid-cols-2 gap-3"
                         >
@@ -337,30 +338,6 @@ const ProductDetail = () => {
                           className="grid grid-cols-1 gap-3"
                         >
                           <Label
-                            htmlFor="pay-cod"
-                            className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
-                              paymentMethod === "cod"
-                                ? "border-primary bg-primary/5 ring-primary ring-1"
-                                : "bg-transparent"
-                            }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <RadioGroupItem
-                                value="cod"
-                                id="pay-cod"
-                              />
-                              <div className="flex flex-col">
-                                <span className="text-sm font-medium">
-                                  COD
-                                </span>
-                                <span className="text-muted-foreground text-xs">
-                                  Cek otomatis
-                                </span>
-                              </div>
-                            </div>
-                            <Banknote className="text-muted-foreground h-5 w-5" />
-                          </Label>
-                          <Label
                             htmlFor="pay-qris"
                             className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
                               paymentMethod === "qris"
@@ -380,6 +357,31 @@ const ProductDetail = () => {
                               </div>
                             </div>
                             <QrCode className="text-muted-foreground h-5 w-5" />
+                          </Label>
+                          <Label
+                            htmlFor="pay-cod"
+                            className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
+                              paymentMethod === "cod"
+                                ? "border-primary bg-primary/5 ring-primary ring-1"
+                                : "bg-transparent"
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <RadioGroupItem
+                                value="cod"
+                                id="pay-cod"
+                                disabled
+                              />
+                              <div className="flex flex-col">
+                                <span className="text-muted text-sm font-medium">
+                                  Belum Tersedia
+                                </span>
+                                <span className="text-muted text-xs">
+                                  Metode pembayaran belum tersedia
+                                </span>
+                              </div>
+                            </div>
+                            <Banknote className="text-muted h-5 w-5" />
                           </Label>
                         </RadioGroup>
                       </Field>

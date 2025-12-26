@@ -85,7 +85,7 @@ const HaircutDetail = () => {
         haircut_id: haircutId,
         reservation_time: format(finalDateTime, "yyyy-MM-dd HH:mm:ss"),
         payment_method: paymentMethod,
-        payment_status: paymentMethod === "cash" ? "pending" : "paid",
+        payment_status: "unpaid",
         hairwash: isKeramas === "true",
         total_price: isKeramas === "true" ? 20000 : 15000,
       };
@@ -98,6 +98,7 @@ const HaircutDetail = () => {
         setDate(undefined);
         setPaymentMethod("");
         setIsKeramas("false");
+        router.push(`/me/history/haircut/${res.data.id}`);
       }
       if (!res.success) {
         toast.error(

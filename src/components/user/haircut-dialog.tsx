@@ -25,6 +25,7 @@ import { addNewHaircutTransaction } from "@/actions/management/haircut-transacti
 import { HaircutPayload } from "@/types/transactions";
 import { Spinner } from "../ui/spinner";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 
 type Haircut = {
   id: string;
@@ -41,6 +42,8 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
   const [isKeramas, setIsKeramas] = useState<string>("false");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +63,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
       haircut_id: id,
       reservation_time: format(finalDateTime, "yyyy-MM-dd HH:mm:ss"),
       payment_method: paymentMethod,
-      payment_status: paymentMethod === "cash" ? "pending" : "paid",
+      payment_status: "unpaid",
       hairwash: isKeramas === "true",
       total_price: isKeramas === "true" ? 20000 : 15000,
     };
@@ -75,6 +78,7 @@ const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
         setDate(undefined);
         setPaymentMethod("");
         setIsKeramas("false");
+        router.push(`/me/history/haircut/${res.data.id}`);
       }
       if (!res.success) {
         toast.error(

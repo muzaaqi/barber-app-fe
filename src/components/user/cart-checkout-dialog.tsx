@@ -47,7 +47,7 @@ export default function CartCheckoutDialog({
   const [address, setAddress] = useState("");
   const [expedition, setExpedition] = useState("JNE");
   const [expeditionCost, setExpeditionCost] = useState(15000);
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("qris");
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ export default function CartCheckoutDialog({
       expedition_service: expedition,
       expedition_cost: expeditionCost,
       payment_method: paymentMethod,
-      payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
+      payment_status: "unpaid",
     };
 
     try {
@@ -75,7 +75,7 @@ export default function CartCheckoutDialog({
           description: "Silakan lakukan pembayaran.",
         });
         setIsOpen(false);
-        router.refresh();
+        router.push(`/me/history/product/${res.data.id}`);
       }
     } catch {
       const msg = "Gagal memproses checkout.";
@@ -134,7 +134,7 @@ export default function CartCheckoutDialog({
                   value={expedition}
                   onValueChange={(value) => {
                     setExpedition(value);
-                    setExpeditionCost(value === "J&T" ? 20000 : 15000);
+                    setExpeditionCost(value === "JNE" ? 15000 : 20000);
                   }}
                   className="grid grid-cols-2 gap-3"
                 >
@@ -181,24 +181,6 @@ export default function CartCheckoutDialog({
                 >
                   <Label
                     className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 ${
-                      paymentMethod === "transfer"
-                        ? "border-primary bg-primary/5 ring-primary ring-1"
-                        : ""
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="transfer" id="pay-transfer" />
-                      <div>
-                        <div className="text-sm font-medium">COD</div>
-                        <div className="text-muted-foreground text-xs">
-                          Bayar di tempat saat barang diterima
-                        </div>
-                      </div>
-                    </div>
-                    <Banknote className="text-muted-foreground h-5 w-5" />
-                  </Label>
-                  <Label
-                    className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 ${
                       paymentMethod === "qris"
                         ? "border-primary bg-primary/5 ring-primary ring-1"
                         : ""
@@ -215,6 +197,24 @@ export default function CartCheckoutDialog({
                     </div>
                     <QrCode className="text-muted-foreground h-5 w-5" />
                   </Label>
+                  <Label
+                    className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 ${
+                      paymentMethod === "cod"
+                        ? "border-primary bg-primary/5 ring-primary ring-1"
+                        : ""
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <RadioGroupItem value="cod" id="pay-cod" disabled/>
+                      <div>
+                        <div className="text-sm font-medium text-muted">Belum Tersedia</div>
+                        <div className="text-muted text-xs">
+                          Metode pembayaran belum tersedia
+                        </div>
+                      </div>
+                    </div>
+                    <Banknote className="text-muted h-5 w-5" />
+                  </Label>
                 </RadioGroup>
               </Field>
             </FieldGroup>
@@ -223,7 +223,7 @@ export default function CartCheckoutDialog({
                 Total Tagihan
               </span>
               <span className="text-primary text-xl font-bold">
-              {formatIDR(grandTotal + expeditionCost)}
+                {formatIDR(grandTotal + expeditionCost)}
               </span>
             </div>
           </div>

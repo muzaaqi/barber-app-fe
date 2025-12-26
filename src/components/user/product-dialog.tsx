@@ -35,6 +35,7 @@ import { Input } from "@/components/ui/input";
 import { addNewProcuctTransaction } from "@/actions/management/product-transaction-actions";
 import { Spinner } from "../ui/spinner";
 import { ProductType } from "@/types/products";
+import { useRouter } from "next/navigation";
 
 const ProductDialog = ({
   id,
@@ -46,12 +47,14 @@ const ProductDialog = ({
 }: ProductType) => {
   const [isOpen, setIsOpen] = useState(false);
   const [quantity, setQuantity] = useState<number | string>(1);
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("qris");
   const [expeditionService, setExpeditionService] = useState<string>("JNE");
   const [expeditionCost, setExpeditionCost] = useState<number>(15000);
   const [address, setAddress] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const router = useRouter();
 
   const incrementQty = () => {
     const current = typeof quantity === "string" ? 0 : quantity;
@@ -106,11 +109,11 @@ const ProductDialog = ({
       product_id: id,
       quantity: finalQty,
       payment_method: paymentMethod,
-      payment_status: paymentMethod === "qris" ? "paid" : "unpaid",
+      payment_status: "unpaid",
       expedition_service: expeditionService,
       shipping_address: address,
       expedition_cost: expeditionCost,
-      total_price: (price * finalQty) + expeditionCost,
+      total_price: price * finalQty + expeditionCost,
     };
 
     try {
@@ -121,6 +124,7 @@ const ProductDialog = ({
         setQuantity(1);
         setPaymentMethod("");
         setAddress("");
+        router.push(`/me/history/product/${res.data.id}`);
       }
       if (!res.success) {
         toast.error(
@@ -250,7 +254,7 @@ const ProductDialog = ({
                     value={expeditionService}
                     onValueChange={(value) => {
                       setExpeditionService(value);
-                      setExpeditionCost(value === "J&T" ? 15000 : 20000);
+                      setExpeditionCost(value === "JNE" ? 15000 : 20000);
                     }}
                     className="grid grid-cols-2 gap-3"
                   >
@@ -304,25 +308,6 @@ const ProductDialog = ({
                     className="grid grid-cols-1 gap-3"
                   >
                     <Label
-                      htmlFor="prod-cod"
-                      className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
-                        paymentMethod === "cod"
-                          ? "border-primary bg-primary/5 ring-primary ring-1"
-                          : "bg-transparent"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <RadioGroupItem value="cod" id="prod-cod" />
-                        <div className="flex flex-col">
-                          <span className="text-sm font-medium">COD</span>
-                          <span className="text-muted-foreground text-xs">
-                            Bayar di tempat saat barang diterima
-                          </span>
-                        </div>
-                      </div>
-                      <Banknote className="text-muted-foreground h-5 w-5" />
-                    </Label>
-                    <Label
                       htmlFor="prod-qris"
                       className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
                         paymentMethod === "qris"
@@ -340,6 +325,27 @@ const ProductDialog = ({
                         </div>
                       </div>
                       <QrCode className="text-muted-foreground h-5 w-5" />
+                    </Label>
+                    <Label
+                      htmlFor="prod-cod"
+                      className={`hover:bg-accent flex cursor-pointer items-center justify-between rounded-md border p-3 transition-all ${
+                        paymentMethod === "cod"
+                          ? "border-primary bg-primary/5 ring-primary ring-1"
+                          : "bg-transparent"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <RadioGroupItem value="cod" id="prod-cod" disabled/>
+                        <div className="flex flex-col text-muted">
+                          <span className="text-sm font-medium">
+                            Belum Tersedia
+                          </span>
+                          <span className="text-muted text-xs">
+                            Saat ini metode pembayaran belum tersedia.
+                          </span>
+                        </div>
+                      </div>
+                      <Banknote className="text-muted h-5 w-5" />
                     </Label>
                   </RadioGroup>
                 </Field>
@@ -377,7 +383,7 @@ const ProductDialog = ({
                   <Spinner /> Memproses...
                 </>
               ) : (
-                "Konfirmasi Booking"
+                "Bayar Sekarang"
               )}
             </Button>
           </DialogFooter>

@@ -4,9 +4,11 @@ import { Spinner } from "../ui/spinner";
 import { addToCart } from "@/actions/management/cart-actions";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const AddToCartButton = ({ productId }: { productId: string }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -19,7 +21,14 @@ const AddToCartButton = ({ productId }: { productId: string }) => {
         toast.error(res.message);
         return;
       }
-      toast.success("Produk berhasil ditambahkan ke troli");
+      toast.success("Produk berhasil ditambahkan ke troli", {
+        action: {
+          label: "Lihat Troli",
+          onClick: () => {
+            router.push("/me/cart");
+          },
+        },
+      });
     } catch {
       toast.error("Gagal menambahkan ke troli");
     } finally {
