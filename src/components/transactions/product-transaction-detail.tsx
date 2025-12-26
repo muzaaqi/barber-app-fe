@@ -16,6 +16,7 @@ import {
   UploadCloud,
   X,
   QrCode,
+  Clock,
 } from "lucide-react";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
@@ -31,7 +32,7 @@ interface ProductTransactionDetailProps {
     id: string;
     created_at: string;
     updated_at: string;
-    payment_status: "unpaid" | "paid";
+    payment_status: "unpaid" | "received" | "paid";
     payment_method: string;
     total_price: number;
     qris_payload?: string;
@@ -102,8 +103,7 @@ export const ProductTransactionDetail = ({
           },
         },
       );
-      if (res.status !== 200)
-        throw new Error("Failed to upload payment proof");
+      if (res.status !== 200) throw new Error("Failed to upload payment proof");
       toast.success(
         "Bukti pembayaran berhasil diunggah! Menunggu verifikasi admin.",
       );
@@ -113,8 +113,7 @@ export const ProductTransactionDetail = ({
       setIsUpdating(false);
     }
   };
-  const isPendingPayment =
-    data.payment_status === "unpaid";
+  const isPendingPayment = data.payment_status === "unpaid";
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto w-full max-w-5xl pb-10 duration-700">
@@ -321,6 +320,12 @@ export const ProductTransactionDetail = ({
                     <span className="font-medium uppercase">QRIS</span>
                   </div>
                 </div>
+                {data.payment_status === "received" && (
+                  <div className="flex items-center gap-2 rounded-md border border-yellow-100 bg-yellow-50 p-3 text-xs text-yellow-700">
+                    <Clock className="h-4 w-4" /> Lunas:{" "}
+                    {format(new Date(data.updated_at), "d MMM yyyy")}
+                  </div>
+                )}
                 {data.payment_status === "paid" && (
                   <div className="flex items-center gap-2 rounded-md border border-green-100 bg-green-50 p-3 text-xs text-green-700">
                     <CheckCircle className="h-4 w-4" /> Lunas:{" "}

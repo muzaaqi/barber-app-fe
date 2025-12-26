@@ -15,6 +15,7 @@ import {
   FileImage,
   UploadCloud,
   X,
+  Clock,
 } from "lucide-react";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
@@ -32,7 +33,7 @@ interface TransactionDetailProps {
     haircut_id: string;
     hairwash: boolean;
     payment_method: "cash" | "qris";
-    payment_status: "unpaid" | "paid";
+    payment_status: "unpaid" | "received" | "paid";
     reservation_status: "pending" | "confirmed" | "completed";
     reservation_time: string;
     total_price: number;
@@ -112,7 +113,11 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
     return <Badge variant="destructive">{status}</Badge>;
   };
 
-  const isPendingQRIS = data.payment_method === "qris" && data.payment_status === "unpaid";
+  const isPendingQRIS =
+    data.payment_method === "qris" &&
+    data.payment_status === "unpaid" &&
+    data.qris_payload;
+
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto w-full max-w-5xl duration-700">
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -305,6 +310,15 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                     </p>
                   </div>
                 </div>
+                {data.payment_status === "received" && (
+                  <>
+                    <Separator className="bg-primary/10" />
+                    <div className="flex items-center gap-2 rounded-lg border border-yellow-100 bg-yellow-50 p-3 text-sm font-medium text-yellow-700">
+                      <Clock className="h-5 w-5" />
+                      Pembayaran sedang diverifikasi. Terima kasih!
+                    </div>
+                  </>
+                )}
                 {data.payment_status === "paid" && (
                   <>
                     <Separator className="bg-primary/10" />
