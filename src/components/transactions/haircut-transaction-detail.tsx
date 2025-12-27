@@ -133,7 +133,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
       if (res.success) {
         toast.success("Pesanan berhasil diselesaikan!");
         setIsScanOpen(false);
-        window.location.reload();
+        router.refresh();
       } else {
         throw new Error("Gagal menyelesaikan pesanan");
       }

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import QRCode from "react-qr-code";
+import { useState, useTransition, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -51,6 +50,16 @@ export const EditableStatus = ({
   const [isOpen, setIsOpen] = useState(false);
   const [showQr, setShowQr] = useState(false);
 
+  useEffect(() => {
+    if (currentStatus === qrTriggerStatus && showQr) {
+      const timer = setTimeout(() => {
+        setShowQr(false);
+        setIsOpen(false);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [currentStatus, qrTriggerStatus, showQr]);
+
   const getBadgeVariant = (status: string) => {
     if (colorMap && colorMap[status]) return colorMap[status];
 
@@ -69,6 +78,7 @@ export const EditableStatus = ({
       return "destructive";
     return "secondary";
   };
+
   const performUpdate = (newStatus: string) => {
     startTransition(async () => {
       const res = await onUpdate(id, newStatus);
@@ -93,10 +103,9 @@ export const EditableStatus = ({
     performUpdate(newStatus);
   };
 
-
   return (
     <>
-      <DropdownMenu open={isOpen && currentStatus !== "completed" } onOpenChange={setIsOpen}>
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
           <button
             disabled={isPending}
@@ -134,6 +143,8 @@ export const EditableStatus = ({
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      {/* Dialog QR Code */}
       <Dialog open={showQr} onOpenChange={setShowQr}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
