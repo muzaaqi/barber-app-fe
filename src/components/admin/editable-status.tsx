@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, useEffect } from "react";
+import QRCode from "react-qr-code";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -144,7 +145,6 @@ export const EditableStatus = ({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Dialog QR Code */}
       <Dialog open={showQr} onOpenChange={setShowQr}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
@@ -170,7 +170,6 @@ export const EditableStatus = ({
               </code>
             </div>
           </div>
-
           <DialogFooter className="flex-col gap-2 sm:justify-between sm:gap-0">
             <Button
               variant="secondary"
