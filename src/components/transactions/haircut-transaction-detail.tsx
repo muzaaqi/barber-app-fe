@@ -25,7 +25,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { format } from "date-fns";
-import { id as idLocale, ro } from "date-fns/locale";
+import { id as idLocale } from "date-fns/locale";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";

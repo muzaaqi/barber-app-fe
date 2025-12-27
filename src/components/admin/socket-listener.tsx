@@ -15,17 +15,21 @@ export const SocketListener = () => {
 
     const unlockAudio = () => {
       if (audioRef.current) {
-        audioRef.current.play().then(() => {
-          audioRef.current?.pause();
-          audioRef.current!.currentTime = 0;
-        }).catch(() => {});
+        audioRef.current
+          .play()
+          .then(() => {
+            audioRef.current?.pause();
+            audioRef.current!.currentTime = 0;
+          })
+          .catch(() => {});
       }
       document.removeEventListener("click", unlockAudio);
     };
     document.addEventListener("click", unlockAudio);
 
     if (!socketRef.current) {
-      const socketUrl = process.env.NEXT_PUBLIC_SOCKET_IO_URL || "http://localhost:5000";
+      const socketUrl =
+        process.env.NEXT_PUBLIC_SOCKET_IO_URL || "http://localhost:5000";
 
       socketRef.current = io(socketUrl, {
         transports: ["polling", "websocket"],
@@ -42,7 +46,7 @@ export const SocketListener = () => {
 
           if (playPromise !== undefined) {
             playPromise.catch(() => {
-              toast("🔊 Notifikasi suara tertahan", {
+              toast("Notifikasi suara tertahan", {
                 description: "Klik di sini untuk mengaktifkan suara.",
                 action: {
                   label: "Aktifkan",
@@ -65,6 +69,7 @@ export const SocketListener = () => {
 
       socket.on("new_haircut_transaction_created", (data) => {
         playNotificationSound();
+        router.refresh();
         toast.success("Ada transaksi potong rambut baru!", {
           action: {
             label: "Lihat",
@@ -73,11 +78,11 @@ export const SocketListener = () => {
             },
           },
         });
-        router.refresh();
       });
 
       socket.on("new_product_transaction_created", (data) => {
         playNotificationSound();
+        router.refresh();
         toast.success("Ada transaksi produk baru!", {
           action: {
             label: "Lihat",
@@ -86,14 +91,13 @@ export const SocketListener = () => {
             },
           },
         });
-        router.refresh();
       });
 
       socket.on("haircut_transaction_completed", (data) => {
-        toast.success(
-          `Status transaksi potong rambut #${data.id} diperbarui menjadi "${data.status}".`
-        );
         router.refresh();
+        toast.success(
+          `Status transaksi potong rambut #${data.id.slice(0, 8)} diperbarui menjadi "${data.status}".`,
+        );
       });
 
       socket.on("disconnect", (reason) => {

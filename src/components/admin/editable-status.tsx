@@ -96,7 +96,7 @@ export const EditableStatus = ({
 
   return (
     <>
-      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenu open={isOpen && currentStatus !== "completed" } onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
           <button
             disabled={isPending}
