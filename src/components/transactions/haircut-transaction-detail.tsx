@@ -25,7 +25,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { format } from "date-fns";
-import { id as idLocale } from "date-fns/locale";
+import { id as idLocale, ro } from "date-fns/locale";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -34,6 +34,7 @@ import { jwtBergasAPI } from "@/lib/axios-instance";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { updateHaircutTransactionStatus } from "@/actions/management/haircut-transaction-actions";
 import { Spinner } from "../ui/spinner";
+import { useRouter } from "next/navigation";
 
 interface TransactionDetailProps {
   data: {
@@ -64,6 +65,8 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
   const [isScanOpen, setIsScanOpen] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [scanKey, setScanKey] = useState(0);
+
+  const router = useRouter();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -99,7 +102,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
         throw new Error("Gagal mengunggah bukti pembayaran.");
       }
       toast.success("Bukti pembayaran berhasil diunggah!");
-      window.location.reload();
+      router.refresh();
     } catch {
       toast.error("Gagal mengunggah bukti pembayaran. Silakan coba lagi.");
     } finally {
