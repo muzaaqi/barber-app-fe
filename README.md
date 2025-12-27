@@ -1,6 +1,6 @@
 # 💈 Bergas - Barbershop Management Frontend
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -66,7 +66,7 @@
 ## 🛠 Tech Stack
 
 ### Core Framework
-- **Next.js 15** - React framework with App Router
+- **Next.js 16** - React framework with App Router
 - **React 19** - Latest React with concurrent features
 - **TypeScript 5.0+** - Type-safe JavaScript
 
@@ -377,7 +377,7 @@ CMD ["node", "server.js"]
 
 ### App Router Structure
 
-Using Next.js 15 App Router with route groups:
+Using Next.js 16 App Router with route groups:
 
 ```
 app/
