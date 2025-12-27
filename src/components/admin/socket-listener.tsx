@@ -25,7 +25,7 @@ export const SocketListener = () => {
     document.addEventListener("click", unlockAudio);
 
     if (!socketRef.current) {
-      const socketUrl = "http://localhost:5000";
+      const socketUrl = process.env.NEXT_PUBLIC_SOCKET_IO_URL || "http://localhost:5000";
 
       socketRef.current = io(socketUrl, {
         transports: ["polling", "websocket"],
