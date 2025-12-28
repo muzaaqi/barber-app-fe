@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Home, Info, Scissors, MapPin } from "lucide-react";
 import { getCartData } from "@/actions/management/cart-actions";
-import { NavbarUserActions } from "./navbar-user-actions"; // Import komponen baru
+import { NavbarUserActions } from "./navbar-user-actions";
 
 const Navbar = async () => {
   const cartItems = await getCartData();
@@ -30,9 +30,10 @@ const Navbar = async () => {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="flex items-center justify-end">
           <NavbarUserActions cartItems={cartItems} />
         </div>
-        <div className="hidden lg:block"></div>
       </div>
     </nav>
   );
