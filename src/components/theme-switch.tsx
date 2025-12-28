@@ -2,7 +2,7 @@
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { Monitor, Moon, Sun } from "lucide-react";
+import { Monitor, Moon, Palette, Sun } from "lucide-react";
 
 const SimpleThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
@@ -22,7 +22,7 @@ const GroupThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
   return (
     <ButtonGroup>
-      <Button 
+      <Button
         variant={theme === "system" ? "default" : "outline"}
         onClick={() => setTheme("system")}
       >
@@ -47,20 +47,25 @@ const GroupThemeSwitch = () => {
 const MobileThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
   return (
-    <ButtonGroup className="w-full gap-2 flex justify-center">
-      <Button
-        variant={theme === "light" ? "default" : "outline"}
-        onClick={() => setTheme("light")}
-      >
-        <Sun /> Terang
-      </Button>
-      <Button
-        variant={theme === "dark" ? "default" : "outline"}
-        onClick={() => setTheme("dark")}
-      >
-        <Moon /> Gelap
-      </Button>
-    </ButtonGroup>
+    <div className="flex w-full items-center justify-between gap-2 pl-2">
+      <div className="flex items-center text-sm gap-2">
+        <Palette size={16} className="text-muted-foreground" /> Tema
+      </div>
+      <ButtonGroup className="flex w-full justify-center">
+        <Button
+          variant={theme === "light" ? "default" : "outline"}
+          onClick={() => setTheme("light")}
+        >
+          <Sun />
+        </Button>
+        <Button
+          variant={theme === "dark" ? "default" : "outline"}
+          onClick={() => setTheme("dark")}
+        >
+          <Moon />
+        </Button>
+      </ButtonGroup>
+    </div>
   );
 };
 

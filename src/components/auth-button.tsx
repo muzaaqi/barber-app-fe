@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getInitials } from "@/features/formatter";
 import { CartResponse } from "@/types/cart";
 
-export default async function AuthButton({
+export default function AuthButton({
   user, cartItems,
 }: {
   user?: { name: string; email: string; role: string } | null ; 
@@ -30,7 +30,7 @@ export default async function AuthButton({
   );
 }
 
-const MobileAuthButton = async ({
+const MobileAuthButton = ({
   user,
 }: {
   user?: { name: string; email: string; role: string } | null ;
@@ -55,7 +55,7 @@ const MobileAuthButton = async ({
           </div>
         </Link>
       ) : (
-        <ButtonGroup className="w-full flex-col gap-2">
+        <ButtonGroup className="w-full flex gap-2">
           <Link href="/login">
             <Button variant="default" className="w-full">
               Masuk

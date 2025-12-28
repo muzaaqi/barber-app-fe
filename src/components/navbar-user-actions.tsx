@@ -19,9 +19,10 @@ import {
   Scissors,
   MapPin,
   Home,
+  Palette,
 } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { MobileThemeSwitch } from "./theme-switch";
+import { GroupThemeSwitch, MobileThemeSwitch } from "./theme-switch";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { CartResponse } from "@/types/cart";
 
@@ -44,10 +45,9 @@ export const NavbarUserActions = ({ cartItems }: NavbarUserActionsProps) => {
       <div className="hidden items-center justify-end gap-3 lg:flex">
         <AuthButton user={user} cartItems={cartItems} />
       </div>
-
       <div className="lg:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Menu className="cursor-pointer" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="font-mono" align="end">
@@ -69,39 +69,40 @@ export const NavbarUserActions = ({ cartItems }: NavbarUserActionsProps) => {
                   <LayoutDashboard /> Dashboard
                 </Link>
               </DropdownMenuItem>
-            ) : user?.role === "user" ? (
-              <>
-                <DropdownMenuItem asChild>
-                  <Link href="/me/history">
-                    <Clock /> Riwayat
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/me/cart"
-                    className="group flex w-full justify-between"
-                  >
-                    <div className="flex items-center gap-2">
-                      <ShoppingCart /> Troli
-                    </div>
-                    {cartItems &&
-                      cartItems.data &&
-                      cartItems.data.items.length > 0 && (
-                        <Badge variant="secondary">
-                          {cartItems.data.items.length}
-                        </Badge>
-                      )}
-                  </Link>
-                </DropdownMenuItem>
-              </>
-            ) : null}
-
+            ) : (
+              user?.role === "user" && (
+                <>
+                  <DropdownMenuItem asChild>
+                    <Link href="/me/history">
+                      <Clock /> Riwayat
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/me/cart"
+                      className="group flex w-full justify-between"
+                    >
+                      <div className="flex items-center gap-2">
+                        <ShoppingCart /> Troli
+                      </div>
+                      {cartItems &&
+                        cartItems.data &&
+                        cartItems.data.items.length > 0 && (
+                          <Badge variant="secondary">
+                            {cartItems.data.items.length}
+                          </Badge>
+                        )}
+                    </Link>
+                  </DropdownMenuItem>
+                </>
+              )
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <MobileThemeSwitch />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <MobileAuthButton user={user} />
             </DropdownMenuItem>
           </DropdownMenuContent>
