@@ -100,6 +100,36 @@ export const SocketListener = () => {
         );
       });
 
+      socket.on("haircut_receipt_uploaded", (data) => {
+        router.refresh();
+        toast.success(
+          `Struk transaksi potong rambut #${data.id.slice(0, 8)} telah diunggah.`,
+          {
+            action: {
+              label: "Lihat",
+              onClick: () => {
+                router.push(`/dashboard/transactions/haircut`);
+              },
+            },
+          },
+        );
+      });
+
+      socket.on("product_receipt_uploaded", (data) => {
+        router.refresh();
+        toast.success(
+          `Struk transaksi produk #${data.id.slice(0, 8)} telah diunggah.`,
+          {
+            action: {
+              label: "Lihat",
+              onClick: () => {
+                router.push(`/dashboard/transactions/product`);
+              },
+            },
+          },
+        );
+      });
+
       socket.on("disconnect", (reason) => {
         console.warn("Disconnected:", reason);
       });
