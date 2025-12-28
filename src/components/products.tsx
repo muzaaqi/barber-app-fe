@@ -113,8 +113,8 @@ const ProductsCards = () => {
                       </h2>
                     </div>
                   </CardContent>
-                  <CardFooter>
-                    <ButtonGroup className="flex w-full gap-2">
+                  <CardFooter className="px-3 md:px-6">
+                    <ButtonGroup className="flex w-full gap-2 p-0">
                       <AddToCartButton productId={id} />
                       <div
                         onClick={(e) => {
