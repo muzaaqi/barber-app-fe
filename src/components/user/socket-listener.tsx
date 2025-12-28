@@ -95,7 +95,7 @@ export const SocketListener = () => {
           action: {
             label: "Lihat",
             onClick: () => {
-              router.push(`/dashboard/transactions/haircut/${data.id}`);
+              router.push(`/dashboard/transactions/haircut`);
             },
           },
         });
@@ -108,7 +108,7 @@ export const SocketListener = () => {
           action: {
             label: "Lihat",
             onClick: () => {
-              router.push(`/dashboard/transactions/product/${data.id}`);
+              router.push(`/dashboard/transactions/product`);
             },
           },
         });

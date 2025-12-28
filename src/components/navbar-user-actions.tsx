@@ -19,10 +19,9 @@ import {
   Scissors,
   MapPin,
   Home,
-  Palette,
 } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { GroupThemeSwitch, MobileThemeSwitch } from "./theme-switch";
+import { MobileThemeSwitch } from "./theme-switch";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { CartResponse } from "@/types/cart";
 
