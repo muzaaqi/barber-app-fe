@@ -54,7 +54,7 @@ export const SocketListener = () => {
       }
 
       if (user?.role === "admin" && user.id) {
-        socket.emit("join_room", "admin_room");
+        socket.emit("join_admin_room", "admin_room");
       }
     };
 
@@ -65,7 +65,8 @@ export const SocketListener = () => {
       router.refresh();
       const shortId = String(data.id).slice(0, 8);
       toast.info("Update Pesanan Haircut", {
-        description: `ID: #${shortId} | Status: ${data.reservation_status} | Pembayaran: ${data.payment_status}`,
+        duration: 5000,
+        description: `ID: #${shortId}\nStatus: ${data.reservation_status}\nPembayaran: ${data.payment_status}`,
         action: {
           label: "Cek",
           onClick: () => router.push(`/dashboard/transactions/haircut`),
@@ -77,7 +78,8 @@ export const SocketListener = () => {
       router.refresh();
       const shortId = String(data.id).slice(0, 8);
       toast.info("Update Pesanan Produk", {
-        description: `ID: #${shortId} | Ekspedisi: ${data.expedition_status} | Pembayaran: ${data.payment_status}`,
+        duration: 5000,
+        description: `ID: #${shortId}\nEkspedisi: ${data.expedition_status}\nPembayaran: ${data.payment_status}`,
         action: {
           label: "Cek",
           onClick: () => router.push(`/dashboard/transactions/product`),
@@ -90,6 +92,8 @@ export const SocketListener = () => {
         playNotificationSound();
         router.refresh();
         toast.info("Ada transaksi potong rambut baru!", {
+          duration: 5000,
+          description: `ID: #${String(data.id).slice(0, 8)}`,
           action: {
             label: "Lihat",
             onClick: () => {
@@ -103,6 +107,8 @@ export const SocketListener = () => {
         playNotificationSound();
         router.refresh();
         toast.info("Ada transaksi produk baru!", {
+          duration: 5000,
+          description: `ID: #${String(data.id).slice(0, 8)}`,
           action: {
             label: "Lihat",
             onClick: () => {
@@ -115,7 +121,7 @@ export const SocketListener = () => {
       socket.on("haircut_transaction_completed", (data) => {
         router.refresh();
         toast.info(
-          `Status transaksi potong rambut #${data.id.slice(0, 8)} diperbarui menjadi "${data.status}".`,
+          `Status transaksi potong rambut #${data.id.slice(0, 8)} diperbarui menjadi "${data.status}".`, {}
         );
       });
 
@@ -124,6 +130,7 @@ export const SocketListener = () => {
         toast.info(
           `Struk transaksi potong rambut #${data.id.slice(0, 8)} telah diunggah.`,
           {
+            duration: 5000,
             action: {
               label: "Lihat",
               onClick: () => {
@@ -139,6 +146,7 @@ export const SocketListener = () => {
         toast.info(
           `Struk transaksi produk #${data.id.slice(0, 8)} telah diunggah.`,
           {
+            duration: 5000,
             action: {
               label: "Lihat",
               onClick: () => {

@@ -113,7 +113,7 @@ export const ProductTransactionDetail = ({
       setIsUpdating(false);
     }
   };
-  const isPendingPayment = data.payment_status === "unpaid";
+  const isPendingPayment = data.payment_status === "unpaid" || data.payment_status === "received";
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto w-full max-w-5xl pb-10 duration-700">
@@ -322,7 +322,7 @@ export const ProductTransactionDetail = ({
                 </div>
                 {data.payment_status === "received" && (
                   <div className="flex items-center gap-2 rounded-md border border-yellow-100 bg-yellow-50 p-3 text-xs text-yellow-700">
-                    <Clock className="h-4 w-4" /> Lunas:{" "}
+                    <Clock className="h-4 w-4" /> Menunggu Verifikasi Admin:{" "}
                     {format(new Date(data.updated_at), "d MMM yyyy")}
                   </div>
                 )}
