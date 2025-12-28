@@ -105,12 +105,9 @@ const FooterSection = () => {
         </div>
         <div className="border-border my-6 border-t"></div>
         <div className="text-muted-foreground flex flex-col items-center justify-between gap-4 text-xs md:flex-row">
-          {/* Copyright */}
           <div className="text-center md:text-left">
             &copy; {currentYear} Bergas Barbershop. All rights reserved.
           </div>
-
-          {/* Developer Credit */}
           <div className="flex items-center gap-1">
             <span>Developed with</span>
             <Heart className="h-3 w-3 animate-pulse fill-red-500 text-red-500" />
