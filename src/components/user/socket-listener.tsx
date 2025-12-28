@@ -67,7 +67,7 @@ export const SocketListener = () => {
       router.refresh();
       const shortId = String(data.id).slice(0, 8);
       toast.info("Update Pesanan Haircut", {
-        description: `ID: #${shortId} | Status: ${data.reservation_status}`,
+        description: `ID: #${shortId} | Status: ${data.reservation_status} | Pembayaran: ${data.payment_status}`,
         action: {
           label: "Cek",
           onClick: () => router.push(`/dashboard/transactions/haircut`),
@@ -79,7 +79,7 @@ export const SocketListener = () => {
       router.refresh();
       const shortId = String(data.id).slice(0, 8);
       toast.info("Update Pesanan Produk", {
-        description: `ID: #${shortId} | Ekspedisi: ${data.expedition_status}`,
+        description: `ID: #${shortId} | Ekspedisi: ${data.expedition_status} | Pembayaran: ${data.payment_status}`,
         action: {
           label: "Cek",
           onClick: () => router.push(`/dashboard/transactions/product`),
@@ -91,11 +91,11 @@ export const SocketListener = () => {
       socket.on("new_haircut_transaction_created", (data) => {
         playNotificationSound();
         router.refresh();
-        toast.success("Ada transaksi potong rambut baru!", {
+        toast.info("Ada transaksi potong rambut baru!", {
           action: {
             label: "Lihat",
             onClick: () => {
-              router.push(`/dashboard/transactions/haircut`);
+              router.push(`/dashboard/transactions/haircuts`);
             },
           },
         });
@@ -104,11 +104,11 @@ export const SocketListener = () => {
       socket.on("new_product_transaction_created", (data) => {
         playNotificationSound();
         router.refresh();
-        toast.success("Ada transaksi produk baru!", {
+        toast.info("Ada transaksi produk baru!", {
           action: {
             label: "Lihat",
             onClick: () => {
-              router.push(`/dashboard/transactions/product`);
+              router.push(`/dashboard/transactions/products`);
             },
           },
         });
@@ -116,14 +116,14 @@ export const SocketListener = () => {
 
       socket.on("haircut_transaction_completed", (data) => {
         router.refresh();
-        toast.success(
+        toast.info(
           `Status transaksi potong rambut #${data.id.slice(0, 8)} diperbarui menjadi "${data.status}".`,
         );
       });
 
       socket.on("haircut_receipt_uploaded", (data) => {
         router.refresh();
-        toast.success(
+        toast.info(
           `Struk transaksi potong rambut #${data.id.slice(0, 8)} telah diunggah.`,
           {
             action: {
@@ -138,7 +138,7 @@ export const SocketListener = () => {
 
       socket.on("product_receipt_uploaded", (data) => {
         router.refresh();
-        toast.success(
+        toast.info(
           `Struk transaksi produk #${data.id.slice(0, 8)} telah diunggah.`,
           {
             action: {
