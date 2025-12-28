@@ -5,7 +5,6 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +14,7 @@ import { Mail, Shield, UserIcon, LogOut, User } from "lucide-react";
 import { getInitials } from "@/features/formatter";
 import { redirect } from "next/navigation";
 import ConfirmationDialog from "../confirmation-dialog";
+import EditedField from "./edited-field";
 
 type User = {
   id: string;
@@ -31,7 +31,7 @@ const ProfileCard = async () => {
   }
   return (
     <Card className="shadow-lg">
-      <CardHeader className="flex flex-col items-center gap-4 pb-2">
+      <CardHeader className="flex flex-col items-center gap-4 pb-2 relative">
         <Avatar className="size-24 border-4 shadow-sm">
           <AvatarImage src="" alt={user.name} />
           <AvatarFallback className="bg-primary/10 text-primary text-2xl font-bold">
@@ -39,7 +39,7 @@ const ProfileCard = async () => {
           </AvatarFallback>
         </Avatar>
         <div className="flex flex-col items-center text-center">
-          <CardTitle className="text-2xl font-bold">{user.name}</CardTitle>
+          <EditedField user={user} />
           <CardDescription className="text-md text-muted-foreground font-medium">
             {user.email}
           </CardDescription>

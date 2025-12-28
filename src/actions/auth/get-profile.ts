@@ -15,6 +15,21 @@ const getProfile = async () => {
   return res.data.data;
 };
 
+const updateProfile = async (payload: { name: string }) => {
+  const token = await getAuthHeader();
+  if (!token) return { success: false, message: "Unauthorized" };
+
+  try {
+    const res = await jwtBergasAPI.put("/user/me", payload);
+    if (res.status !== 200) {
+      return { success: false, message: "Gagal memperbarui profil." };
+    }
+    return { success: true, message: "Profil berhasil diperbarui." };
+  } catch {
+    return { success: false, message: "Gagal memperbarui profil." };
+  }
+}
+
 const changePassword = async (payload: {
   current_password: string;
   new_password: string;
@@ -46,4 +61,4 @@ const logOutAction = async () => {
   }
 };
 
-export { getProfile, changePassword, logOutAction };
+export { getProfile, updateProfile, changePassword, logOutAction };
