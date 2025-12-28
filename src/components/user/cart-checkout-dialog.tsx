@@ -94,7 +94,6 @@ export default function CartCheckoutDialog({
           Checkout ({totalItems})
         </Button>
       </DialogTrigger>
-
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
         <form onSubmit={handleCheckout}>
           <DialogHeader>
