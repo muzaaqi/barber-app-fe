@@ -82,7 +82,7 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-80" align="start">
-                    <div className="space-y-3 p-3">
+                    <div className="space-y-3">
                       <h4 className="mb-2 border-b pb-2 text-sm font-medium">
                         Detail Item
                       </h4>
