@@ -65,7 +65,7 @@ const FooterSection = () => {
             <div className="text-muted-foreground space-y-3 text-sm">
               <div className="flex items-start gap-2">
                 <MapPin className="mt-1 h-4 w-4 shrink-0" />
-                <span>Jl. Contoh No. 123, Kota Anda, Indonesia</span>
+                <span>Jl. Daendels, Purworejo, Jawa Tengah</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0" />
@@ -73,7 +73,7 @@ const FooterSection = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 shrink-0" />
-                <span>Setiap Hari: 10:00 - 21:00</span>
+                <span>Setiap Hari: 15:00 - 23:00</span>
               </div>
             </div>
           </div>
