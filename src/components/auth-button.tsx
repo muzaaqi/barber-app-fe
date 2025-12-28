@@ -4,14 +4,14 @@ import { ButtonGroup } from "./ui/button-group";
 import ProfilePopover from "./user/profile-popover";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getInitials } from "@/features/formatter";
-import { getCartData } from "@/actions/management/cart-actions";
+import { CartResponse } from "@/types/cart";
 
 export default async function AuthButton({
-  user,
+  user, cartItems,
 }: {
-  user?: { name: string; email: string; role: string };
+  user?: { name: string; email: string; role: string } | null ; 
+  cartItems?: CartResponse | null ;
 }) {
-  const cartItems = await getCartData();
   return user ? (
     <ProfilePopover user={user} cartItems={cartItems} />
   ) : (
@@ -33,7 +33,7 @@ export default async function AuthButton({
 const MobileAuthButton = async ({
   user,
 }: {
-  user?: { name: string; email: string; role: string };
+  user?: { name: string; email: string; role: string } | null ;
 }) => {
   return (
     <>

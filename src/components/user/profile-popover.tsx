@@ -28,7 +28,7 @@ const ProfilePopover = ({
   cartItems,
 }: {
   user: { name: string; email: string; role: string };
-  cartItems: CartResponse | null;
+  cartItems: CartResponse | null | undefined;
 }) => {
   return (
     <Popover>
