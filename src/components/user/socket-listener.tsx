@@ -49,13 +49,11 @@ export const SocketListener = () => {
     const handleJoinRooms = () => {
       if (!socket.connected) return;
 
-      if (user?.id) {
-        console.log("Bergabung ke room user:", user.id);
+      if (user?.role === "user" && user.id) {
         socket.emit("join_user_room", { user_id: user.id });
       }
 
-      if (user?.role === "admin") {
-        console.log("Bergabung ke room admin");
+      if (user?.role === "admin" && user.id) {
         socket.emit("join_room", "admin_room");
       }
     };
@@ -121,7 +119,7 @@ export const SocketListener = () => {
         );
       });
 
-      socket.on("haircut_receipt_uploaded", (data) => {
+      socket.on("haircut_transaction_receipt_uploaded", (data) => {
         router.refresh();
         toast.info(
           `Struk transaksi potong rambut #${data.id.slice(0, 8)} telah diunggah.`,
@@ -136,7 +134,7 @@ export const SocketListener = () => {
         );
       });
 
-      socket.on("product_receipt_uploaded", (data) => {
+      socket.on("product_transaction_receipt_uploaded", (data) => {
         router.refresh();
         toast.info(
           `Struk transaksi produk #${data.id.slice(0, 8)} telah diunggah.`,
@@ -160,8 +158,8 @@ export const SocketListener = () => {
       socket.off("new_haircut_transaction_created");
       socket.off("new_product_transaction_created");
       socket.off("haircut_transaction_completed");
-      socket.off("haircut_receipt_uploaded");
-      socket.off("product_receipt_uploaded");
+      socket.off("haircut_transaction_receipt_uploaded");
+      socket.off("product_transaction_receipt_uploaded");
     };
   }, [router, user]);
 
