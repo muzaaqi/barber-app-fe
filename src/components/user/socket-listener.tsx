@@ -66,9 +66,23 @@ export const SocketListener = () => {
       const shortId = String(data.id).slice(0, 8);
       toast.info("Update Pesanan Haircut", {
         duration: 5000,
-        description: `ID: #${shortId}\nStatus: ${data.reservation_status}\nPembayaran: ${data.payment_status}`,
+        description: (
+          <div className="mt-2 space-y-1 text-xs">
+            <p className="capitalize">
+              <span className="font-semibold">ID:</span> #{shortId}
+            </p>
+            <p className="capitalize">
+              <span className="font-semibold">Status:</span>{" "}
+              {data.reservation_status}
+            </p>
+            <p className="capitalize">
+              <span className="font-semibold">Pembayaran:</span>{" "}
+              {data.payment_status}
+            </p>
+          </div>
+        ),
         action: {
-          label: "Cek",
+          label: "Lihat",
           onClick: () => router.push(`/dashboard/transactions/haircut`),
         },
       });
@@ -79,9 +93,23 @@ export const SocketListener = () => {
       const shortId = String(data.id).slice(0, 8);
       toast.info("Update Pesanan Produk", {
         duration: 5000,
-        description: `ID: #${shortId}\nEkspedisi: ${data.expedition_status}\nPembayaran: ${data.payment_status}`,
+        description: (
+          <div className="mt-2 space-y-1 text-xs">
+            <p className="capitalize">
+              <span className="font-semibold">ID:</span> #{shortId}
+            </p>
+            <p className="capitalize">
+              <span className="font-semibold">Ekspedisi:</span>{" "}
+              {data.expedition_status}
+            </p>
+            <p className="capitalize">
+              <span className="font-semibold">Pembayaran:</span>{" "}
+              {data.payment_status}
+            </p>
+          </div>
+        ),
         action: {
-          label: "Cek",
+          label: "Lihat",
           onClick: () => router.push(`/dashboard/transactions/product`),
         },
       });
@@ -121,7 +149,8 @@ export const SocketListener = () => {
       socket.on("haircut_transaction_completed", (data) => {
         router.refresh();
         toast.info(
-          `Status transaksi potong rambut #${data.id.slice(0, 8)} diperbarui menjadi "${data.status}".`, {}
+          `Status transaksi potong rambut #${data.id.slice(0, 8)} diperbarui menjadi "${data.status}".`,
+          {},
         );
       });
 
