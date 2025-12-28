@@ -4,6 +4,7 @@ import { jwtBergasAPI } from "@/lib/axios-instance";
 import { revalidatePath } from "next/cache";
 import { CartCheckoutPayload, CartResponse } from "@/types/cart";
 import getAuthHeader from "@/features/get-jwt-token";
+import { redirect } from "next/navigation";
 
 const getCartData = async (): Promise<CartResponse | null> => {
   const token = await getAuthHeader();
@@ -32,10 +33,7 @@ const getCartData = async (): Promise<CartResponse | null> => {
 const addToCart = async (productId: string, quantity: number) => {
   const token = await getAuthHeader();
   if (!token) {
-    return {
-      success: false,
-      message: "Login terlebih dahulu untuk menambahkan ke troli",
-    };
+    redirect("/login");
   }
   try {
     const res = await jwtBergasAPI.post("/carts", {
