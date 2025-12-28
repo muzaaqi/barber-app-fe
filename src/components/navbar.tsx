@@ -32,7 +32,7 @@ const Navbar = async () => {
           </ul>
         </div>
         <div className="flex items-center justify-end">
-          <NavbarUserActions cartItems={cartItems} />
+          <NavbarUserActions cartItems={cartItems?.success ? cartItems : null} />
         </div>
       </div>
     </nav>

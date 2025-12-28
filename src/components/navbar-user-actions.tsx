@@ -42,7 +42,7 @@ export const NavbarUserActions = ({ cartItems }: NavbarUserActionsProps) => {
   return (
     <>
       <div className="hidden items-center justify-end gap-3 lg:flex">
-        <AuthButton user={user} cartItems={cartItems}/>
+        <AuthButton user={user} cartItems={cartItems} />
       </div>
 
       <div className="lg:hidden">
@@ -84,11 +84,13 @@ export const NavbarUserActions = ({ cartItems }: NavbarUserActionsProps) => {
                     <div className="flex items-center gap-2">
                       <ShoppingCart /> Troli
                     </div>
-                    {cartItems?.data && cartItems.data.items.length > 0 && (
-                      <Badge variant="secondary">
-                        {cartItems.data.items.length}
-                      </Badge>
-                    )}
+                    {cartItems &&
+                      cartItems.data &&
+                      cartItems.data.items.length > 0 && (
+                        <Badge variant="secondary">
+                          {cartItems.data.items.length}
+                        </Badge>
+                      )}
                   </Link>
                 </DropdownMenuItem>
               </>
