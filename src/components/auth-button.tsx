@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getInitials } from "@/features/formatter";
 import { CartResponse } from "@/types/cart";
 import { LogOutIcon } from "lucide-react";
+import ConfirmationDialog from "./confirmation-dialog";
+import { logOutAction } from "@/actions/auth/get-profile";
 
 export default function AuthButton({
   user,
@@ -42,7 +44,7 @@ const MobileAuthButton = ({
       {user ? (
         <div className="flex items-center justify-between gap-4">
           <Link href="/me">
-            <div className="flex gap-2 hover:bg-accent/50 px-2 py-1 rounded-lg transition-colors">
+            <div className="hover:bg-accent/50 flex gap-2 rounded-lg px-2 py-1 transition-colors">
               <div className="flex items-center">
                 <Avatar className="hover:border-primary aspect-square size-10 cursor-pointer border shadow-sm transition-all hover:scale-105">
                   <AvatarImage src="" alt={user.name} />
@@ -57,9 +59,21 @@ const MobileAuthButton = ({
               </div>
             </div>
           </Link>
-          <Button variant="ghost" className="hover:text-destructive">
-            <LogOutIcon />
-          </Button>
+          <ConfirmationDialog
+            onConfirm={logOutAction}
+            title="Keluar"
+            description="Apakah Anda yakin ingin keluar dari akun ini?"
+            confirmText="Keluar"
+            cancelText="Batal"
+            successText="Berhasil keluar dari akun."
+            errorText="Gagal keluar dari akun."
+            variant="destructive"
+            trigger={
+              <Button variant="ghost" className="hover:text-destructive">
+                <LogOutIcon />
+              </Button>
+            }
+          />
         </div>
       ) : (
         <ButtonGroup className="flex w-full gap-2">
