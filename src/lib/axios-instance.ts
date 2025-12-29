@@ -7,7 +7,7 @@ const bergasAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   validateStatus: () => true,
   headers: {
-    "Permission-Key": process.env.SECRET_API_KEY || "",
+    "Permission-Key": process.env.NEXT_PUBLIC_SECRET_API_KEY || "",
   },
 });
 
@@ -15,7 +15,7 @@ const jwtBergasAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   validateStatus: () => true,
   headers: {
-    "Permission-Key": process.env.SECRET_API_KEY || "",
+    "Permission-Key": process.env.NEXT_PUBLIC_SECRET_API_KEY || "",
   },
 });
 
