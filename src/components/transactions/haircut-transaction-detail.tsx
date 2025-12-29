@@ -164,9 +164,17 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
       );
     }
     if (status === "unpaid") {
-      return <Badge variant="destructive">Belum Bayar</Badge>;
+      return (
+        <Badge className="px-3 py-1 text-sm" variant="destructive">
+          Belum Bayar
+        </Badge>
+      );
     }
-    return <Badge variant="destructive">{status}</Badge>;
+    return (
+      <Badge className="px-3 py-1 text-sm" variant="destructive">
+        {status}
+      </Badge>
+    );
   };
 
   const isPendingQRIS =
@@ -189,18 +197,6 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
         <div className="flex items-center gap-2">
           {getStatusBadge(data.reservation_status, "reservation")}
           {getStatusBadge(data.payment_status, "payment")}
-          {canScanToComplete && (
-            <Button
-              onClick={() => {
-                setIsScanOpen(true);
-                setScanKey(0);
-              }}
-              className="ml-2 gap-2 bg-green-600 hover:bg-green-700"
-            >
-              <ScanLine className="h-4 w-4" />
-              Scan Selesai
-            </Button>
-          )}
         </div>
       </div>
       <div className="grid gap-8 lg:grid-cols-12">
@@ -263,6 +259,17 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                   </Badge>
                 )}
               </div>
+              {canScanToComplete && (
+                <Button
+                  onClick={() => {
+                    setIsScanOpen(true);
+                    setScanKey(0);
+                  }}
+                >
+                  <ScanLine className="h-4 w-4" />
+                  Scan Selesai
+                </Button>
+              )}
             </CardContent>
           </Card>
           {isPendingQRIS ? (
