@@ -7,7 +7,7 @@ const getAllHaircuts = async (page: number, limit: number) => {
   try {
     const res = await bergasAPI.get(`/haircuts?page=${page}&limit=${limit}`, {
       headers: {
-        "Permission-Key": process.env.NEXT_PUBLIC_SECRET_API_KEY || "",
+        "Permission-Key": process.env.SECRET_API_KEY || "",
       },
     });
     if (res.status !== 200) {
