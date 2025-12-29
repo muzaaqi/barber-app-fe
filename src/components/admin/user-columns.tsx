@@ -27,7 +27,7 @@ export const columns: ColumnDef<User>[] = [
       const user = row.original;
       return (
         <div className="flex items-center gap-3">
-          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md">
+          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-md">
             <Image
               src="/default_avatar.svg"
               alt={user.name}
