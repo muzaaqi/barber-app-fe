@@ -20,7 +20,7 @@ export const metadata = {
 
 export default async function CartPage() {
   const cartData = await getCartData();
-
+  
   if (!cartData || !cartData.data || cartData.data.items.length === 0) {
     return (
       <div className="container mx-auto max-w-4xl px-4 py-20">
