@@ -5,12 +5,14 @@ import ProfilePopover from "./user/profile-popover";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getInitials } from "@/features/formatter";
 import { CartResponse } from "@/types/cart";
+import { LogOutIcon } from "lucide-react";
 
 export default function AuthButton({
-  user, cartItems,
+  user,
+  cartItems,
 }: {
-  user?: { name: string; email: string; role: string } | null ; 
-  cartItems?: CartResponse | null ;
+  user?: { name: string; email: string; role: string } | null;
+  cartItems?: CartResponse | null;
 }) {
   return user ? (
     <ProfilePopover user={user} cartItems={cartItems} />
@@ -33,29 +35,34 @@ export default function AuthButton({
 const MobileAuthButton = ({
   user,
 }: {
-  user?: { name: string; email: string; role: string } | null ;
+  user?: { name: string; email: string; role: string } | null;
 }) => {
   return (
     <>
       {user ? (
-        <Link href="/me">
-          <div className="flex gap-2">
-            <div className="flex items-center">
-              <Avatar className="hover:border-primary aspect-square size-10 cursor-pointer border shadow-sm transition-all hover:scale-105">
-                <AvatarImage src="" alt={user.name} />
-                <AvatarFallback className="dark:bg-primary/20 bg-primary/50 dark:text-primary text-foreground font-bold">
-                  {getInitials(user.name)}
-                </AvatarFallback>
-              </Avatar>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/me">
+            <div className="flex gap-2 hover:bg-accent/50 px-2 py-1 rounded-lg transition-colors">
+              <div className="flex items-center">
+                <Avatar className="hover:border-primary aspect-square size-10 cursor-pointer border shadow-sm transition-all hover:scale-105">
+                  <AvatarImage src="" alt={user.name} />
+                  <AvatarFallback className="dark:bg-primary/20 bg-primary/50 dark:text-primary text-foreground font-bold">
+                    {getInitials(user.name)}
+                  </AvatarFallback>
+                </Avatar>
+              </div>
+              <div>
+                <span>{user.name}</span>
+                <p className="text-muted-foreground text-sm">{user.email}</p>
+              </div>
             </div>
-            <div>
-              <span>{user.name}</span>
-              <p className="text-muted-foreground text-sm">{user.email}</p>
-            </div>
-          </div>
-        </Link>
+          </Link>
+          <Button variant="ghost" className="hover:text-destructive">
+            <LogOutIcon />
+          </Button>
+        </div>
       ) : (
-        <ButtonGroup className="w-full flex gap-2">
+        <ButtonGroup className="flex w-full gap-2">
           <Link href="/login">
             <Button variant="default" className="w-full">
               Masuk

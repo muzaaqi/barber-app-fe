@@ -19,9 +19,10 @@ import {
   Scissors,
   MapPin,
   Home,
+  Palette,
 } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { MobileThemeSwitch } from "./theme-switch";
+import { GroupThemeSwitch, MobileThemeSwitch } from "./theme-switch";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { CartResponse } from "@/types/cart";
 
@@ -98,7 +99,12 @@ export const NavbarUserActions = ({ cartItems }: NavbarUserActionsProps) => {
             )}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <MobileThemeSwitch />
+              <div className="flex justify-between">
+                <div className="flex items-center gap-2 text-sm">
+                  <Palette size={16} className="text-muted-foreground" /> Tema
+                </div>
+                <GroupThemeSwitch />
+              </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
