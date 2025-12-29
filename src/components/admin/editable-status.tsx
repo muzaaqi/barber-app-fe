@@ -68,11 +68,11 @@ export const EditableStatus = ({
       return "default";
     }
 
-    if (["cancelled", "failed", "unpaid", "pending"].includes(status)) {
+    if (["failed", "unpaid", "pending"].includes(status)) {
       return "destructive";
     }
 
-    if (["processing", "shipping", "received"].includes(status)) {
+    if (["processing", "shipping", "received", "confirmed"].includes(status)) {
       return "secondary";
     }
 
