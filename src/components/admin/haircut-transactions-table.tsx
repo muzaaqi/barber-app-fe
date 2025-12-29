@@ -1,5 +1,5 @@
 import { DataTable } from "../ui/data-table";
-import { columns, HaircutTransaction } from "./haircut-transaction-colums";
+import { columns, HaircutTransaction } from "./haircut-transaction-columns";
 import GlobalPagination from "../global-pagination";
 import { getHaircutTransactions } from "@/actions/management/haircut-transaction-actions";
 
