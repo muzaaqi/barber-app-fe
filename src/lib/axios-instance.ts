@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 const bergasAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
   validateStatus: () => true,
   headers: {
     "Permission-Key": process.env.NEXT_PUBLIC_SECRET_API_KEY || "",
@@ -13,6 +14,7 @@ const bergasAPI = axios.create({
 
 const jwtBergasAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
   validateStatus: () => true,
   headers: {
     "Permission-Key": process.env.NEXT_PUBLIC_SECRET_API_KEY || "",
