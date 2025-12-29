@@ -126,11 +126,6 @@ const ProductDialog = ({
         setAddress("");
         router.push(`/me/history/product/${res.data.id}`);
       }
-      if (!res.success) {
-        toast.error(
-          res.message || "Gagal memproses pesanan. Silakan coba lagi.",
-        );
-      }
     } catch {
       toast.error("Gagal memproses pesanan. Silakan coba lagi.");
     } finally {

@@ -100,11 +100,6 @@ const HaircutDetail = () => {
         setIsKeramas("false");
         router.push(`/me/history/haircut/${res.data.id}`);
       }
-      if (!res.success) {
-        toast.error(
-          res.message || "Gagal membuat reservasi. Silakan coba lagi.",
-        );
-      }
     } catch {
       setErrorMessage("Gagal membuat reservasi. Silakan coba lagi.");
       toast.error("Gagal membuat reservasi. Silakan coba lagi.");

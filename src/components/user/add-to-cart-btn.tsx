@@ -17,10 +17,6 @@ const AddToCartButton = ({ productId }: { productId: string }) => {
 
     try {
       const res = await addToCart(productId, 1);
-      if (!res.success) {
-        toast.error(res.message);
-        return;
-      }
       toast.success("Produk berhasil ditambahkan ke troli", {
         action: {
           label: "Lihat Troli",

@@ -22,7 +22,7 @@ import {
   Palette,
 } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { GroupThemeSwitch, MobileThemeSwitch } from "./theme-switch";
+import { GroupThemeSwitch } from "./theme-switch";
 import { AuthButton, MobileAuthButton } from "./auth-button";
 import { CartResponse } from "@/types/cart";
 

@@ -43,7 +43,7 @@ const addToCart = async (productId: string, quantity: number) => {
     if (res.status !== 200) {
       throw new Error("Failed to add to cart");
     }
-    revalidatePath("/cart");
+    revalidatePath("/me/cart");
     return { success: true, message: "Berhasil menambahkan ke troli" };
   } catch {
     return { success: false, message: "Gagal menambahkan ke troli" };

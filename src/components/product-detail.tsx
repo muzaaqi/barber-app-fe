@@ -124,11 +124,6 @@ const ProductDetail = () => {
         toast.success("Pesanan berhasil dibuat!");
         router.push(`/me/history/product/${res.data.id}`);
       }
-      if (!res.success) {
-        toast.error(
-          res.message || "Gagal memproses pesanan. Silakan coba lagi.",
-        );
-      }
     } catch (error) {
       console.error(error);
       setErrorMessage("Gagal memproses pesanan. Silakan coba lagi.");
