@@ -53,7 +53,7 @@ const updateCartQuantity = async (cartId: string, quantity: number) => {
     if (res.status !== 200) {
       throw new Error("Failed to update cart quantity");
     }
-    revalidatePath("/cart");
+    revalidatePath("/me/cart");
     return { success: true, message: "Berhasil update quantity" };
   } catch {
     return { success: false, message: "Gagal update quantity" };
@@ -66,7 +66,7 @@ const deleteCartItem = async (cartId: string) => {
     if (res.status !== 200) {
       throw new Error("Failed to delete cart item");
     }
-    revalidatePath("/cart");
+    revalidatePath("/me/cart");
     return { success: true };
   } catch {
     return { success: false, message: "Gagal menghapus item" };
@@ -82,7 +82,7 @@ const checkoutCart = async (payload: CartCheckoutPayload) => {
     if (res.status !== 201) {
       throw new Error("Failed to checkout cart");
     }
-    revalidatePath("/cart");
+    revalidatePath("/me/cart");
     return {
       success: true,
       data: res.data.data,
