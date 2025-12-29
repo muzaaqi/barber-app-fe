@@ -11,7 +11,6 @@ import {
   User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
@@ -35,17 +34,17 @@ const navItems = [
     icon: <LayoutDashboard className="mr-3 h-5 w-5" />,
   },
   {
-    name: "Users",
+    name: "Pengguna",
     url: "/dashboard/users",
     icon: <User className="mr-3 h-5 w-5" />,
   },
   {
-    name: "Haircuts",
+    name: "Model Rambut",
     url: "/dashboard/haircuts",
     icon: <Scissors className="mr-3 h-5 w-5" />,
   },
   {
-    name: "Products",
+    name: "Produk",
     url: "/dashboard/products",
     icon: <ShoppingBasket className="mr-3 h-5 w-5" />,
   },
