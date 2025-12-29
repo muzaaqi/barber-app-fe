@@ -26,6 +26,7 @@ import { PaymentQRIS } from "./payment-qris";
 import { cn } from "@/lib/utils";
 import { jwtBergasAPI } from "@/lib/axios-instance";
 import { Spinner } from "../ui/spinner";
+import { useRouter } from "next/navigation";
 
 interface ProductTransactionDetailProps {
   data: {
@@ -64,6 +65,8 @@ export const ProductTransactionDetail = ({
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -104,6 +107,7 @@ export const ProductTransactionDetail = ({
         },
       );
       if (res.status !== 200) throw new Error("Failed to upload payment proof");
+      router.refresh();
       toast.success(
         "Bukti pembayaran berhasil diunggah! Menunggu verifikasi admin.",
       );
