@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Scissors, ShoppingBasket, Menu, LayoutDashboard } from "lucide-react";
+import {
+  Scissors,
+  ShoppingBasket,
+  Menu,
+  LayoutDashboard,
+  User,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -27,6 +33,11 @@ const navItems = [
     name: "Dashboard",
     url: "/dashboard",
     icon: <LayoutDashboard className="mr-3 h-5 w-5" />,
+  },
+  {
+    name: "Users",
+    url: "/dashboard/users",
+    icon: <User className="mr-3 h-5 w-5" />,
   },
   {
     name: "Haircuts",
@@ -97,7 +108,7 @@ const SidebarContent = () => {
       </div>
       <div className="space-y-4">
         <Separator />
-        <div className="flex justify-between px-3 items-center">
+        <div className="flex items-center justify-between px-3">
           {!isLoading && user ? (
             <div className="flex items-center gap-3">
               <ProfilePopover user={user} cartItems={null} />
