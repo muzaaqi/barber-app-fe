@@ -123,7 +123,7 @@ const updateHaircutTransactionStatus = async (
     const res = await jwtBergasAPI.put(`/haircut-transactions/${id}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Permission-Key": process.env.SECRET_API_KEY || "",
+        "Permission-Key": process.env.NEXT_PUBLIC_SECRET_API_KEY || "",
       },
     });
     if (res.status !== 200) throw new Error("Gagal update status");
