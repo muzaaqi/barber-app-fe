@@ -4,6 +4,22 @@ import getAuthHeader from "@/features/get-jwt-token";
 import { jwtBergasAPI } from "@/lib/axios-instance";
 import { cookies } from "next/headers";
 
+const getAllUsers = async (page: number, limit: number) => {
+  const token = await getAuthHeader();
+
+  if (!token) return null;
+
+  try {
+    const res = await jwtBergasAPI.get(`user?page=${page}&limit=${limit}`);
+
+    if (res.status !== 200) return null;
+
+    return { data: res.data.data.data, pagination: res.data.data.pagination };
+  } catch {
+    return null;
+  }
+};
+
 const getProfile = async () => {
   const token = await getAuthHeader();
 
@@ -28,7 +44,7 @@ const updateProfile = async (payload: { name: string }) => {
   } catch {
     return { success: false, message: "Gagal memperbarui profil." };
   }
-}
+};
 
 const changePassword = async (payload: {
   current_password: string;
@@ -61,4 +77,4 @@ const logOutAction = async () => {
   }
 };
 
-export { getProfile, updateProfile, changePassword, logOutAction };
+export { getAllUsers, getProfile, updateProfile, changePassword, logOutAction };
