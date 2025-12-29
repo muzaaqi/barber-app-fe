@@ -87,7 +87,7 @@ export default function ProductHistory() {
         {data.map((transaction) => (
           <Card
             key={transaction.id}
-            className="group hover:border-primary/50 flex flex-col justify-between overflow-hidden border transition-all hover:shadow-md py-0"
+            className="group hover:border-primary/50 flex flex-col justify-between overflow-hidden border py-0 transition-all hover:shadow-md"
           >
             <CardHeader className="bg-muted/30 flex flex-row items-start justify-between border-b p-4">
               <div className="flex flex-col gap-1">
@@ -144,7 +144,7 @@ export default function ProductHistory() {
                 )}
               </div>
             </CardContent>
-            <CardFooter className="bg-muted/10 flex gap-3 border-t p-4 flex-row sm:justify-between">
+            <CardFooter className="bg-muted/10 flex flex-row gap-3 border-t p-4 sm:justify-between">
               <div className="flex w-full flex-col items-start justify-center">
                 <span className="text-muted-foreground text-xs">
                   Total Belanja
@@ -180,7 +180,7 @@ const StatusBadge = ({ status }: { status: string }) => {
     paid: "bg-green-100 text-green-800 border-green-200",
     pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
     unpaid: "bg-red-100 text-red-800 border-red-200",
-    shipped: "bg-blue-100 text-blue-800 border-blue-200",
+    shipping: "bg-blue-100 text-blue-800 border-blue-200",
     completed: "bg-primary/20 text-primary border-primary/20",
     cancelled: "bg-gray-100 text-gray-800 border-gray-200",
   };

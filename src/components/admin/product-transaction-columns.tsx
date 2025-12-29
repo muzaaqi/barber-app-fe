@@ -14,7 +14,12 @@ import { updateProductTransactionStatus } from "@/actions/management/product-tra
 import { EditableStatus } from "@/components/admin/editable-status";
 import { Banknote, QrCode } from "lucide-react";
 
-const EXPEDITION_STATUS_OPTS = ["pending", "processed", "shipped", "delivered"];
+const EXPEDITION_STATUS_OPTS = [
+  "pending",
+  "processing",
+  "shipping",
+  "delivered",
+];
 const PAYMENT_STATUS_OPTS = ["unpaid", "paid"];
 
 export type ProductsTransaction = {
@@ -162,9 +167,9 @@ export const columns: ColumnDef<ProductsTransaction>[] = [
               }
               colorMap={{
                 delivered: "default",
-                shipped: "secondary",
+                shipping: "secondary",
                 pending: "outline",
-                processed: "destructive",
+                processing: "destructive",
               }}
             />
           </div>

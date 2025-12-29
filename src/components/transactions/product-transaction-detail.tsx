@@ -40,8 +40,8 @@ interface ProductTransactionDetailProps {
     expedition_service: string;
     expedition_status:
       | "pending"
-      | "processed"
-      | "shipped"
+      | "processing"
+      | "shipping"
       | "delivered"
       | "cancelled";
     shipping_address?: string;
@@ -117,7 +117,8 @@ export const ProductTransactionDetail = ({
       setIsUpdating(false);
     }
   };
-  const isPendingPayment = data.payment_status === "unpaid" || data.payment_status === "received";
+  const isPendingPayment =
+    data.payment_status === "unpaid" || data.payment_status === "received";
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto w-full max-w-5xl pb-10 duration-700">
@@ -392,14 +393,14 @@ const StatusBadge = ({ status }: { status: string }) => {
 const ExpeditionTimeline = ({ status }: { status: string }) => {
   const steps = [
     { key: "pending", label: "Dipesan" },
-    { key: "processed", label: "Diproses" },
-    { key: "shipped", label: "Dikirim" },
+    { key: "processing", label: "Diproses" },
+    { key: "shipping", label: "Dikirim" },
     { key: "delivered", label: "Sampai" },
   ];
 
   let activeIndex = 0;
-  if (status === "processed") activeIndex = 1;
-  if (status === "shipped") activeIndex = 2;
+  if (status === "processing") activeIndex = 1;
+  if (status === "shipping") activeIndex = 2;
   if (status === "delivered" || status === "completed") activeIndex = 3;
 
   return (

@@ -64,20 +64,19 @@ export const EditableStatus = ({
   const getBadgeVariant = (status: string) => {
     if (colorMap && colorMap[status]) return colorMap[status];
 
-    if (
-      [
-        "paid",
-        "success",
-        "completed",
-        "shipped",
-        "delivered",
-        "confirmed",
-      ].includes(status)
-    )
+    if (["paid", "completed", "delivered"].includes(status)) {
       return "default";
-    if (["cancelled", "failed", "unpaid"].includes(status))
+    }
+
+    if (["cancelled", "failed", "unpaid", "pending"].includes(status)) {
       return "destructive";
-    return "secondary";
+    }
+
+    if (["processing", "shipping", "received"].includes(status)) {
+      return "secondary";
+    }
+
+    return "outline";
   };
 
   const performUpdate = (newStatus: string) => {
