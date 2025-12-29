@@ -32,8 +32,6 @@ export default function CartItemCard({ item }: { item: CartItem }) {
     });
   };
 
-  console.log("Rendering CartItemCard for item:", item);
-
   return (
     <Card className="mb-4 overflow-hidden border shadow-sm">
       <CardContent className="flex gap-3">

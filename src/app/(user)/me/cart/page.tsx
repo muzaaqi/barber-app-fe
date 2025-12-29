@@ -20,8 +20,6 @@ export const metadata = {
 
 export default async function CartPage() {
   const cartData = await getCartData();
-
-  console.log("Cart Data:", cartData);
   
   if (!cartData || !cartData.data || cartData.data.items.length === 0) {
     return (
