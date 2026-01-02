@@ -17,11 +17,10 @@ export interface ProductType {
   description: string | null;
   stock: number;
   price: number;
-  image_url: string | null;
-  image_key: string | null;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
+  image_url: string;
+  image_key?: string | null;
+  created_at?: string;
+  deleted_at?: string | null;
 }
 
 export interface CreateProductPayload {
