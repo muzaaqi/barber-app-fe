@@ -1,7 +1,5 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import axios from "axios";
-import { redirect } from "next/navigation";
-import { toast } from "sonner";
 
 const bergasAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -28,7 +26,6 @@ jwtBergasAPI.interceptors.request.use(async (config) => {
       config.headers.Authorization = `Bearer ${token}`;
     }
   } catch {
-    redirect("/login");
   }
   return config;
 });

@@ -41,6 +41,14 @@ const getProductTransactions = async (page?: number, limit?: number) => {
     const res = await jwtBergasAPI.get(
       `/product-transactions${page !== undefined && limit !== undefined ? `?page=${page}&limit=${limit}` : ""}`,
     );
+    if (res.status === 401) {
+      return {
+        data: [],
+        pagination: { page: 1, limit: 10, total: 0 },
+        success: false,
+        message: "Unauthorized",
+      };
+    }
     if (res.status !== 200) {
       throw new Error("Failed to fetch product transactions");
     }
@@ -53,6 +61,8 @@ const getProductTransactions = async (page?: number, limit?: number) => {
   } catch (error) {
     console.error("Failed to fetch product transactions:", error);
     return {
+      data: [],
+      pagination: { page: 1, limit: 10, total: 0 },
       success: false,
       message: "Gagal mengambil data transaksi produk",
     };
