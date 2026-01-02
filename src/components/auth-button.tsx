@@ -4,7 +4,7 @@ import { ButtonGroup } from "./ui/button-group";
 import ProfilePopover from "./user/profile-popover";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getInitials } from "@/features/formatter";
-import { CartResponse } from "@/types/cart";
+import { CartResponse } from "@/types";
 import { LogOutIcon } from "lucide-react";
 import ConfirmationDialog from "./confirmation-dialog";
 import { logOutAction } from "@/actions/auth/get-profile";

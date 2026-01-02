@@ -9,7 +9,7 @@ import {
   updateCartQuantity,
   deleteCartItem,
 } from "@/actions/management/cart-actions";
-import { CartItem } from "@/types/cart";
+import { CartItem } from "@/types";
 import { formatIDR } from "@/features/formatter";
 import { toast } from "sonner";
 import ConfirmationDialog from "../confirmation-dialog";

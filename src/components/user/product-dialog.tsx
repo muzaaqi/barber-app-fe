@@ -34,7 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { addNewProcuctTransaction } from "@/actions/management/product-transaction-actions";
 import { Spinner } from "../ui/spinner";
-import { ProductType } from "@/types/products";
+import { ProductType } from "@/types";
 import { useRouter } from "next/navigation";
 
 const ProductDialog = ({

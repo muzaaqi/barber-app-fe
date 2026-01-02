@@ -21,7 +21,7 @@ import { Badge } from "../ui/badge";
 import { logOutAction } from "@/actions/auth/get-profile";
 import { Separator } from "../ui/separator";
 import { GroupThemeSwitch } from "../theme-switch";
-import { CartResponse } from "@/types/cart";
+import { CartResponse } from "@/types";
 import ConfirmationDialog from "../confirmation-dialog";
 const ProfilePopover = ({
   user,

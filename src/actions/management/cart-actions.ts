@@ -2,7 +2,7 @@
 
 import { jwtBergasAPI } from "@/lib/axios-instance";
 import { revalidatePath } from "next/cache";
-import { CartCheckoutPayload, CartResponse } from "@/types/cart";
+import { CartCheckoutPayload, CartResponse } from "@/types";
 import getAuthHeader from "@/features/get-jwt-token";
 import { redirect } from "next/navigation";
 

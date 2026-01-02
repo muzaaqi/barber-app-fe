@@ -24,7 +24,7 @@ import {
 import { Badge } from "./ui/badge";
 import { GroupThemeSwitch } from "./theme-switch";
 import { AuthButton, MobileAuthButton } from "./auth-button";
-import { CartResponse } from "@/types/cart";
+import { CartResponse } from "@/types";
 
 interface NavbarUserActionsProps {
   cartItems: CartResponse | null;

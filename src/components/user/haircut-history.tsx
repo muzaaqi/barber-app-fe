@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { HaircutTransaction, PaginationMeta } from "@/types/transactions";
+import { HaircutTransaction, PaginationMeta } from "@/types";
 import GlobalPagination from "@/components/global-pagination";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

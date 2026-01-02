@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatIDR } from "@/features/formatter";
-import { CartSummary as SummaryType } from "@/types/cart";
+import { CartSummary as SummaryType } from "@/types";
 import CartCheckoutDialog from "./cart-checkout-dialog";
 
 export default function CartSummary({ summary }: { summary: SummaryType }) {
