@@ -24,7 +24,7 @@ import { toast } from "sonner";
 type Props = {
   id: string;
   product_name: string;
-  product_description: string;
+  product_description: string | null;
   product_price: number;
   product_stock: number;
   image_url: string;
@@ -71,7 +71,7 @@ const EditProduct = ({
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("description", description);
+    formData.append("description", description || "");
     formData.append("price", price.toString());
     formData.append("stock", stock.toString());
 
@@ -213,7 +213,7 @@ const EditProduct = ({
                 <Textarea
                   id="description"
                   rows={5}
-                  value={description}
+                  value={description || ""}
                   placeholder="Ubah deskripsi tentang produk ini (maks. 500 karakter)"
                   onChange={(e) => setDescription(e.target.value)}
                 />

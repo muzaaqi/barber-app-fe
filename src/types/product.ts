@@ -3,8 +3,8 @@ export interface Product {
   name: string;
   description: string | null;
   price: number;
-  image_url: string | null;
-  image_key: string | null;
+  image_url: string;
+  image_key: string;
   stock: number;
   created_at: string;
   updated_at: string;

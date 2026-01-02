@@ -1,5 +1,6 @@
 import { DataTable } from "../ui/data-table";
-import { columns, Haircut } from "./haircut-columns";
+import { columns } from "./haircut-columns";
+import type { Haircut } from "@/types";
 import GlobalPagination from "../global-pagination";
 import { getAllHaircuts } from "@/actions/management/haircut-actions";
 

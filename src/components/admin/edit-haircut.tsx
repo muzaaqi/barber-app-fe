@@ -24,7 +24,7 @@ import { toast } from "sonner";
 type Props = {
   id: string;
   haircut_name: string;
-  haircut_description: string;
+  haircut_description: string | null;
   image_url: string;
 };
 
@@ -65,7 +65,7 @@ const EditHaircut = ({
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("description", description);
+    formData.append("description", description || "");
 
     if (file) {
       formData.append("image", file);
@@ -172,7 +172,7 @@ const EditHaircut = ({
               <Textarea
                 id="description"
                 rows={5}
-                value={description}
+                value={description || ""}
                 placeholder="Ubah deskripsi tentang model potongan rambut ini (maks. 255 karakter)"
                 onChange={(e) => setDescription(e.target.value)}
               />
