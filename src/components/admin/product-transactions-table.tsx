@@ -1,17 +1,14 @@
 import { DataTable } from "../ui/data-table";
-import { columns, ProductsTransaction } from "./product-transaction-columns";
+import { columns } from "./product-transaction-columns";
 import GlobalPagination from "../global-pagination";
 import { getProductTransactions } from "@/actions/management/product-transaction-actions";
+import type { ProductTransaction } from "@/types";
 
-type Props = {
-  page?: string;
-};
-
-const ProductsTransactionsTable = async ({ page }: Props) => {
+const ProductsTransactionsTable = async ({ page }: { page?: string }) => {
   const currentPage = Number(page) || 1;
   const limit = 10;
 
-  let transactions: ProductsTransaction[] = [];
+  let transactions: ProductTransaction[] = [];
   let pagination = { page: currentPage, limit: limit, total: 0 };
 
   try {
