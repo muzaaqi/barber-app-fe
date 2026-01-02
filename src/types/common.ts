@@ -4,17 +4,20 @@ export interface PaginationMeta {
   total: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface ApiResponse<T = any> {
+export interface BaseApiResponse {
   success: boolean;
   message: string;
-  data?: T;
-  pagination?: PaginationMeta;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface ActionResponse<T = any> {
-  success: boolean;
-  message: string;
-  data?: T;
+export interface PaginatedApiResponse<T> extends BaseApiResponse {
+  data: T[];
+  pagination: PaginationMeta;
+}
+
+export interface SingleApiResponse<T> extends BaseApiResponse {
+  data: T;
+}
+
+export interface EmptyApiResponse extends BaseApiResponse {
+  data?: null;
 }

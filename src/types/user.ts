@@ -18,3 +18,20 @@ export interface ChangePasswordPayload {
   current_password: string;
   new_password: string;
 }
+
+export interface UserResponse {
+  success: boolean;
+  message: string;
+  data: User;
+}
+
+export interface UsersListResponse {
+  success: boolean;
+  message: string;
+  data: User[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+}

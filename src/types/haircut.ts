@@ -17,3 +17,20 @@ export interface CreateHaircutPayload {
 }
 
 export type UpdateHaircutPayload = Partial<CreateHaircutPayload>;
+
+export interface HaircutResponse {
+  success: boolean;
+  message: string;
+  data: Haircut;
+}
+
+export interface HaircutsListResponse {
+  success: boolean;
+  message: string;
+  data: Haircut[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+}

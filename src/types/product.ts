@@ -33,3 +33,20 @@ export interface CreateProductPayload {
 }
 
 export type UpdateProductPayload = Partial<CreateProductPayload>;
+
+export interface ProductResponse {
+  success: boolean;
+  message: string;
+  data: Product;
+}
+
+export interface ProductsListResponse {
+  success: boolean;
+  message: string;
+  data: Product[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+}

@@ -84,3 +84,37 @@ export interface ProductPayload {
   expedition_cost: number;
   shipping_address: string;
 }
+
+export interface HaircutTransactionResponse {
+  success: boolean;
+  message: string;
+  data: HaircutTransaction;
+}
+
+export interface HaircutTransactionsListResponse {
+  success: boolean;
+  message: string;
+  data: HaircutTransaction[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+}
+
+export interface ProductTransactionResponse {
+  success: boolean;
+  message: string;
+  data: ProductTransaction;
+}
+
+export interface ProductTransactionsListResponse {
+  success: boolean;
+  message: string;
+  data: ProductTransaction[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+}
