@@ -28,7 +28,6 @@ jwtBergasAPI.interceptors.request.use(async (config) => {
       config.headers.Authorization = `Bearer ${token}`;
     }
   } catch {
-    toast.error("Silahkan login terlebih dahulu");
     redirect("/login");
   }
   return config;
