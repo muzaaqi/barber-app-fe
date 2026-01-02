@@ -1,13 +1,10 @@
 import { DataTable } from "../ui/data-table";
-import { columns, Product } from "./product-columns";
+import { columns } from "./product-columns";
 import GlobalPagination from "../global-pagination";
 import { getAllProducts } from "@/actions/management/product-actions";
+import type { Product } from "@/types";
 
-type Props = {
-  page?: string;
-};
-
-const ProductsTable = async ({ page }: Props) => {
+const ProductsTable = async ({ page }: { page?: string }) => {
   const currentPage = Number(page) || 1;
   const limit = 10;
 

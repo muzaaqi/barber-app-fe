@@ -8,28 +8,9 @@ import { EditableStatus } from "@/components/admin/editable-status";
 import { Banknote, QrCode } from "lucide-react";
 import { Popover } from "@radix-ui/react-popover";
 import { PopoverContent, PopoverTrigger } from "../ui/popover";
-import type { PaymentStatus, ReservationStatus, PaymentMethod } from "@/types";
+import type { PaymentStatus, HaircutTransaction } from "@/types";
 
 const PAYMENT_STATUS_OPTS: PaymentStatus[] = ["paid", "unpaid"];
-
-export type HaircutTransaction = {
-  id: string;
-  reservation_time: string;
-  reservation_status: ReservationStatus;
-  payment_method: PaymentMethod;
-  payment_status: PaymentStatus;
-  receipt_url: string;
-  total_price: number;
-  haircut: {
-    name: string;
-    image_url: string;
-  };
-  user: {
-    name: string;
-    email: string;
-    image_url?: string;
-  };
-};
 
 export const columns: ColumnDef<HaircutTransaction>[] = [
   {

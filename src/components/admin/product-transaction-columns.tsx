@@ -13,7 +13,7 @@ import { formatIDR } from "@/features/formatter";
 import { updateProductTransactionStatus } from "@/actions/management/product-transaction-actions";
 import { EditableStatus } from "@/components/admin/editable-status";
 import { Banknote, QrCode } from "lucide-react";
-import type { ExpeditionStatus, PaymentStatus, PaymentMethod } from "@/types";
+import type { ExpeditionStatus, PaymentStatus, ProductTransaction } from "@/types";
 
 const EXPEDITION_STATUS_OPTS: ExpeditionStatus[] = [
   "pending",
@@ -23,30 +23,9 @@ const EXPEDITION_STATUS_OPTS: ExpeditionStatus[] = [
 ];
 const PAYMENT_STATUS_OPTS: PaymentStatus[] = ["unpaid", "paid"];
 
-export type ProductsTransaction = {
-  id: string;
-  expedition_service: string;
-  expedition_status: ExpeditionStatus;
-  payment_method: PaymentMethod;
-  payment_status: PaymentStatus;
-  receipt_url: string;
-  total_price: number;
-  shipping_address: string;
-  created_at?: string;
-  items: {
-    product_name: string;
-    product_image: string;
-    quantity: number;
-    subtotal: number;
-  }[];
-  user: {
-    name: string;
-    email: string;
-    image_url?: string;
-  };
-};
 
-export const columns: ColumnDef<ProductsTransaction>[] = [
+
+export const columns: ColumnDef<ProductTransaction>[] = [
   {
     id: "index",
     header: () => <span className="hidden md:table-cell">No</span>,

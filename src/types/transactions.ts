@@ -25,13 +25,14 @@ export interface HaircutTransaction {
   receipt_key: string | null;
   created_at: string;
   updated_at: string;
-  haircut?: {
+  haircut: {
     name: string;
     image_url: string;
   };
-  user?: {
+  user: {
     name: string;
     email: string;
+    image_url?: string;
   };
 }
 
@@ -48,7 +49,7 @@ export interface ProductTransactionItem {
   id: string;
   product_id: string;
   product_name: string;
-  product_image: string | null;
+  product_image: string;
   quantity: number;
   price_at_purchase: number;
   subtotal: number;
@@ -69,9 +70,10 @@ export interface ProductTransaction {
   created_at: string;
   updated_at: string;
   items: ProductTransactionItem[];
-  user?: {
+  user: {
     name: string;
     email: string;
+    image_url?: string;
   };
 }
 
