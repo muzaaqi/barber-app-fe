@@ -2,7 +2,7 @@
 
 import getAuthHeader from "@/features/get-jwt-token";
 import { jwtBergasAPI } from "@/lib/axios-instance";
-import { HaircutPayload } from "@/types/transactions";
+import { HaircutPayload } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 

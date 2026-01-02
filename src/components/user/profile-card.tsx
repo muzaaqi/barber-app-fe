@@ -10,18 +10,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Mail, Shield, UserIcon, LogOut, User } from "lucide-react";
+import {
+  Mail,
+  Shield,
+  UserIcon,
+  LogOut,
+  User as UserIcon2,
+} from "lucide-react";
 import { getInitials } from "@/features/formatter";
 import { redirect } from "next/navigation";
 import ConfirmationDialog from "../confirmation-dialog";
 import EditedField from "./edited-field";
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: "user" | "admin";
-};
+import { User } from "@/types";
 
 const ProfileCard = async () => {
   const user: User = await getProfile();
@@ -31,7 +31,7 @@ const ProfileCard = async () => {
   }
   return (
     <Card className="shadow-lg">
-      <CardHeader className="flex flex-col items-center gap-4 pb-2 relative">
+      <CardHeader className="relative flex flex-col items-center gap-4 pb-2">
         <Avatar className="size-24 border-4 shadow-sm">
           <AvatarImage src="" alt={user.name} />
           <AvatarFallback className="bg-primary/10 text-primary text-2xl font-bold">

@@ -13,21 +13,22 @@ import { formatIDR } from "@/features/formatter";
 import { updateProductTransactionStatus } from "@/actions/management/product-transaction-actions";
 import { EditableStatus } from "@/components/admin/editable-status";
 import { Banknote, QrCode } from "lucide-react";
+import type { ExpeditionStatus, PaymentStatus, PaymentMethod } from "@/types";
 
-const EXPEDITION_STATUS_OPTS = [
+const EXPEDITION_STATUS_OPTS: ExpeditionStatus[] = [
   "pending",
-  "processing",
-  "shipping",
+  "shipped",
   "delivered",
+  "cancelled",
 ];
-const PAYMENT_STATUS_OPTS = ["unpaid", "paid"];
+const PAYMENT_STATUS_OPTS: PaymentStatus[] = ["unpaid", "paid"];
 
 export type ProductsTransaction = {
   id: string;
   expedition_service: string;
-  expedition_status: string;
-  payment_method: string;
-  payment_status: string;
+  expedition_status: ExpeditionStatus;
+  payment_method: PaymentMethod;
+  payment_status: PaymentStatus;
   receipt_url: string;
   total_price: number;
   shipping_address: string;

@@ -35,6 +35,7 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import { updateHaircutTransactionStatus } from "@/actions/management/haircut-transaction-actions";
 import { Spinner } from "../ui/spinner";
 import { useRouter } from "next/navigation";
+import ConfirmationDialog from "../confirmation-dialog";
 
 interface TransactionDetailProps {
   data: {
@@ -45,7 +46,7 @@ interface TransactionDetailProps {
     hairwash: boolean;
     payment_method: "cash" | "qris";
     payment_status: "unpaid" | "received" | "paid";
-    reservation_status: "pending" | "confirmed" | "completed";
+    reservation_status: "cancelled" | "pending" | "confirmed" | "completed";
     reservation_time: string;
     total_price: number;
     qris_payload?: string;
@@ -145,6 +146,27 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
     }
   };
 
+  const handleCancelReservation = async () => {
+    try {
+      setIsUpdating(true);
+      const res = await updateHaircutTransactionStatus(
+        data.id,
+        "reservation_status",
+        "cancelled",
+      );
+
+      if (res.success) {
+        router.refresh();
+      } else {
+        throw new Error("Gagal membatalkan reservasi.");
+      }
+    } catch {
+      toast.error("Gagal membatalkan reservasi. Silakan coba lagi.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   const getStatusBadge = (status: string, type: "payment" | "reservation") => {
     if (status === "paid" || status === "completed" || status === "confirmed") {
       return (
@@ -163,10 +185,10 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
         </Badge>
       );
     }
-    if (status === "unpaid") {
+    if (status === "unpaid" || status === "cancelled") {
       return (
         <Badge className="px-3 py-1 text-sm" variant="destructive">
-          Belum Bayar
+          {type === "payment" ? "Belum Dibayar" : "Dibatalkan"}
         </Badge>
       );
     }
@@ -270,6 +292,29 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                   Scan Selesai
                 </Button>
               )}
+              {data.reservation_status === "pending" && data.payment_method === "cash" &&
+                  data.payment_status === "unpaid" && (
+                    <ConfirmationDialog
+                      title="Batalkan Reservasi"
+                      description="Apakah Anda yakin ingin membatalkan reservasi ini? Tindakan ini tidak dapat dibatalkan."
+                      confirmText="Ya, Batalkan"
+                      cancelText="Batal"
+                      successText="Berhasil membatalkan reservasi!"
+                      variant="destructive"
+                      onConfirm={handleCancelReservation}
+                      trigger={
+                        <Button variant="destructive" disabled={isUpdating}>
+                          {isUpdating ? (
+                            <Spinner />
+                          ) : (
+                            <>
+                              <X className="h-4 w-4" /> Batalkan
+                            </>
+                          )}
+                        </Button>
+                      }
+                    />
+                  )}
             </CardContent>
           </Card>
           {isPendingQRIS ? (

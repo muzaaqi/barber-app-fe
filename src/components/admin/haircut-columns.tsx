@@ -12,13 +12,7 @@ import {
 import EditHaircut from "./edit-haircut";
 import { deleteHaircutById } from "@/actions/management/haircut-actions";
 import ConfirmationDialog from "../confirmation-dialog";
-
-export type Haircut = {
-  id: string;
-  name: string;
-  description: string;
-  image_url: string;
-};
+import type { Haircut } from "@/types";
 
 export const columns: ColumnDef<Haircut>[] = [
   {
@@ -94,8 +88,12 @@ export const columns: ColumnDef<Haircut>[] = [
                 errorText="Gagal menghapus model rambut."
                 variant="destructive"
                 trigger={
-                  <Button variant="ghost" className="text-destructive flex items-center justify-start gap-3">
-                    <Trash2 />Hapus
+                  <Button
+                    variant="ghost"
+                    className="text-destructive flex items-center justify-start gap-3"
+                  >
+                    <Trash2 />
+                    Hapus
                   </Button>
                 }
               />

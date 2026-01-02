@@ -22,17 +22,10 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { addNewHaircutTransaction } from "@/actions/management/haircut-transaction-actions";
-import { HaircutPayload } from "@/types/transactions";
+import { HaircutPayload, Haircut } from "@/types";
 import { Spinner } from "../ui/spinner";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
-
-type Haircut = {
-  id: string;
-  name: string;
-  description: string;
-  image_url: string;
-};
 
 const HaircutDialog = ({ id, name, image_url, description }: Haircut) => {
   const [isOpen, setIsOpen] = useState(false);

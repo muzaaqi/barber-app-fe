@@ -1,13 +1,7 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
-
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: "admin" | "user";
-};
+import type { User } from "@/types";
 
 type AuthContextType = {
   user: User | null;
@@ -23,9 +17,7 @@ export const AuthProvider = ({
   user: User | null;
 }) => {
   return (
-    <AuthContext.Provider value={{ user }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 };
 

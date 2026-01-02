@@ -35,15 +35,7 @@ import { toast } from "sonner";
 import { formatIDR } from "@/features/formatter";
 import { addNewProcuctTransaction } from "@/actions/management/product-transaction-actions";
 import { getProductById } from "@/actions/management/product-actions";
-
-type Product = {
-  id: string;
-  name: string;
-  description: string;
-  image_url: string;
-  price: number;
-  stock?: number;
-};
+import { Product } from "@/types";
 
 const ProductDetail = () => {
   const { productId }: { productId: string } = useParams();

@@ -15,17 +15,10 @@ import {
 import { Skeleton } from "./ui/skeleton";
 import { toast } from "sonner";
 import { getAllHaircuts } from "@/actions/management/haircut-actions";
-import { PaginationMeta } from "@/types/transactions";
+import { PaginationMeta, Haircut } from "@/types";
 import HaircutDialog from "./user/haircut-dialog";
 import GlobalPagination from "@/components/global-pagination";
 import { SearchX } from "lucide-react";
-
-type Haircut = {
-  id: string;
-  name: string;
-  description: string;
-  image_url: string;
-};
 
 const HaircutsCards = () => {
   const searchParams = useSearchParams();
@@ -61,7 +54,7 @@ const HaircutsCards = () => {
         <Empty>
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <SearchX className="h-10 w-10 text-muted-foreground" />
+              <SearchX className="text-muted-foreground h-10 w-10" />
             </EmptyMedia>
             <EmptyTitle>Layanan Tidak Tersedia</EmptyTitle>
             <EmptyDescription>
@@ -81,7 +74,7 @@ const HaircutsCards = () => {
               <Card key={index} className="flex flex-col justify-between">
                 <CardContent className="text-center">
                   <Skeleton className="mb-3 aspect-square w-full rounded-md" />
-                  <Skeleton className="h-6 w-3/4 mx-auto" />
+                  <Skeleton className="mx-auto h-6 w-3/4" />
                 </CardContent>
                 <CardFooter>
                   <Skeleton className="h-10 w-full" />
@@ -101,17 +94,17 @@ const HaircutsCards = () => {
                         src={image_url}
                         alt={name}
                         fill
-                        className="object-cover transition-transform hover:scale-105 duration-300"
+                        className="object-cover transition-transform duration-300 hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold md:text-xl line-clamp-1">
+                    <h2 className="line-clamp-1 text-lg font-semibold md:text-xl">
                       {name}
                     </h2>
                   </CardContent>
                   <CardFooter>
                     <div
-                      className="w-full pointer-events-none md:pointer-events-auto"
+                      className="pointer-events-none w-full md:pointer-events-auto"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();

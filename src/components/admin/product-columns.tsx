@@ -11,18 +11,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatIDR } from "@/features/formatter";
 import EditProduct from "./edit-product";
-
 import { deleteProductById } from "@/actions/management/product-actions";
 import ConfirmationDialog from "../confirmation-dialog";
-
-export type Product = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  image_url: string;
-};
+import type { Product } from "@/types";
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -117,7 +108,10 @@ export const columns: ColumnDef<Product>[] = [
                 errorText="Gagal menghapus produk."
                 variant="destructive"
                 trigger={
-                  <Button variant="ghost" className="text-destructive flex items-center justify-start gap-3">
+                  <Button
+                    variant="ghost"
+                    className="text-destructive flex items-center justify-start gap-3"
+                  >
                     <Trash2 />
                     Hapus
                   </Button>

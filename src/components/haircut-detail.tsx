@@ -25,14 +25,7 @@ import { toast } from "sonner";
 import { getHaircutById } from "@/actions/management/haircut-actions";
 import { format } from "date-fns";
 import { addNewHaircutTransaction } from "@/actions/management/haircut-transaction-actions";
-
-type Haircut = {
-  id: string;
-  name: string;
-  description: string;
-  image_url: string;
-  price?: number;
-};
+import { Haircut } from "@/types";
 
 const HaircutDetail = () => {
   const { haircutId }: { haircutId: string } = useParams();
@@ -104,7 +97,7 @@ const HaircutDetail = () => {
       setErrorMessage("Gagal membuat reservasi. Silakan coba lagi.");
       toast.error("Gagal membuat reservasi. Silakan coba lagi.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   };
 

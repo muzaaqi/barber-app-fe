@@ -2,7 +2,7 @@
 
 import getAuthHeader from "@/features/get-jwt-token";
 import { jwtBergasAPI } from "@/lib/axios-instance";
-import { ProductPayload } from "@/types/transactions";
+import { ProductPayload } from "@/types";
 import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
 import { redirect } from "next/navigation";
 

@@ -2,12 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
+import type { User } from "@/types";
 
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
+export type UserWithTimestamps = User & {
   created_at: string;
   updated_at: string;
 };
@@ -68,7 +65,9 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const createdAt = new Date(row.getValue("created_at") as string);
       return (
-        <span className="hidden md:table-cell">{createdAt.toLocaleDateString()}</span>
+        <span className="hidden md:table-cell">
+          {createdAt.toLocaleDateString()}
+        </span>
       );
     },
   },
@@ -78,8 +77,10 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const updatedAt = new Date(row.getValue("updated_at") as string);
       return (
-        <span className="hidden md:table-cell">{updatedAt.toLocaleDateString()}</span>
+        <span className="hidden md:table-cell">
+          {updatedAt.toLocaleDateString()}
+        </span>
       );
     },
-  }
+  },
 ];

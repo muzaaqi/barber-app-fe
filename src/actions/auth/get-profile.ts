@@ -3,6 +3,7 @@
 import getAuthHeader from "@/features/get-jwt-token";
 import { jwtBergasAPI } from "@/lib/axios-instance";
 import { cookies } from "next/headers";
+import { UpdateUserPayload, ChangePasswordPayload } from "@/types";
 
 const getAllUsers = async (page: number, limit: number) => {
   const token = await getAuthHeader();
@@ -31,7 +32,7 @@ const getProfile = async () => {
   return res.data.data;
 };
 
-const updateProfile = async (payload: { name: string }) => {
+const updateProfile = async (payload: UpdateUserPayload) => {
   const token = await getAuthHeader();
   if (!token) return { success: false, message: "Unauthorized" };
 
@@ -46,10 +47,7 @@ const updateProfile = async (payload: { name: string }) => {
   }
 };
 
-const changePassword = async (payload: {
-  current_password: string;
-  new_password: string;
-}) => {
+const changePassword = async (payload: ChangePasswordPayload) => {
   const token = await getAuthHeader();
 
   if (!token) return { success: false, message: "Unauthorized" };
