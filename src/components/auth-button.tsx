@@ -76,7 +76,7 @@ const MobileAuthButton = ({
           />
         </div>
       ) : (
-        <ButtonGroup className="flex w-full gap-2">
+        <ButtonGroup className="grid grid-cols-2 w-full gap-2">
           <Link href="/login">
             <Button variant="default" className="w-full">
               Masuk
