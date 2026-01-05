@@ -87,8 +87,8 @@ const HaircutsCards = () => {
                 key={id}
                 className="no-underline"
               >
-                <Card className="hover:border-primary flex h-full flex-col justify-between transition-colors duration-300">
-                  <CardContent className="text-center">
+                <Card className="hover:border-primary flex h-full flex-col justify-between transition-colors duration-300 py-3 md:py-6">
+                  <CardContent className="text-center px-3 md:px-6">
                     <div className="bg-muted relative mb-4 aspect-square w-full overflow-hidden rounded-md border">
                       <Image
                         src={image_url}
