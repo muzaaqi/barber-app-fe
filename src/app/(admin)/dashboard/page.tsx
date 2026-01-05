@@ -41,8 +41,8 @@ interface ProductTransaction {
 
 export default async function DashboardPage() {
   const [haircutRes, productRes] = await Promise.all([
-    getHaircutTransactions(undefined, 100),
-    getProductTransactions(undefined, 100),
+    getHaircutTransactions(1, 1000000),
+    getProductTransactions(1, 1000000),
   ]);
 
   const haircuts = haircutRes?.data || [];
