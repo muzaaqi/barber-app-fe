@@ -146,26 +146,26 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
     }
   };
 
-  const handleCancelReservation = async () => {
-    try {
-      setIsUpdating(true);
-      const res = await updateHaircutTransactionStatus(
-        data.id,
-        "reservation_status",
-        "cancelled",
-      );
+  // const handleCancelReservation = async () => {
+  //   try {
+  //     setIsUpdating(true);
+  //     const res = await updateHaircutTransactionStatus(
+  //       data.id,
+  //       "reservation_status",
+  //       "cancelled",
+  //     );
 
-      if (res.success) {
-        router.refresh();
-      } else {
-        throw new Error("Gagal membatalkan reservasi.");
-      }
-    } catch {
-      toast.error("Gagal membatalkan reservasi. Silakan coba lagi.");
-    } finally {
-      setIsUpdating(false);
-    }
-  };
+  //     if (res.success) {
+  //       router.refresh();
+  //     } else {
+  //       throw new Error("Gagal membatalkan reservasi.");
+  //     }
+  //   } catch {
+  //     toast.error("Gagal membatalkan reservasi. Silakan coba lagi.");
+  //   } finally {
+  //     setIsUpdating(false);
+  //   }
+  // };
 
   const getStatusBadge = (status: string, type: "payment" | "reservation") => {
     if (status === "paid" || status === "completed" || status === "confirmed") {
@@ -292,7 +292,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                   Scan Selesai
                 </Button>
               )}
-              {data.reservation_status === "pending" && data.payment_method === "cash" &&
+              {/* {data.reservation_status === "pending" && data.payment_method === "cash" &&
                   data.payment_status === "unpaid" && (
                     <ConfirmationDialog
                       title="Batalkan Reservasi"
@@ -314,7 +314,7 @@ export const HaircutTransactionDetail = ({ data }: TransactionDetailProps) => {
                         </Button>
                       }
                     />
-                  )}
+                  )} */}
             </CardContent>
           </Card>
           {isPendingQRIS ? (
