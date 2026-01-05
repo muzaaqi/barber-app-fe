@@ -121,7 +121,7 @@ const ProductsCards = () => {
                             e.preventDefault();
                             e.stopPropagation();
                           }}
-                          className="w-full"
+                          className="pointer-events-none w-full md:pointer-events-auto"
                         >
                           <ProductDialog
                             id={id}
