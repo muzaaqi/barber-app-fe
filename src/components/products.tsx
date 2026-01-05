@@ -75,13 +75,13 @@ const ProductsCards = () => {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
         {isLoading
           ? Array.from({ length: 8 }).map((_, index) => (
-              <Card key={index}>
-                <CardContent className="text-center">
+              <Card key={index} className="py-3 md:py-6">
+                <CardContent className="text-center px-3 md:px-6">
                   <Skeleton className="mb-3 aspect-square w-full rounded-md" />
                   <Skeleton className="mx-auto mb-2 h-6 w-3/4" />
                   <Skeleton className="mx-auto h-6 w-1/2" />
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="px-3 md:px-6">
                   <Skeleton className="h-10 w-full" />
                 </CardFooter>
               </Card>

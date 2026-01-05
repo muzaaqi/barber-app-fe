@@ -71,12 +71,12 @@ const HaircutsCards = () => {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
         {isLoading
           ? Array.from({ length: 8 }).map((_, index) => (
-              <Card key={index} className="flex flex-col justify-between">
-                <CardContent className="text-center">
+              <Card key={index} className="flex flex-col justify-between py-3 md:py-6">
+                <CardContent className="text-center px-3 md:px-6">
                   <Skeleton className="mb-3 aspect-square w-full rounded-md" />
                   <Skeleton className="mx-auto h-6 w-3/4" />
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="px-3 md:px-6">
                   <Skeleton className="h-10 w-full" />
                 </CardFooter>
               </Card>
@@ -102,7 +102,7 @@ const HaircutsCards = () => {
                       {name}
                     </h2>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className="px-3 md:px-6">
                     <div
                       className="pointer-events-none w-full md:pointer-events-auto"
                       onClick={(e) => {
