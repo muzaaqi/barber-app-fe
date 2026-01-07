@@ -125,8 +125,8 @@ export function LoginForm({
                   {loginLoading ? <><Spinner /> Masuk...</> : "Masuk"}
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account?{" "}
-                  <Link href="/signup">Sign up</Link>
+                  Tidak punya akun?{" "}
+                  <Link href="/signup">Daftar</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
